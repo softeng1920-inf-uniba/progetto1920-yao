@@ -1,0 +1,124 @@
+From e154f2f53103fd8717781470c460c2ace8d8433b Mon Sep 17 00:00:00 2001
+From: Luigi Quaranta <quarantalgu@gmail.com>
+Date: Fri, 27 Mar 2020 13:12:34 +0100
+Subject: [PATCH 1/3] Comments out sections related to the Google Cloud
+ Platform API in the student's guide.
+
+---
+ Guida per lo studente.md | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Guida per lo studente.md b/Guida per lo studente.md
+index 5a41a9b..051d3f5 100644
+--- a/Guida per lo studente.md	
++++ b/Guida per lo studente.md	
+@@ -221,13 +221,13 @@ Se l’operazione è andata a buon fine, siamo quasi pronti per partire… Ma pr
+ 
+ Assicuarsi di aver installato [Java versione 8](https://www.oracle.com/technetwork/java/javase/overview/index.html) ed [Eclipse IDE for Java](https://www.eclipse.org/downloads/) versione 2019-12 (4.14.0) o superiore.
+ 
+-###### Installazione Google Cloud Tools
++<!-- ###### Installazione Google Cloud Tools
+ 
+ Dopo aver completato l'installazione, avviate Eclipse. Quindi, selezionate la voce del menu `Help > Eclipse Marketplace`.  Nella finestra, effettuate la ricerca delle parole chiave *Google cloud* per far comparire la componente *Google Cloud Tools for Eclipse*  come da figura.
+ 
+ ![](res/img/guida-studente/marketplace.png)
+ 
+-Completate l'installazione e riavviate.
++Completate l'installazione e riavviate. -->
+ 
+ **Importazione del progetto in Eclipse**
+ 
+@@ -253,7 +253,7 @@ La cartella di default per la generazione di *javadoc* è la cartella `doc`. Per
+ - Tramite il pulsante *Browse*, selezionare il percorso `doc/javadoc` all’interno della cartella di progetto.
+ - Chiudere la finestra con *Apply and Close*.
+ 
+-###### Verifica setup librerie
++<!-- ###### Verifica setup librerie
+ 
+ Verificate la presenza delle librerie nel build path di Java.
+ 
+@@ -265,17 +265,17 @@ Quindi, selezionate la voce `Java Build Path` e verificate le seguenti librerie
+ 
+ ![](res/img/guida-studente/buildpath.png)
+ 
+-Se dovesse invece mancare la voce *Google Cloud Platform Libraries*, aggiungetela premendo sul task *"Add Library…"*.
++ Se dovesse invece mancare la voce *Google Cloud Platform Libraries*, aggiungetela premendo sul task *"Add Library…"*.
+ 
+ ![](res/img/guida-studente/gcloudlib1.png)
+ 
+ Quindi, premete su *"Finish"*, senza selezionare alcuna voce.
+ 
+-![](res/img/guida-studente/gcloudlib2.png)
++![](res/img/guida-studente/gcloudlib2.png) -->
+ 
+ 
+ 
+-## Eseguire l'applicazione
++<!-- ## Eseguire l'applicazione
+ 
+ #### Attivare Google Service Account 
+ 
+@@ -317,7 +317,7 @@ Questi passi devono essere eseguiti da un solo componente del gruppo di progetto
+ 
+ 12. È possibile che alcuni metodi dell'API richiedano l'ID del progetto: è quello annotato nel passo 7.
+ 
+-13. Posizionatevi sul file `AppMain.java` ed eseguite come Java application da Eclipse.
++13. Posizionatevi sul file `AppMain.java` ed eseguite come Java application da Eclipse. -->
+ 
+ 
+ 
+-- 
+2.21.1 (Apple Git-122.3)
+
+
+From 3513cf07794543fdc143618e6c2d310a88e4021a Mon Sep 17 00:00:00 2001
+From: Luigi Quaranta <quarantalgu@gmail.com>
+Date: Fri, 27 Mar 2020 13:15:45 +0100
+Subject: [PATCH 2/3] Updates the student's guide toc.
+
+---
+ Guida per lo studente.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Guida per lo studente.md b/Guida per lo studente.md
+index 051d3f5..3800c00 100644
+--- a/Guida per lo studente.md	
++++ b/Guida per lo studente.md	
+@@ -13,7 +13,7 @@
+ - Configurazione Coveralls
+   - Aggiunta del badge di Coveralls nel README
+ - Configurazione locale del progetto
+-- Eseguire l'applicazione
++<!-- - Eseguire l'applicazione -->
+ - Lavoro sul codice dell’applicazione
+ - Test automatici e Controlli di Qualità
+ - Esecuzione immagine docker
+-- 
+2.21.1 (Apple Git-122.3)
+
+
+From 2d099b6002e393c8f6a74aaecb397d7d8113fe2b Mon Sep 17 00:00:00 2001
+From: Luigi Quaranta <quarantalgu@gmail.com>
+Date: Fri, 27 Mar 2020 13:22:06 +0100
+Subject: [PATCH 3/3] Little fix in the student's guide.
+
+---
+ Guida per lo studente.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Guida per lo studente.md b/Guida per lo studente.md
+index 3800c00..9958886 100644
+--- a/Guida per lo studente.md	
++++ b/Guida per lo studente.md	
+@@ -265,7 +265,7 @@ Quindi, selezionate la voce `Java Build Path` e verificate le seguenti librerie
+ 
+ ![](res/img/guida-studente/buildpath.png)
+ 
+- Se dovesse invece mancare la voce *Google Cloud Platform Libraries*, aggiungetela premendo sul task *"Add Library…"*.
++Se dovesse invece mancare la voce *Google Cloud Platform Libraries*, aggiungetela premendo sul task *"Add Library…"*.
+ 
+ ![](res/img/guida-studente/gcloudlib1.png)
+ 
+-- 
+2.21.1 (Apple Git-122.3)
+
