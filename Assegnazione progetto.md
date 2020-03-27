@@ -33,4 +33,4 @@ Progetto assegnato: *scacchi*
 - 1.e4e5  
 - 2.Cf3Cc6  
 - 3.d4  
-res/img/Presentazione.png
+(./res/img/Presentazione.png)
