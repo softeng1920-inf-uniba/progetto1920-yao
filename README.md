@@ -1,4 +1,4 @@
-# scacchi ![GitHub Actions workflow](https://github.com/softeng1920-inf-uniba/progetto1920-yao/workflows/Gradle%20Check&Build%20+%20Image%20Push%20on%20GitHub%20Packages/badge.svg)
+# scacchi ![GitHub Actions workflow](https://github.com/softeng1920-inf-uniba/progetto1920-yao/workflows/Gradle%20Check&Build%20+%20Image%20Push%20on%20GitHub%20Packages/badge.svg)  [![Coverage ](https://coveralls.io/repos/github/softeng1920-inf-uniba/progetto1920-yao/badge.svg?t=oG3xVl)](https://coveralls.io/github/softeng1920-inf-uniba/progetto1920-yao)
 
 La struttura della repository si presenta nel seguente modo:
 ```
