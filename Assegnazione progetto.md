@@ -30,7 +30,7 @@ docker run --rm softeng1819infuniba/<nome_repository> <options>
 Progetto assegnato: *scacchi*
 * Applicazione per il gioco 2-players degli scacchi, con interfaccia a linea di comando (CLI) 
 * Le mosse sono descritte in notazione algebrica (https://it.wikipedia.org/wiki/Notazione_algebrica) 
-– 1.e4 e5 
-– 2.Cf3 Cc6 
-– 3.d4
-(/c/Users/utente/progetto1920-yao/res/img/Presentazione.png) 
+– 1.e4 e5  
+– 2.Cf3 Cc6  
+– 3.d4 
+(.res/img/Presentazione.png) 
