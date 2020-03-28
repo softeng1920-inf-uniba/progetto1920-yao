@@ -26,3 +26,14 @@ docker run --rm softeng1819infuniba/<nome_repository> <options>
   - l'applicazione stampa a console l'url per acceddere via web a tale foglio di calcolo
   - il foglio di calcolo deve essere accessibile in lettura a chiunque abbia il link
   - il foglio di calcolo deve poter essere salvato in locale in formato CSV
+
+Progetto assegnato: *scacchi*
+* Applicazione per il gioco 2-players degli scacchi, con interfaccia a linea di comando (CLI) 
+* Le mosse sono descritte in notazione algebrica (https://it.wikipedia.org/wiki/Notazione_algebrica) 
+  - 1.e4e5  
+
+  - 2.Cf3Cc6  
+
+  - 3.d4  
+
+![Presentazione](./res/img/Presentazione.png)
