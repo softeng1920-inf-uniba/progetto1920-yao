@@ -107,6 +107,14 @@ public class Tabella {
         }
     }
 
+  public void stampaComandi(){
+       for (int i = 0; i < comandi.size(); i++){
+           System.out.print(comandi.get(i) + ";  ");
+           if (i % 2 == 1){
+               System.out.println();
+           }
+       }
+   }
 
 
     private void mangiaPedina(Posizione toGo, Pezzo pezzo){
