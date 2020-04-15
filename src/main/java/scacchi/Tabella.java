@@ -49,15 +49,15 @@ public class Tabella {
 
     public void move(Posizione toGo , Pezzo pezzo){
         if ((toGo.getRiga() >=this.getRighe()) || (toGo.getColonna() >= this.getColonne()) || (toGo.getRiga() < 0) || (toGo.getColonna() < 0)){
-            System.out.println("casella inesistente");
+            System.out.println("mossa illegales");
         }
         else if (pezzo == null){
-            System.out.println("pezzo inesistente in quella posizione");
+            System.out.println("mossa illegale");
         }
         else{
             if ((this.getTabella(toGo) != null )){
                 if (this.getTabella(toGo).getColore() == pezzo.getColore()) {
-                    System.out.println("bro hai gia un altro pezzo nella casella");
+                    System.out.println("mossa illegale");
                 }
                 else{
                     Posizione pos1 = pezzo.getPosizione();
@@ -91,7 +91,7 @@ public class Tabella {
         Scanner input = new Scanner(System.in);
         moss1 = input.nextLine();
         if (moss1.length() == 0){
-            System.out.println("inserisci un comando valido");
+            System.out.println("hai scritto male il comando");
         }
         Comando comando = new Comando(moss1);
         if (comando.getSistema()){
@@ -228,7 +228,7 @@ public class Tabella {
                             }
                         }//cicla  i pedoni e vede quale di questi si può muovere
                         if(!esito){
-                            System.out.println("non puoi fare quello spostamento con il pedone bianco");
+                            System.out.println("mossa illegale");
                         }
                     }//controllano tutti i pedoni e si vede si potrebbe implementare un algoritmo di ricerca migliore che cerca  a partire dalla colonna iniziale del pedone perchè si ha piu probabilità di torvarlo vicino che lontano però dato che i dati non sono ocsi grossi e massicci possiamo lasiare questa
                 }//controlla se si sta muovendo un pedone, e traduce il movimento
@@ -242,7 +242,7 @@ public class Tabella {
                             }
                         }
                         if (!esito){
-                            System.out.println("non puoi fare quello spostamento con il pedone nero");
+                            System.out.println("mossa illegale");
                         }
                     }
                 }//le funzioni cmabiano a seconda se si sta giocando nero o bianco qunid c'è un if grosso alla inizio
