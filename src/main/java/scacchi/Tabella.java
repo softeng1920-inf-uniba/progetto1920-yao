@@ -172,6 +172,44 @@ public class Tabella {
                 return true;
         }
     }
+    
+    public void display(){
+        char[] nomiColonne = {'a' , 'b' , 'c' , 'd' , 'e' , 'f' , 'g' , 'h'};
+        System.out.print('\u1680');
+        for (int i  = 0; i < colonne; i++)
+        {
+            System.out.print('\u1680');
+            System.out.print(" " + nomiColonne[i]);
+        }
+        System.out.println();
+        for (int i = righe - 1; i >= 0; i--){
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < colonne; j++){
+                if (tabella[i][j] != null){
+                    System.out.print( tabella[i][j].getSimbolo() + " " );
+                }
+                else{
+                    if (i == 0){
+                            System.out.print(altriPezzineri[j] + " ");
+                    }
+                    else if (i == 7){
+                            System.out.print(altriPezzibiachi[j] + " ");
+                    }
+                    else{
+                        System.out.print('\u274C' + " ");
+                    }
+                }
+            }
+            System.out.println((i + 1) + " ");
+        }
+        System.out.print('\u1680');
+        for (int i  = 0; i < colonne; i++)
+        {
+            System.out.print('\u1680');
+            System.out.print(" " + nomiColonne[i]);
+        }
+    }
+
 
 
     public void cambiaTurno(){
