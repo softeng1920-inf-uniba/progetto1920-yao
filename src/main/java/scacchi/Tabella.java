@@ -6,6 +6,8 @@ public class Tabella {
     private Pezzo[][] tabella;
     private Pezzo[] pedoniBianchi;
     private Pezzo[] pedoniNeri;
+    private Mangiati bianchiMangiati;      
+    private Mangiati neriMangiati;
     private char[] altriPezzibiachi = {'\u2656' , '\u2658' , '\u2657' , '\u2655' , '\u2654' , '\u2657' , '\u2658' , '\u2656' };
     private char[] altriPezzineri= {'\u265C' , '\u265E' , '\u265D' , '\u265B' , '\u265A' , '\u265D' , '\u265E' , '\u265C' };
     private int rigaPedoniBianchi = 1;
@@ -19,6 +21,8 @@ public class Tabella {
         this.colonne = colonne;
         turno = bianco;
         tabella = new Pezzo[8][8];
+        neriMangiati = new Mangiati(16);
+        bianchiMangiati = new Mangiati(16);
         pedoniBianchi = new Pezzo[8];
         pedoniNeri = new Pezzo[8];
         for (int i = 0; i < 8; i++){
@@ -347,9 +351,6 @@ public class Tabella {
 
 
     }
-
-}
-
        public void getIstruzioni(){
            if ((comando.equals("/help")) || (comando.equals("/Help")) || (comando.equals("/HELP"))){
                System.out.println("/help   stampa elenco comandi");
@@ -384,6 +385,40 @@ public class Tabella {
            posizioneTradotta = null;
        }
 
+  protected class Mangiati{
+       private int numeroMangiati = 0;
+       private int pedoniMangiati = 0;
+       private Pezzo[] mangiati;
+       Mangiati(int grandezza){
+           mangiati = new Pezzo[grandezza];
+       }
 
+       public int getNumeroMangiati() {
+           return numeroMangiati;
+       }
+
+       public void incrase(Pezzo pezzo) {
+           numeroMangiati++;
+           if (pezzo.getNome() == 'p'){
+               pedoniMangiati++;
+           }
+       }
+       public void Set(Pezzo pezzo){
+           if (numeroMangiati < mangiati.length){
+               mangiati[numeroMangiati] = pezzo;
+               incrase(pezzo);
+           }
+           else{
+               System.out.println("array pieno li hai mangiati tutti");
+           }
+       }
+       public void displayMangiati(){
+           if (numeroMangiati == 0){
+               System.out.println("nessun pezzo mangiato");
+           }
+           else{
+               System.out.println(mangiati[0].getSimbolo() + " x " + numeroMangiati);
+           }
+       }
    }
-
+}
