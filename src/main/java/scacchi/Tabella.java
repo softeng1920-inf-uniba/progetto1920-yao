@@ -1,3 +1,4 @@
+package scacchi;
 import java.util.Scanner;
 import java.util.Vector;
 public class Tabella {
@@ -53,22 +54,22 @@ public class Tabella {
 
     public void move(Posizione toGo , Pezzo pezzo){
         if ((toGo.getRiga() >=this.getRighe()) || (toGo.getColonna() >= this.getColonne()) || (toGo.getRiga() < 0) || (toGo.getColonna() < 0)){
-            System.out.println("mossa illegales");
+            System.out.println("Mossa illegales");
         }
         else if (pezzo == null){
-            System.out.println("mossa illegale");
+            System.out.println("Mossa illegale");
         }
         else{
             if ((this.getTabella(toGo) != null )){
                 if (this.getTabella(toGo).getColore() == pezzo.getColore()) {
-                    System.out.println("mossa illegale");
+                    System.out.println("Mossa illegale");
                 }
                 else{
                     Posizione pos1 = pezzo.getPosizione();
                     mangiaPedina(toGo , pezzo);
                     setTabella(null , pos1);
                     pezzo.setPosizione(toGo);
-                    System.out.println("pedone mangiato");
+                    System.out.println("Pedone mangiato");
                 }
             }
             else{
@@ -76,16 +77,16 @@ public class Tabella {
                 setTabella(pezzo , toGo);
                 setTabella(null , pos1);
                 pezzo.setPosizione(toGo);
-                System.out.println("pedone spostato");
+                System.out.println("Pedone spostato");
             }
         }
     }
     public void stampaTurno(){
         if (turno == bianco ){
-            System.out.println("muove il bianco:");
+            System.out.println("Muove il bianco:");
         }
         else{
-            System.out.println("muove il nero:");
+            System.out.println("Muove il nero:");
         }
     }
 
@@ -95,7 +96,7 @@ public class Tabella {
         Scanner input = new Scanner(System.in);
         moss1 = input.nextLine();
         if (moss1.length() == 0){
-            System.out.println("hai scritto male il comando");
+            System.out.println("Comando scritto non correttamente");
         }
         Comando comando = new Comando(moss1);
         if (comando.getSistema()){
@@ -107,7 +108,7 @@ public class Tabella {
             cambiaTurno();
         }
         else{
-            System.out.println("Hai scritto male il comando");
+            System.out.println("Comando scritto non correttamente");
         }
     }
 
@@ -278,7 +279,7 @@ public class Tabella {
                             }
                         }//cicla  i pedoni e vede quale di questi si può muovere
                         if(!esito){
-                            System.out.println("mossa illegale");
+                            System.out.println("Mossa illegale");
                         }
                     }//controllano tutti i pedoni e si vede si potrebbe implementare un algoritmo di ricerca migliore che cerca  a partire dalla colonna iniziale del pedone perchè si ha piu probabilità di torvarlo vicino che lontano però dato che i dati non sono ocsi grossi e massicci possiamo lasiare questa
                 }//controlla se si sta muovendo un pedone, e traduce il movimento
@@ -292,7 +293,7 @@ public class Tabella {
                             }
                         }
                         if (!esito){
-                            System.out.println("mossa illegale");
+                            System.out.println("Mossa illegale");
                         }
                     }
                 }//le funzioni cmabiano a seconda se si sta giocando nero o bianco qunid c'è un if grosso alla inizio
@@ -304,7 +305,7 @@ public class Tabella {
 
         public void traduzionePosFinale(){
             if (comando.length() == 0){
-                System.out.println("inserisci un comando valido");
+                System.out.println("Digita un comando valido");
                 posizioneTradotta = null;
                 inizialeTradotta = null;
             }
@@ -349,41 +350,42 @@ public class Tabella {
             return sistema;
         }
 
-
+        public void getIstruzioni(){
+            if ((comando.equals("/help")) || (comando.equals("/Help")) || (comando.equals("/HELP"))){
+                System.out.println("/help   stampa elenco comandi");
+                System.out.println("/board   mostra la schacchiera");
+                System.out.println("/captures   mostra i pezzi mangiati dell avversario");
+                System.out.println("/moves     mossa le mosse effettuate finora");
+                //System.out.println("/import   importa una partita salvata");   verranno implementate dopo
+                //System.out.println("/export    esporta una partita salvata");
+                System.out.println("/quit      esci dal gioco");
+            }
+            else if (comando.equals("/board") || (comando.equals("/Board")) || (comando.equals("/BOARD"))){
+                display();
+            }
+            else if ((comando.equals("/quit")) || (comando.equals("/Quit")) || (comando.equals("/QUIT"))){
+                esciDalGioco();
+            }
+            else if ((comando.equals("/captures")) || (comando.equals("/Captures")) || (comando.equals("/CAPTURES"))){
+                if (turno == bianco){
+                    neriMangiati.displayMangiati();
+                }
+                else{
+                    bianchiMangiati.displayMangiati();
+                }
+            }
+            else if ((comando.equals("/moves")) || (comando.equals("/Moves")) || (comando.equals("/MOVES"))){
+                stampaComandi();
+            }
+            else{
+                System.out.println("Comando non riconosciuto inserire /help per vedere elenco comand disponibili");
+            }
+            System.out.println();
+            posizioneTradotta = null;
+        }
+        
     }
-       public void getIstruzioni(){
-           if ((comando.equals("/help")) || (comando.equals("/Help")) || (comando.equals("/HELP"))){
-               System.out.println("/help   stampa elenco comandi");
-               System.out.println("/board   mostra la schacchiera");
-               System.out.println("/captures   mostra i pezzi mangiati dell avversario");
-               System.out.println("/moves     mossa le mosse effettuate finora");
-               //System.out.println("/import   importa una partita salvata");   verranno implementate dopo
-               //System.out.println("/export    esporta una partita salvata");
-               System.out.println("/quit      esci dal gioco");
-           }
-           else if (comando.equals("/board") || (comando.equals("/Board")) || (comando.equals("/BOARD"))){
-               display();
-           }
-           else if ((comando.equals("/quit")) || (comando.equals("/Quit")) || (comando.equals("/QUIT"))){
-               esciDalGioco();
-           }
-           else if ((comando.equals("/captures")) || (comando.equals("/Captures")) || (comando.equals("/CAPTURES"))){
-               if (turno == bianco){
-                   neriMangiati.displayMangiati();
-               }
-               else{
-                   bianchiMangiati.displayMangiati();
-               }
-           }
-           else if ((comando.equals("/moves")) || (comando.equals("/Moves")) || (comando.equals("/MOVES"))){
-               stampaComandi();
-           }
-           else{
-               System.out.println("comando non riconosciuto inserire /help per vedere elenco comand disponibili");
-           }
-           System.out.println();
-           posizioneTradotta = null;
-       }
+       
 
   protected class Mangiati{
        private int numeroMangiati = 0;
@@ -409,7 +411,7 @@ public class Tabella {
                incrase(pezzo);
            }
            else{
-               System.out.println("array pieno li hai mangiati tutti");
+               System.out.println("Array pieno, tutti i pezzi sono stati mangiati");
            }
        }
        public void displayMangiati(){
