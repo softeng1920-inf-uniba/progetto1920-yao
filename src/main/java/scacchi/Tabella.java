@@ -350,4 +350,40 @@ public class Tabella {
 
 }
 
+       public void getIstruzioni(){
+           if ((comando.equals("/help")) || (comando.equals("/Help")) || (comando.equals("/HELP"))){
+               System.out.println("/help   stampa elenco comandi");
+               System.out.println("/board   mostra la schacchiera");
+               System.out.println("/captures   mostra i pezzi mangiati dell avversario");
+               System.out.println("/moves     mossa le mosse effettuate finora");
+               //System.out.println("/import   importa una partita salvata");   verranno implementate dopo
+               //System.out.println("/export    esporta una partita salvata");
+               System.out.println("/quit      esci dal gioco");
+           }
+           else if (comando.equals("/board") || (comando.equals("/Board")) || (comando.equals("/BOARD"))){
+               display();
+           }
+           else if ((comando.equals("/quit")) || (comando.equals("/Quit")) || (comando.equals("/QUIT"))){
+               esciDalGioco();
+           }
+           else if ((comando.equals("/captures")) || (comando.equals("/Captures")) || (comando.equals("/CAPTURES"))){
+               if (turno == bianco){
+                   neriMangiati.displayMangiati();
+               }
+               else{
+                   bianchiMangiati.displayMangiati();
+               }
+           }
+           else if ((comando.equals("/moves")) || (comando.equals("/Moves")) || (comando.equals("/MOVES"))){
+               stampaComandi();
+           }
+           else{
+               System.out.println("comando non riconosciuto inserire /help per vedere elenco comand disponibili");
+           }
+           System.out.println();
+           posizioneTradotta = null;
+       }
+
+
+   }
 
