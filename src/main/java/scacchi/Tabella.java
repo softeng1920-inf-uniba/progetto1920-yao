@@ -209,7 +209,7 @@ public class Tabella {
                             System.out.print(altriPezzibiachi[j] + " ");
                     }
                     else{
-                        System.out.print('\u274C' + " ");
+                        System.out.print('x' + " ");
                     }
                 }
             }
@@ -356,8 +356,8 @@ public class Tabella {
                 System.out.println("/board   mostra la schacchiera");
                 System.out.println("/captures   mostra i pezzi mangiati dell avversario");
                 System.out.println("/moves     mossa le mosse effettuate finora");
-                //System.out.println("/import   importa una partita salvata");   verranno implementate dopo
-                //System.out.println("/export    esporta una partita salvata");
+                System.out.println("/import   importa una partita salvata");   //verranno implementate dopo
+                System.out.println("/export    esporta una partita salvata");
                 System.out.println("/quit      esci dal gioco");
             }
             else if (comando.equals("/board") || (comando.equals("/Board")) || (comando.equals("/BOARD"))){
