@@ -7,6 +7,7 @@ public abstract class Pezzo {
 	   private char nome;
 	   private int colore;
 	   private char simbolo;
+	   
 	   Pezzo(int gittata , int colore , char nome , Posizione posizione){
 	       this.gittata = gittata;
 	       this.colore = colore;
