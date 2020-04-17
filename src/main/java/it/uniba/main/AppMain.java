@@ -1,56 +1,29 @@
 package it.uniba.main;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.GeneralSecurityException;
+import java.util.Scanner;
 
-import it.uniba.sotorrent.GoogleDocsUtils;
-
-/**
- * The main class for the project. It must be customized to meet the project
- * assignment specifications.
- * 
- * <b>DO NOT RENAME</b>
- */
-public final class AppMain {
-
-	/**
-	 * Private constructor. Change if needed.
-	 */
-	private AppMain() {
-
-	}
-
-	/**
-	 * 	 * This is the main entry of the application.
-	 *
-	 * @param args The command-line arguments.
-	 */
-	public static void main(final String[] args) {
-
-		System.out.println("Current working dir: " + System.getProperty("user.dir"));
-
-		if (args.length > 0) {
-			switch (args[0]) {
-			case "it":
-				System.out.println("Applicazione avviata.");
-				break;
-
-			case "en":
-				System.out.println("Application started.");
-				break;
-
-			default:
-				System.out.println("Specify the language. "
-								   + "Languages supported: 'it' or 'en'");
-				break;
+public class AppMain {
+	public static void main(String args[]){
+		System.out.println("scrivi /play  per iniziare una nuova partita");
+		String comando;
+		boolean esito = true;
+		while(esito){
+			Scanner input = new Scanner(System.in);
+			comando = input.nextLine();
+			if(comando.length() == 0){
+				System.out.println("comando non valido");
 			}
-		} else {
-			System.out.println("Using default language 'en'");
-			System.out.println("Application started.");
+			else if (comando.equals("/play") || comando.equals("/Play") || (comando.equals("/PLAY"))){
+				esito = false;
+			}
+			else{
+				System.out.println("comando non  valido");
+			}
 		}
-
+		System.out.println("scrivi /help per visualizzare i comandi disponibili");
+		Tabella tabella = new Tabella(8 , 8);
+		for (int i = 0; true; i++){
+			tabella.muovicondomanda();
+		}
 	}
-
 }
