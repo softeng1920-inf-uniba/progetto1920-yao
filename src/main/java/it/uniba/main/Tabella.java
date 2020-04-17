@@ -1,4 +1,5 @@
-package scacchi;
+package it.uniba.main;
+
 import java.util.Scanner;
 import java.util.Vector;
 public class Tabella {
@@ -7,7 +8,7 @@ public class Tabella {
     private Pezzo[][] tabella;
     private Pezzo[] pedoniBianchi;
     private Pezzo[] pedoniNeri;
-    private Mangiati bianchiMangiati;      
+    private Mangiati bianchiMangiati;
     private Mangiati neriMangiati;
     private char[] altriPezzibiachi = {'\u2656' , '\u2658' , '\u2657' , '\u2655' , '\u2654' , '\u2657' , '\u2658' , '\u2656' };
     private char[] altriPezzineri= {'\u265C' , '\u265E' , '\u265D' , '\u265B' , '\u265A' , '\u265D' , '\u265E' , '\u265C' };
@@ -53,40 +54,29 @@ public class Tabella {
     }
 
     public void move(Posizione toGo , Pezzo pezzo){
-        if ((toGo.getRiga() >=this.getRighe()) || (toGo.getColonna() >= this.getColonne()) || (toGo.getRiga() < 0) || (toGo.getColonna() < 0)){
-            System.out.println("Mossa illegales");
-        }
-        else if (pezzo == null){
-            System.out.println("Mossa illegale");
+        if ((this.getTabella(toGo) != null )){
+            Posizione pos1 = pezzo.getPosizione();
+            mangiaPedina(toGo , pezzo);
+            setTabella(null , pos1);
+            pezzo.setPosizione(toGo);
+            System.out.println("pedone mangiato");
+
         }
         else{
-            if ((this.getTabella(toGo) != null )){
-                if (this.getTabella(toGo).getColore() == pezzo.getColore()) {
-                    System.out.println("Mossa illegale");
-                }
-                else{
-                    Posizione pos1 = pezzo.getPosizione();
-                    mangiaPedina(toGo , pezzo);
-                    setTabella(null , pos1);
-                    pezzo.setPosizione(toGo);
-                    System.out.println("Pedone mangiato");
-                }
-            }
-            else{
-                Posizione pos1 = pezzo.getPosizione();
-                setTabella(pezzo , toGo);
-                setTabella(null , pos1);
-                pezzo.setPosizione(toGo);
-                System.out.println("Pedone spostato");
-            }
+            Posizione pos1 = pezzo.getPosizione();
+            setTabella(pezzo , toGo);
+            setTabella(null , pos1);
+            pezzo.setPosizione(toGo);
+            System.out.println("pedone spostato");
         }
     }
+
     public void stampaTurno(){
         if (turno == bianco ){
-            System.out.println("Muove il bianco:");
+            System.out.println("muove il bianco:");
         }
         else{
-            System.out.println("Muove il nero:");
+            System.out.println("muove il nero:");
         }
     }
 
@@ -96,7 +86,7 @@ public class Tabella {
         Scanner input = new Scanner(System.in);
         moss1 = input.nextLine();
         if (moss1.length() == 0){
-            System.out.println("Comando scritto non correttamente");
+            System.out.println("hai scritto male il comando");
         }
         Comando comando = new Comando(moss1);
         if (comando.getSistema()){
@@ -107,19 +97,19 @@ public class Tabella {
             comandi.add(comando.getComando());
             cambiaTurno();
         }
-        else{
-            System.out.println("Comando scritto non correttamente");
+        else if (!comando.scrittaBene()){
+            System.out.println("hai scritto male il comando");
         }
     }
 
-  public void stampaComandi(){
-       for (int i = 0; i < comandi.size(); i++){
-           System.out.print(comandi.get(i) + ";  ");
-           if (i % 2 == 1){
-               System.out.println();
-           }
-       }
-   }
+    public void stampaComandi(){
+        for (int i = 0; i < comandi.size(); i++){
+            System.out.print(comandi.get(i) + ";  ");
+            if (i % 2 == 1){
+                System.out.println();
+            }
+        }
+    }
 
 
     private void mangiaPedina(Posizione toGo, Pezzo pezzo){
@@ -185,7 +175,7 @@ public class Tabella {
                 return true;
         }
     }
-    
+
     public void display(){
         char[] nomiColonne = {'a' , 'b' , 'c' , 'd' , 'e' , 'f' , 'g' , 'h'};
         System.out.print('\u1680');
@@ -203,27 +193,24 @@ public class Tabella {
                 }
                 else{
                     if (i == 0){
-                            System.out.print(altriPezzineri[j] + " ");
+                        System.out.print(altriPezzineri[j] + " ");
                     }
                     else if (i == 7){
-                            System.out.print(altriPezzibiachi[j] + " ");
+                        System.out.print(altriPezzibiachi[j] + " ");
                     }
                     else{
-                        System.out.print('x' + " ");
+                        System.out.print("x ");
                     }
                 }
             }
             System.out.println((i + 1) + " ");
         }
-        System.out.print('\u1680');
+        System.out.print(" ");
         for (int i  = 0; i < colonne; i++)
         {
-            System.out.print('\u1680');
             System.out.print(" " + nomiColonne[i]);
         }
     }
-
-
 
     public void cambiaTurno(){
         if (turno == bianco){
@@ -240,7 +227,7 @@ public class Tabella {
 
 
 
-    public class Comando{
+    public class Comando {
         private Posizione posizioneTradotta;//essendo il comando un vettore di char trasformiamo i char in int , la a minuscola è il 97 esimo carattere e ha valore 97 invece l'1 ha valore 49
         private Posizione inizialeTradotta;
         private Pezzo pezzoMosso;
@@ -253,14 +240,14 @@ public class Tabella {
         private char torre = 'R';
         private char cavallo = 'N';
         private char sys = '/';
-        Comando(String commands){
-            this.comando = commands;
-            if (comando.length() == 0){
 
-            }
-            else if (comando.charAt(0) == sys){
+        Comando(String commands) {
+            this.comando = commands;
+            if (comando.length() == 0) {
+
+            } else if (comando.charAt(0) == sys) {
                 sistema = true;
-            }else{
+            } else {
                 traduzionePosFinale();
                 traduzionePosIniziale();
             }
@@ -268,60 +255,56 @@ public class Tabella {
 
         public void traduzionePosIniziale() {
             boolean esito = false;
-            if (posizioneTradotta != null){
+            if (posizioneTradotta != null) {
                 if (turno == bianco) {
                     if ((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) {
                         for (int i = 0; i < pedoniBianchi.length && !esito; i++) {
-                            if (controlMovimento(pedoniBianchi[i] , this)){
+                            if (controlMovimento(pedoniBianchi[i], this)) {
                                 inizialeTradotta = pedoniBianchi[i].getPosizione();
                                 pezzoMosso = pedoniBianchi[i];
                                 esito = true;
                             }
                         }//cicla  i pedoni e vede quale di questi si può muovere
-                        if(!esito){
-                            System.out.println("Mossa illegale");
+                        if (!esito) {
+                            System.out.println("mossa illegale");
                         }
                     }//controllano tutti i pedoni e si vede si potrebbe implementare un algoritmo di ricerca migliore che cerca  a partire dalla colonna iniziale del pedone perchè si ha piu probabilità di torvarlo vicino che lontano però dato che i dati non sono ocsi grossi e massicci possiamo lasiare questa
                 }//controlla se si sta muovendo un pedone, e traduce il movimento
                 else {
-                    if ( (comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) {
+                    if ((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) {
                         for (int i = 0; i < pedoniNeri.length && !esito; i++) {
-                            if (controlMovimento(pedoniNeri[i] , this)){
+                            if (controlMovimento(pedoniNeri[i], this)) {
                                 inizialeTradotta = pedoniNeri[i].getPosizione();
                                 pezzoMosso = pedoniNeri[i];
                                 esito = true;
                             }
                         }
-                        if (!esito){
-                            System.out.println("Mossa illegale");
+                        if (!esito) {
+                            System.out.println("mossa illegale");
                         }
                     }
                 }//le funzioni cmabiano a seconda se si sta giocando nero o bianco qunid c'è un if grosso alla inizio
-            }
-            else{
+            } else {
                 inizialeTradotta = null;
             }//dato che non hai scirtto bene il comando acnhe la posizione finale è nulla
         }//qusta funzione si occupa solo di tradurre il movimento qualunque esso sia poi il contorlo se lo può fare o meno si farà in seguito
 
-        public void traduzionePosFinale(){
-            if (comando.length() == 0){
-                System.out.println("Digita un comando valido");
+        public void traduzionePosFinale() {
+            if (comando.length() == 0) {
                 posizioneTradotta = null;
                 inizialeTradotta = null;
-            }
-            else if ((comando.length() == 2) && (comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <=  7) && (comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)) {
-                posizioneTradotta = new Posizione(comando.charAt(1) - 49 , comando.charAt(0) - 97);
+            } else if ((comando.length() == 2) && (comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7) && (comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)) {
+                posizioneTradotta = new Posizione(comando.charAt(1) - 49, comando.charAt(0) - 97);
                 cattura = false;
             }//comando di movimento semplice per pedone
-            else if ((comando.length() == 4) && (((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <=  7)) || ((comando.charAt(0) == regina ) || (comando.charAt(0) == re) || (comando.charAt(0) == alfiere) || (comando.charAt(0) == torre) || (comando.charAt(0) == cavallo)) && (comando.charAt(1) == 'x') && ((comando.charAt(2) - 97 >= 0) && (comando.charAt(2) - 97 <=  7)) && ((comando.charAt(3) - 49 >= 0) && (comando.charAt(3) - 49 <= 7)))){
-                posizioneTradotta = new Posizione(comando.charAt(3) - 49 , comando.charAt(2) - 97);
+            else if ((comando.length() == 4) && (((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) || ((comando.charAt(0) == regina) || (comando.charAt(0) == re) || (comando.charAt(0) == alfiere) || (comando.charAt(0) == torre) || (comando.charAt(0) == cavallo)) && (comando.charAt(1) == 'x') && ((comando.charAt(2) - 97 >= 0) && (comando.charAt(2) - 97 <= 7)) && ((comando.charAt(3) - 49 >= 0) && (comando.charAt(3) - 49 <= 7)))) {
+                posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
                 cattura = true;
             }//comando di movimento con mangiata senza ambiguità che prevede anche l'ambiguità dei pedoni ne verifica la correttezza sintattica e assegna la posizione tradotta alla varibaile
-            else{
+            else {
                 posizioneTradotta = null;
             }//altrimenit la posizione tradotta è nulla e se è nulla significa che la roba non l'hai scirtta bene
         }
-
 
 
         public Posizione getPosizioneTradotta() {
@@ -329,98 +312,89 @@ public class Tabella {
         }
 
 
-
-        public boolean scrittaBene(){
-            if ((posizioneTradotta != null) && (inizialeTradotta != null)){
+        public boolean scrittaBene() {
+            if ((posizioneTradotta != null) && (inizialeTradotta != null)) {
                 return true;
-            }
-            else{
-                return  false;
+            } else {
+                return false;
             }
         }
-        public String getComando(){
+
+        public String getComando() {
             return comando;
         }
 
-        public boolean getCattura(){
+        public boolean getCattura() {
             return cattura;
         }
 
-        public boolean getSistema(){
+        public boolean getSistema() {
             return sistema;
         }
 
-        public void getIstruzioni(){
-            if ((comando.equals("/help")) || (comando.equals("/Help")) || (comando.equals("/HELP"))){
+        public void getIstruzioni() {
+            if ((comando.equals("/help")) || (comando.equals("/Help")) || (comando.equals("/HELP"))) {
                 System.out.println("/help   stampa elenco comandi");
                 System.out.println("/board   mostra la schacchiera");
                 System.out.println("/captures   mostra i pezzi mangiati dell avversario");
                 System.out.println("/moves     mossa le mosse effettuate finora");
-                System.out.println("/import   importa una partita salvata");   //verranno implementate dopo
-                System.out.println("/export    esporta una partita salvata");
                 System.out.println("/quit      esci dal gioco");
-            }
-            else if (comando.equals("/board") || (comando.equals("/Board")) || (comando.equals("/BOARD"))){
+            } else if (comando.equals("/board") || (comando.equals("/Board")) || (comando.equals("/BOARD"))) {
                 display();
-            }
-            else if ((comando.equals("/quit")) || (comando.equals("/Quit")) || (comando.equals("/QUIT"))){
+            } else if ((comando.equals("/quit")) || (comando.equals("/Quit")) || (comando.equals("/QUIT"))) {
                 esciDalGioco();
-            }
-            else if ((comando.equals("/captures")) || (comando.equals("/Captures")) || (comando.equals("/CAPTURES"))){
-                if (turno == bianco){
+            } else if ((comando.equals("/captures")) || (comando.equals("/Captures")) || (comando.equals("/CAPTURES"))) {
+                if (turno == bianco) {
                     neriMangiati.displayMangiati();
-                }
-                else{
+                } else {
                     bianchiMangiati.displayMangiati();
                 }
-            }
-            else if ((comando.equals("/moves")) || (comando.equals("/Moves")) || (comando.equals("/MOVES"))){
+            } else if ((comando.equals("/moves")) || (comando.equals("/Moves")) || (comando.equals("/MOVES"))) {
                 stampaComandi();
-            }
-            else{
-                System.out.println("Comando non riconosciuto inserire /help per vedere elenco comand disponibili");
+            } else {
+                System.out.println("comando non riconosciuto inserire /help per vedere elenco comand disponibili");
             }
             System.out.println();
             posizioneTradotta = null;
         }
-        
     }
-       
 
-  protected class Mangiati{
-       private int numeroMangiati = 0;
-       private int pedoniMangiati = 0;
-       private Pezzo[] mangiati;
-       Mangiati(int grandezza){
-           mangiati = new Pezzo[grandezza];
-       }
 
-       public int getNumeroMangiati() {
-           return numeroMangiati;
-       }
+    protected class Mangiati{
+        private int numeroMangiati = 0;
+        private int pedoniMangiati = 0;
+        private Pezzo[] mangiati;
+        Mangiati(int grandezza){
+            mangiati = new Pezzo[grandezza];
+        }
 
-       public void incrase(Pezzo pezzo) {
-           numeroMangiati++;
-           if (pezzo.getNome() == 'p'){
-               pedoniMangiati++;
-           }
-       }
-       public void Set(Pezzo pezzo){
-           if (numeroMangiati < mangiati.length){
-               mangiati[numeroMangiati] = pezzo;
-               incrase(pezzo);
-           }
-           else{
-               System.out.println("Array pieno, tutti i pezzi sono stati mangiati");
-           }
-       }
-       public void displayMangiati(){
-           if (numeroMangiati == 0){
-               System.out.println("nessun pezzo mangiato");
-           }
-           else{
-               System.out.println(mangiati[0].getSimbolo() + " x " + numeroMangiati);
-           }
-       }
-   }
+        public int getNumeroMangiati() {
+            return numeroMangiati;
+        }
+
+        public void incrase(Pezzo pezzo) {
+            numeroMangiati++;
+            if (pezzo.getNome() == 'p'){
+                pedoniMangiati++;
+            }
+        }
+        public void Set(Pezzo pezzo){
+            if (numeroMangiati < mangiati.length){
+                mangiati[numeroMangiati] = pezzo;
+                incrase(pezzo);
+            }
+            else{
+                System.out.println("array pieno li hai mangiati tutti");
+            }
+        }
+        public void displayMangiati(){
+            if (numeroMangiati == 0){
+                System.out.println("nessun pezzo mangiato");
+            }
+            else{
+                System.out.println(mangiati[0].getSimbolo() + " x " + numeroMangiati);
+            }
+        }
+    }
 }
+
