@@ -1,9 +1,10 @@
 package it.uniba.main;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class AppMain {
-	public static void main(String args[]){
+	public static void main(String args[]) throws UnsupportedEncodingException {
 		System.out.println("scrivi /play  per iniziare una nuova partita");
 		String comando;
 		boolean esito = true;

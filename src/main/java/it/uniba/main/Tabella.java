@@ -1,5 +1,8 @@
 package it.uniba.main;
 
+
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import java.util.Vector;
 public class Tabella {
@@ -79,7 +82,7 @@ public class Tabella {
         }
     }
 
-    public void muovicondomanda(){
+    public void muovicondomanda() throws UnsupportedEncodingException {
         stampaTurno();
         String moss1;
         Scanner input = new Scanner(System.in);
@@ -212,12 +215,11 @@ public class Tabella {
         }
     }
 
-    public void display(){
+    public void display() throws UnsupportedEncodingException {
         char[] nomiColonne = {'a' , 'b' , 'c' , 'd' , 'e' , 'f' , 'g' , 'h'};
-        System.out.print('\u1680');
+        System.out.print(" ");
         for (int i  = 0; i < colonne; i++)
         {
-            System.out.print('\u1680');
             System.out.print(" " + nomiColonne[i]);
         }
         System.out.println();
@@ -225,13 +227,17 @@ public class Tabella {
             System.out.print((i + 1) + " ");
             for (int j = 0; j < colonne; j++){
                 if (tabella[i][j] != null){
+                    System.setOut(new PrintStream(System.out, false, "UTF-8"));
                     System.out.print( tabella[i][j].getSimbolo() + " " );
+
                 }
                 else{
                     if (i == 0){
+                        System.setOut(new PrintStream(System.out, false, "UTF-8"));
                         System.out.print(altriPezzineri[j] + " ");
                     }
                     else if (i == 7){
+                        System.setOut(new PrintStream(System.out, false, "UTF-8"));
                         System.out.print(altriPezzibiachi[j] + " ");
                     }
                     else{
@@ -372,7 +378,7 @@ public class Tabella {
             return sistema;
         }
 
-        public void getIstruzioni() {
+        public void getIstruzioni() throws UnsupportedEncodingException {
             if ((comando.equals("/help")) || (comando.equals("/Help")) || (comando.equals("/HELP"))) {
                 System.out.println("/help   stampa elenco comandi");
                 System.out.println("/board   mostra la schacchiera");
