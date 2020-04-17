@@ -229,6 +229,7 @@ public class Tabella {
                 if (tabella[i][j] != null){
                     System.setOut(new PrintStream(System.out, false, "UTF-8"));
                     System.out.print( tabella[i][j].getSimbolo() + " " );
+
                 }
                 else{
                     if (i == 0){
