@@ -55,12 +55,11 @@ public class Tabella {
 
     public void move(Posizione toGo , Pezzo pezzo){
         if ((this.getTabella(toGo) != null )){
-            Posizione pos1 = pezzo.getPosizione();
             mangiaPedina(toGo , pezzo);
-            setTabella(null , pos1);
-            pezzo.setPosizione(toGo);
             System.out.println("pedone mangiato");
-
+        }
+        else if ((tabella[pezzo.getPosizione().getRiga()][toGo.getColonna()] != null) && (tabella[pezzo.getPosizione().getRiga()][toGo.getColonna()].getCatturabileE()) && (toGo.getColonna() != pezzo.getPosizione().getColonna())){
+            mangiaPedinaEnpassant(toGo , pezzo);
         }
         else{
             Posizione pos1 = pezzo.getPosizione();
@@ -93,6 +92,7 @@ public class Tabella {
             comando.getIstruzioni();
         }
         else if (comando.scrittaBene()){
+            isEnpassant(comando);
             move(comando.posizioneTradotta , tabella[comando.inizialeTradotta.getRiga()][comando.inizialeTradotta.getColonna()]);
             comandi.add(comando.getComando());
             cambiaTurno();
@@ -119,8 +119,27 @@ public class Tabella {
         else{
             neriMangiati.Set(tabella[toGo.getRiga()][toGo.getColonna()]);
         }
+        Posizione pos1 = pezzo.getPosizione();
+        setTabella(null , pos1);
+        pezzo.setPosizione(toGo);
         setTabella(pezzo , toGo);
 
+    }
+
+    private void mangiaPedinaEnpassant(Posizione toGo , Pezzo pezzo){
+        if (tabella[pezzo.getPosizione().getRiga()][toGo.getColonna()].getColore() == bianco){
+            bianchiMangiati.Set(tabella[pezzo.getPosizione().getRiga()][toGo.getColonna()]);
+        }
+        else{
+            neriMangiati.Set(tabella[pezzo.getPosizione().getRiga()][toGo.getColonna()]);
+        }
+        Posizione pos1 = pezzo.getPosizione(); //posizione del pezzo iniziale
+        Posizione pos2 = new Posizione(pezzo.getPosizione().getRiga() , toGo.getColonna()); //pezzo da mangiare
+        setTabella(null , pos1); //mette null la posizione precedente di pezzo
+        setTabella(null , pos2); //mette null la posizione dove stava la pedina mangiata
+        pezzo.setPosizione(toGo); //mette la poiszione di pezzo uguali al posto in cui è ora
+        setTabella(pezzo , toGo); // mette pezzo nel posto della tabella
+        System.out.println("pedone mangiato con en passant");
     }
 
     private boolean controlMovimento(Pezzo pezzo , Comando comando){
@@ -128,19 +147,25 @@ public class Tabella {
         switch (pezzo.getNome()) {
             case 'p':
                 if (pezzo.getColore() == bianco) {
+                    isEnpassant(comando);
                     if (pezzo.getPosizione().getRiga() != rigaPedoniBianchi) {
                         pezzo.giaMosso();
-                    } // controllo gittata x , y sulla posizione di arrivo                    and  ((controllo per vedera se è nella stessa colonna               and  la posizuione è nulla  )                            oppure   (la differenza in valiore asoluto tera le colonne è 1          and   ci deve essere una pedina la                      and    il colore de essere uguale al nero                          and    la fdifferenza tra le righe deve essere di uno) )         and           la pedina non sim muove sullo stesso punto)
-                    return ((toGo.getRiga() - pezzo.getPosizione().getRiga() <= pezzo.getGittata()) && (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()) && controlloGittata(pezzo , toGo)) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] != null) && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == nero)  && (toGo.getRiga() - pezzo.getPosizione().getRiga() == 1  ) && comando.getCattura())) && (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)  && (toGo.getRiga() - pezzo.getPosizione().getRiga() > 0));
+                    } // controllo gittata x , y sulla posizione di arrivo                    and  ((controllo per vedera se è nella stessa colonna                         and  la posizuione è nulla  )                          e si vuole caturare   e  la gittata è quella giusta            oppure   (la differenza in valiore asoluto tera le colonne è 1          and   ci deve essere una pedina                    and    il colore de essere uuale al nero                               e   la differenza di righe è 1                                  e si sta catturando       cattura con en passant
+                    if ((toGo.getRiga() - pezzo.getPosizione().getRiga() <= pezzo.getGittata()) && (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()) && controlloGittata(pezzo , toGo)) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] != null) && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == nero)  && (toGo.getRiga() - pezzo.getPosizione().getRiga() == 1  ) && comando.getCattura()) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (tabella[toGo.getRiga() - 1][toGo.getColonna()] != null) && (tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() == nero) && (tabella[toGo.getRiga() - 1][toGo.getColonna()].getCatturabileE()))) && (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)  && (toGo.getRiga() - pezzo.getPosizione().getRiga() > 0)){
+                        isEnpassant(comando);
+                        return true;
+                    }
 
                 }
                 else {
                     if (pezzo.getPosizione().getRiga() != rigaPedoniNeri) {
                         pezzo.giaMosso();
                     }
-                    if ((toGo.getRiga() - pezzo.getPosizione().getRiga() >= -pezzo.getGittata()) && (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()) && controlloGittata(pezzo , toGo)) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] != null) && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == bianco)  && (Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) == 1  ))) && (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0) && (toGo.getRiga() - pezzo.getPosizione().getRiga() < 0)){
-                        return  true;
+                    if ((toGo.getRiga() - pezzo.getPosizione().getRiga() >= -pezzo.getGittata()) && (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()) && controlloGittata(pezzo , toGo)) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] != null) && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == bianco)  && (Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) == 1  )) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (tabella[toGo.getRiga() + 1][toGo.getColonna()] != null) && (tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() == bianco) && (tabella[toGo.getRiga() + 1][toGo.getColonna()].getCatturabileE()))) && (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0) && (toGo.getRiga() - pezzo.getPosizione().getRiga() < 0)){
+                        isEnpassant(comando);
+                        return true;
                     }
+
                 }
             default:
                 return false;
@@ -173,6 +198,17 @@ public class Tabella {
 
             default:
                 return true;
+        }
+    }
+
+    private void isEnpassant(Comando comando){
+        if (comando.pezzoMosso != null){
+            if ((comando.pezzoMosso.getColore() == bianco) && (comando.inizialeTradotta.getRiga() == rigaPedoniBianchi) && (comando.posizioneTradotta.getRiga() - comando.inizialeTradotta.getRiga() == 2)){
+                comando.pezzoMosso.setCatturabileE();
+            }
+            else if ((comando.pezzoMosso.getColore() == nero) && (comando.inizialeTradotta.getRiga() == rigaPedoniNeri) && (comando.inizialeTradotta.getRiga() - comando.posizioneTradotta.getRiga() == 2)){
+                comando.pezzoMosso.setCatturabileE();
+            }
         }
     }
 
@@ -301,6 +337,10 @@ public class Tabella {
                 posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
                 cattura = true;
             }//comando di movimento con mangiata senza ambiguità che prevede anche l'ambiguità dei pedoni ne verifica la correttezza sintattica e assegna la posizione tradotta alla varibaile
+            else if ((comando.length() == 6) && (((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) || ((comando.charAt(0) == regina) || (comando.charAt(0) == re) || (comando.charAt(0) == alfiere) || (comando.charAt(0) == torre) || (comando.charAt(0) == cavallo)) && (comando.charAt(1) == 'x') && ((comando.charAt(2) - 97 >= 0) && (comando.charAt(2) - 97 <= 7)) && ((comando.charAt(3) - 49 >= 0) && (comando.charAt(3) - 49 <= 7) && (comando.charAt(4) == 'e') && (comando.charAt(5) == 'p')))) {
+                posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
+                cattura = true;
+            }
             else {
                 posizioneTradotta = null;
             }//altrimenit la posizione tradotta è nulla e se è nulla significa che la roba non l'hai scirtta bene
@@ -397,4 +437,5 @@ public class Tabella {
         }
     }
 }
+
 
