@@ -1,12 +1,13 @@
 package it.uniba.main;
 
 public abstract class Pezzo {
-    private  boolean empoisson;
+    private  boolean enpassant;
     private int gittata;
     private Posizione posizione;
     private char nome;
     private int colore;
     private char simbolo;
+    private  boolean catturabileE;
     Pezzo(int gittata , int colore , char nome , Posizione posizione){
         this.gittata = gittata;
         this.colore = colore;
@@ -43,21 +44,33 @@ public abstract class Pezzo {
     }
 
     public void giaMosso(){
-        if (empoisson){
-            empoisson = !empoisson;
+        if (enpassant){
+            enpassant = !enpassant;
             setGittata(1);
         }
+        else if (catturabileE){
+            catturabileE = !catturabileE;
+        }
     }
-    public  boolean getEmpoisson(){
-        return empoisson;
+
+    public void setCatturabileE() {
+        this.catturabileE = true;
+    }
+
+    public boolean getCatturabileE(){
+        return  catturabileE;
+    }
+
+    public  boolean getEnpassant(){
+        return enpassant;
     }
 
     public void setEmpoissonTrue() {
-        empoisson = true;
+        enpassant = true;
     }
 
     public char getSimbolo(){
         return simbolo;
     }
-}
 
+}
