@@ -1,6 +1,7 @@
 package it.uniba.main;
 
 
+import java.awt.*;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ public class Tabella {
     private int bianco = 0;
     private int nero = 1;
     private int turno;
-    private Vector<String> comandi = new Vector<String>();
+    private Vector<String> comandi;
     Tabella(int righe , int colonne){
         this.righe = righe;
         this.colonne = colonne;
@@ -30,6 +31,7 @@ public class Tabella {
         bianchiMangiati = new Mangiati(16);
         pedoniBianchi = new Pezzo[8];
         pedoniNeri = new Pezzo[8];
+        comandi = new Vector<String>();
         for (int i = 0; i < 8; i++){
             Posizione pos = new Posizione(rigaPedoniBianchi , i);
             tabella[rigaPedoniBianchi][i] = new Pedone(0 , pos );
@@ -227,6 +229,7 @@ public class Tabella {
             System.out.print((i + 1) + " ");
             for (int j = 0; j < colonne; j++){
                 if (tabella[i][j] != null){
+                    Font font = new Font("NSimSun" , Font.ITALIC , 14);
                     System.setOut(new PrintStream(System.out, false, "UTF-8"));
                     System.out.print( tabella[i][j].getSimbolo() + " " );
 
@@ -260,6 +263,26 @@ public class Tabella {
         }
         else{
             turno = bianco;
+        }
+    }
+
+    public void restart(){
+        turno = bianco;
+        tabella = new Pezzo[8][8];
+        neriMangiati = new Mangiati(16);
+        bianchiMangiati = new Mangiati(16);
+        pedoniBianchi = new Pezzo[8];
+        pedoniNeri = new Pezzo[8];
+        comandi = new Vector<String>();
+        for (int i = 0; i < 8; i++){
+            Posizione pos = new Posizione(rigaPedoniBianchi , i);
+            tabella[rigaPedoniBianchi][i] = new Pedone(0 , pos );
+            pedoniBianchi[i] = tabella[rigaPedoniBianchi][i];
+        }
+        for (int j = 0; j < 8; j++){
+            Posizione pos = new Posizione(rigaPedoniNeri , j);
+            tabella[rigaPedoniNeri][j] = new Pedone(1 , pos );
+            pedoniNeri[j] = tabella[rigaPedoniNeri][j];
         }
     }
 
@@ -397,8 +420,12 @@ public class Tabella {
                 }
             } else if ((comando.equals("/moves")) || (comando.equals("/Moves")) || (comando.equals("/MOVES"))) {
                 stampaComandi();
-            } else {
-                System.out.println("comando non riconosciuto inserire /help per vedere elenco comand disponibili");
+            } else if ((comando.equals("/play")) || (comando.equals("/Play")) || (comando.equals("/PLAY"))){
+                restart();
+                System.out.println("nuova partita iniziata, inserire /help per vededere elenco comandi disponibili");
+            }
+            else {
+                System.out.println("comando non riconosciuto, inserire /help per vedere elenco comand disponibili");
             }
             System.out.println();
             posizioneTradotta = null;
