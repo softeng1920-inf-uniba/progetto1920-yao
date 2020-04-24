@@ -304,18 +304,28 @@ public class Tabella {
         private char alfiere = 'B';
         private char torre = 'R';
         private char cavallo = 'N';
-        private char sys = '/';
+        private String[] comandiSistema = {"help" , "boards" , "captures" , "moves" , "quit" , "play"};
 
         Comando(String commands) {
             this.comando = commands;
             if (comando.length() == 0) {
 
-            } else if (comando.charAt(0) == sys) {
+            } else if (isSys()) {
                 sistema = true;
             } else {
                 traduzionePosFinale();
                 traduzionePosIniziale();
             }
+        }
+
+        private boolean isSys(){
+            boolean esito = false;
+            for (int i = 0; i < comandiSistema.length && !esito; i++){
+                if (comandiSistema[i].equals(comando)){
+                    esito = true;
+                }
+            }
+            return esito;
         }
 
         public void traduzionePosIniziale() {
@@ -402,27 +412,28 @@ public class Tabella {
         }
 
         public void getIstruzioni() throws UnsupportedEncodingException {
-            if ((comando.equals("/help")) || (comando.equals("/Help")) || (comando.equals("/HELP"))) {
-                System.out.println("/help   stampa elenco comandi");
-                System.out.println("/board   mostra la schacchiera");
-                System.out.println("/captures   mostra i pezzi mangiati dell avversario");
-                System.out.println("/moves     mossa le mosse effettuate finora");
-                System.out.println("/quit      esci dal gioco");
-            } else if (comando.equals("/board") || (comando.equals("/Board")) || (comando.equals("/BOARD"))) {
+            if ((comando.equals("help")) || (comando.equals("Help")) || (comando.equals("HELP"))) {
+                System.out.println("help   stampa elenco comandi");
+                System.out.println("board   mostra la schacchiera");
+                System.out.println("captures   mostra i pezzi mangiati dell avversario");
+                System.out.println("moves     mossa le mosse effettuate finora");
+                System.out.println("quit      esci dal gioco");
+                System.out.println("play       inizia una nuova aprtita");
+            } else if (comando.equals("board")) {
                 display();
-            } else if ((comando.equals("/quit")) || (comando.equals("/Quit")) || (comando.equals("/QUIT"))) {
+            } else if (comando.equals("quit")) {
                 esciDalGioco();
-            } else if ((comando.equals("/captures")) || (comando.equals("/Captures")) || (comando.equals("/CAPTURES"))) {
+            } else if (comando.equals("captures")) {
                 if (turno == bianco) {
                     neriMangiati.displayMangiati();
                 } else {
                     bianchiMangiati.displayMangiati();
                 }
-            } else if ((comando.equals("/moves")) || (comando.equals("/Moves")) || (comando.equals("/MOVES"))) {
+            } else if (comando.equals("moves")) {
                 stampaComandi();
-            } else if ((comando.equals("/play")) || (comando.equals("/Play")) || (comando.equals("/PLAY"))){
+            } else if (comando.equals("play")) {
                 restart();
-                System.out.println("nuova partita iniziata, inserire /help per vededere elenco comandi disponibili");
+                System.out.println("nuova partita iniziata, inserire help per vededere elenco comandi disponibili");
             }
             else {
                 System.out.println("comando non riconosciuto, inserire /help per vedere elenco comand disponibili");
