@@ -408,6 +408,7 @@ public class Tabella {
                 System.out.println("/captures   mostra i pezzi mangiati dell avversario");
                 System.out.println("/moves     mossa le mosse effettuate finora");
                 System.out.println("/quit      esci dal gioco");
+                System.out.println("play       inizia una nuova aprtita");
             } else if (comando.equals("/board") || (comando.equals("/Board")) || (comando.equals("/BOARD"))) {
                 display();
             } else if ((comando.equals("/quit")) || (comando.equals("/Quit")) || (comando.equals("/QUIT"))) {
