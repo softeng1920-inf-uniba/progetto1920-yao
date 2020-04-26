@@ -304,7 +304,7 @@ public class Tabella {
         private char alfiere = 'B';
         private char torre = 'R';
         private char cavallo = 'N';
-        private String[] comandiSistema = {"help" , "boards" , "captures" , "moves" , "quit" , "play"};
+        private String[] comandiSistema = {"help" , "board" , "captures" , "moves" , "quit" , "play"};
 
         Comando(String commands) {
             this.comando = commands;
