@@ -218,6 +218,21 @@ else if (pezzo.getNome() == 'N') {
 					&& (toGo.getColonna() != pezzo.getPosizione().getColonna())
 					&& (toGo.getRiga() != pezzo.getPosizione().getRiga()));
 		}
+		else if (pezzo.getNome() == 'B') {
+			return ((Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) <= pezzo.getGittata())
+					&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) <= pezzo.getGittata())
+					&& (((toGo.getColonna() - pezzo.getPosizione().getColonna() != 0)
+							&& (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)
+							&& (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()))
+							|| ((tabella[toGo.getRiga()][toGo.getColonna()] != null)
+									&& (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore())
+									&& comando.getCattura())
+									&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == Math
+											.abs(toGo.getRiga() - pezzo.getPosizione().getRiga())))
+					&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == Math
+							.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))
+					&& controlloGittata(pezzo, toGo));
+		} 
         else if (pezzo.getNome() == 'Q') { // vede se non sta catturando oppure se sta catturando e se il colore �
                                                 // diverso e se la cattura � true contorlli di movimento su stessa riga
                                                 // o su stessa colonna ma diversa riga o sulle diagonali quindi si vede
@@ -324,6 +339,39 @@ else if (pezzo.getNome() == 'N') {
 				for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {																										
 					if (tabella[pezzo.getPosizione().getRiga()][pezzo.getPosizione().getColonna() - i] != null)
 						return false;
+				}
+			}
+		}else if (pezzo.getNome() == 'B') {
+			// sopra sinistra
+			if (toGo.getRiga() > pezzo.getPosizione().getRiga()
+					&& toGo.getColonna() < pezzo.getPosizione().getColonna()) {
+				for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {
+					if (tabella[pezzo.getPosizione().getRiga() + 1][pezzo.getPosizione().getColonna() - 1] != null) {
+						return false;
+					}
+				}
+			} // sopra destra
+			else if (toGo.getRiga() > pezzo.getPosizione().getRiga()
+					&& toGo.getColonna() > pezzo.getPosizione().getColonna()) {
+				for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {
+					if (tabella[pezzo.getPosizione().getRiga() + i][pezzo.getPosizione().getColonna() + i] != null) {
+						return false;
+					}
+				}
+			} // sotto sinistra
+			else if (toGo.getRiga() < pezzo.getPosizione().getRiga()
+					&& toGo.getColonna() < pezzo.getPosizione().getColonna()) {
+				for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {
+					if (tabella[pezzo.getPosizione().getRiga() - 1][pezzo.getPosizione().getColonna() - 1] != null) {
+						return false;
+					}
+				}
+			} else if (toGo.getRiga() < pezzo.getPosizione().getRiga()
+					&& toGo.getColonna() > pezzo.getPosizione().getColonna()) {
+				for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {
+					if (tabella[pezzo.getPosizione().getRiga() - 1][pezzo.getPosizione().getColonna() + 1] != null) {
+						return false;
+					}
 				}
 			}
 		}else if (pezzo.getNome() == 'Q') {
