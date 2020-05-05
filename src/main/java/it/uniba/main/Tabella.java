@@ -473,15 +473,326 @@ else if (pezzo.getNome() == 'N') {
 					if (bdx > 0)
 						if (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
 								&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'p'
-								&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() == nero)
+								&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() == bianco)
 							return false;
 					if (bsx > 0)
 						if (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
 								&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'p'
-								&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() == nero)
+								&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() == bianco)
 							return false;
 				}
 			}
+
+			/* alfiere, donna */
+			int i = 1;
+
+//altsx
+			while (i < bsx && i < balt) {
+				if (tabella[toGo.getRiga() + i][toGo.getColonna() - i] != null
+						&& tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore() != pezzo.getColore()
+						&& (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() == 'B'
+								|| tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() == 'Q'))
+					return false;
+				i++;
+			}
+//altdx
+			i = 1;
+			while (i < bdx && i < balt) {
+				if (tabella[toGo.getRiga() + i][toGo.getColonna() + i] != null
+						&& tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore() != pezzo.getColore()
+						&& (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() == 'B'
+								|| tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() == 'Q'))
+					return false;
+				i++;
+			}
+//bassx
+			i = 1;
+			while (i < bsx && i < bbas) {
+				if (tabella[toGo.getRiga() - i][toGo.getColonna() - i] != null
+						&& tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore() != pezzo.getColore()
+						&& (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() == 'B'
+								|| tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() == 'Q'))
+					return false;
+				i++;
+			}
+//bassdx
+			i = 1;
+			while (i < bdx && i < bbas) {
+				if (tabella[toGo.getRiga() - i][toGo.getColonna() + i] != null
+						&& tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore() != pezzo.getColore()
+						&& (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() == 'B'
+								|| tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() == 'Q'))
+					return false;
+				i++;
+			}
+
+			/* torre, donna */
+			i = 1;
+			while (i < balt) {
+				if (tabella[toGo.getRiga() + i][toGo.getColonna()] != null
+						&& tabella[toGo.getRiga() + i][toGo.getColonna()].getColore() != pezzo.getColore()
+						&& (tabella[toGo.getRiga() + i][toGo.getColonna()].getNome() == 'R'
+								|| tabella[toGo.getRiga() + i][toGo.getColonna()].getNome() == 'Q'))
+					return false;
+				i++;
+			}
+//giu
+			i = 1;
+			while (i < bbas) {
+				if (tabella[toGo.getRiga() - i][toGo.getColonna()] != null
+						&& tabella[toGo.getRiga() - i][toGo.getColonna()].getColore() != pezzo.getColore()
+						&& (tabella[toGo.getRiga() - i][toGo.getColonna()].getNome() == 'R'
+								|| tabella[toGo.getRiga() - i][toGo.getColonna()].getNome() == 'Q'))
+					return false;
+				i++;
+			}
+//sx
+			i = 1;
+			while (i < bsx) {
+				if (tabella[toGo.getRiga()][toGo.getColonna() - i] != null
+						&& tabella[toGo.getRiga()][toGo.getColonna() - i].getColore() != pezzo.getColore()
+						&& (tabella[toGo.getRiga()][toGo.getColonna() - i].getNome() == 'R'
+								|| tabella[toGo.getRiga()][toGo.getColonna() - i].getNome() == 'Q'))
+					return false;
+				i++;
+			}
+//dx
+			i = 1;
+			while (i < bdx) {
+				if (tabella[toGo.getRiga()][toGo.getColonna() + i] != null
+						&& tabella[toGo.getRiga()][toGo.getColonna() + i].getColore() != pezzo.getColore()
+						&& (tabella[toGo.getRiga()][toGo.getColonna() + i].getNome() == 'R'
+								|| tabella[toGo.getRiga()][toGo.getColonna() + i].getNome() == 'Q'))
+					return false;
+				i++;
+			}
+
+			/* cavallo */ // sx
+			if (bsx >= 2) {
+				// alto
+				if (balt > 0)
+					if (tabella[toGo.getRiga() + 1][toGo.getColonna() - 2] != null
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 2].getNome() == 'N'
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 2].getColore() != pezzo.getColore())
+						return false;
+				if (balt >= 2)
+					if (tabella[toGo.getRiga() + 2][toGo.getColonna() - 1] != null
+							&& tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getNome() == 'N'
+							&& tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getColore() != pezzo.getColore())
+						return false;
+				// basso
+				if (bbas > 0)
+					if (tabella[toGo.getRiga() - 1][toGo.getColonna() - 2] != null
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 2].getNome() == 'N'
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 2].getColore() != pezzo.getColore())
+						return false;
+				if (bbas >= 2)
+					if (tabella[toGo.getRiga() - 2][toGo.getColonna() - 1] != null
+							&& tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getNome() == 'N'
+							&& tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getColore() != pezzo.getColore())
+						return false;
+			}
+			if (bsx == 1) {
+				// alto
+				if (balt >= 2)
+					if (tabella[toGo.getRiga() + 2][toGo.getColonna() - 1] != null
+							&& tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getNome() == 'N'
+							&& tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getColore() != pezzo.getColore())
+						return false;
+				// basso
+				if (bbas >= 2)
+					if (tabella[toGo.getRiga() - 2][toGo.getColonna() - 1] != null
+							&& tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getNome() == 'N'
+							&& tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getColore() != pezzo.getColore())
+						return false;
+			}
+			// dx
+			if (bdx >= 2) {
+				// alto
+				if (balt > 0)
+					if (tabella[toGo.getRiga() + 1][toGo.getColonna() + 2] != null
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 2].getNome() == 'N'
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 2].getColore() != pezzo.getColore())
+						return false;
+				if (balt >= 2)
+					if (tabella[toGo.getRiga() + 2][toGo.getColonna() + 1] != null
+							&& tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getNome() == 'N'
+							&& tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getColore() != pezzo.getColore())
+						return false;
+				// basso
+				if (bbas > 0)
+					if (tabella[toGo.getRiga() - 1][toGo.getColonna() + 2] != null
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 2].getNome() == 'N'
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 2].getColore() != pezzo.getColore())
+						return false;
+				if (bbas >= 2)
+					if (tabella[toGo.getRiga() - 2][toGo.getColonna() + 1] != null
+							&& tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getNome() == 'N'
+							&& tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getColore() != pezzo.getColore())
+						return false;
+			}
+			if (bdx == 1) {
+				// alto
+				if (balt >= 2)
+					if (tabella[toGo.getRiga() + 2][toGo.getColonna() + 1] != null
+							&& tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getNome() == 'N'
+							&& tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getColore() != pezzo.getColore())
+						return false;
+				// basso
+				if (bbas >= 2)
+					if (tabella[toGo.getRiga() - 2][toGo.getColonna() + 1] != null
+							&& tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getNome() == 'N'
+							&& tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getColore() != pezzo.getColore())
+						return false;
+			}
+
+			/* re */ /* alto */ if (toGo.getRiga() - pezzo.getPosizione().getRiga() == 1) {
+
+				if (balt >= 1 && bdx >= 1 && bsx >= 1) {
+					if ((tabella[toGo.getRiga() + 1][toGo.getColonna()] != null
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna()].getNome() == 'K'
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() != pezzo
+											.getColore())
+							|| (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+				if (balt >= 1 && bsx >= 1 && bdx == 0) {
+					if ((tabella[toGo.getRiga() + 1][toGo.getColonna()] != null
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna()].getNome() == 'K'
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+				if (balt >= 1 && bdx >= 1 && bsx == 0) {
+					if ((tabella[toGo.getRiga() + 1][toGo.getColonna()] != null
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna()].getNome() == 'K'
+							&& tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+			}
+			/* basso */ if (toGo.getRiga() - pezzo.getPosizione().getRiga() == -1) {
+
+				if (bbas >= 1 && bdx >= 1 && bsx >= 1) {
+					if ((tabella[toGo.getRiga() - 1][toGo.getColonna()] != null
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna()].getNome() == 'K'
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() != pezzo
+											.getColore())
+							|| (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+				if (bbas >= 1 && bsx >= 1 && bdx == 0) {
+					if ((tabella[toGo.getRiga() - 1][toGo.getColonna()] != null
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna()].getNome() == 'K'
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+				if (bbas >= 1 && bdx >= 1 && bsx == 0) {
+					if ((tabella[toGo.getRiga() - 1][toGo.getColonna()] != null
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna()].getNome() == 'K'
+							&& tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+			}
+			/* dx */ if (toGo.getColonna() - pezzo.getPosizione().getColonna() == 1) {
+				if (bbas >= 1 && bdx >= 1 && balt >= 1) {
+					if ((tabella[toGo.getRiga()][toGo.getColonna() + 1] != null
+							&& tabella[toGo.getRiga()][toGo.getColonna() + 1].getNome() == 'K'
+							&& tabella[toGo.getRiga()][toGo.getColonna() + 1].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() != pezzo
+											.getColore())
+							|| (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+				if (bbas >= 1 && bdx >= 1 && balt == 0) {
+					if ((tabella[toGo.getRiga()][toGo.getColonna() + 1] != null
+							&& tabella[toGo.getRiga()][toGo.getColonna() + 1].getNome() == 'K'
+							&& tabella[toGo.getRiga()][toGo.getColonna() + 1].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+				if (balt >= 1 && bdx >= 1 && bbas == 0) {
+					if ((tabella[toGo.getRiga()][toGo.getColonna() + 1] != null
+							&& tabella[toGo.getRiga()][toGo.getColonna() + 1].getNome() == 'K'
+							&& tabella[toGo.getRiga()][toGo.getColonna() + 1].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+			}
+			/* sx */ if (toGo.getColonna() - pezzo.getPosizione().getColonna() == -1) {
+				if (bbas >= 1 && bsx >= 1 && balt >= 1) {
+					if ((tabella[toGo.getRiga()][toGo.getColonna() - 1] != null
+							&& tabella[toGo.getRiga()][toGo.getColonna() - 1].getNome() == 'K'
+							&& tabella[toGo.getRiga()][toGo.getColonna() - 1].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() != pezzo
+											.getColore())
+							|| (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+				if (balt >= 1 && bsx >= 1 && bbas == 0) {
+					if ((tabella[toGo.getRiga()][toGo.getColonna() - 1] != null
+							&& tabella[toGo.getRiga()][toGo.getColonna() - 1].getNome() == 'K'
+							&& tabella[toGo.getRiga()][toGo.getColonna() - 1].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+				if (bbas >= 1 && bsx >= 1 && balt == 0) {
+					if ((tabella[toGo.getRiga()][toGo.getColonna() - 1] != null
+							&& tabella[toGo.getRiga()][toGo.getColonna() - 1].getNome() == 'K'
+							&& tabella[toGo.getRiga()][toGo.getColonna() - 1].getColore() != pezzo.getColore())
+							|| (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'K'
+									&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() != pezzo
+											.getColore()))
+						return false;
+				}
+			}
+		}
 
 
         return true;  
