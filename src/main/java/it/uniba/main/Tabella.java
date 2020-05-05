@@ -142,68 +142,142 @@ public class Tabella {
         Posizione pos2 = new Posizione(pezzo.getPosizione().getRiga() , toGo.getColonna()); //pezzo da mangiare
         setTabella(null , pos1); //mette null la posizione precedente di pezzo
         setTabella(null , pos2); //mette null la posizione dove stava la pedina mangiata
-        pezzo.setPosizione(toGo); //mette la poiszione di pezzo uguali al posto in cui è ora
+        pezzo.setPosizione(toGo); //mette la poiszione di pezzo uguali al posto in cui Ã¨ ora
         setTabella(pezzo , toGo); // mette pezzo nel posto della tabella
         System.out.println("pedone mangiato con en passant");
     }
 
     private boolean controlMovimento(Pezzo pezzo , Comando comando){
         Posizione toGo = comando.posizioneTradotta;
-        switch (pezzo.getNome()) {
-            case 'p':
-                if (pezzo.getColore() == bianco) {
-                    isEnpassant(comando);
-                    if (pezzo.getPosizione().getRiga() != rigaPedoniBianchi) {
-                        pezzo.giaMosso();
-                    } // controllo gittata x , y sulla posizione di arrivo                    and  ((controllo per vedera se è nella stessa colonna                         and  la posizuione è nulla  )                          e si vuole caturare   e  la gittata è quella giusta            oppure   (la differenza in valiore asoluto tera le colonne è 1          and   ci deve essere una pedina                    and    il colore de essere uuale al nero                               e   la differenza di righe è 1                                  e si sta catturando       cattura con en passant
-                    if ((toGo.getRiga() - pezzo.getPosizione().getRiga() <= pezzo.getGittata()) && (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()) && controlloGittata(pezzo , toGo)) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] != null) && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == nero)  && (toGo.getRiga() - pezzo.getPosizione().getRiga() == 1  ) && comando.getCattura()) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (tabella[toGo.getRiga() - 1][toGo.getColonna()] != null) && (tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() == nero) && (tabella[toGo.getRiga() - 1][toGo.getColonna()].getCatturabileE()))) && (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)  && (toGo.getRiga() - pezzo.getPosizione().getRiga() > 0)){
-                        isEnpassant(comando);
-                        return true;
-                    }
+        if (pezzo.getNome() == 'p') {
+			if (pezzo.getColore() == bianco) {
+				isEnpassant(comando);
+				if (pezzo.getPosizione().getRiga() != rigaPedoniBianchi) {
+					pezzo.giaMosso();
+				} // controllo gittata x , y sulla posizione di arrivo and ((controllo per vedera
+					// se � nella stessa colonna and la posizuione � nulla ) e si vuole caturare e
+					// la gittata � quella giusta oppure (la differenza in valiore asoluto tera le
+					// colonne � 1 and ci deve essere una pedina and il colore de essere uuale al
+					// nero e la differenza di righe � 1 e si sta catturando cattura con en passant
+				if ((toGo.getRiga() - pezzo.getPosizione().getRiga() <= pezzo.getGittata())
+						&& (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0)
+						&& (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura())
+						&& controlloGittata(pezzo, toGo))
+						|| ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1)
+						&& (tabella[toGo.getRiga()][toGo.getColonna()] != null)
+						&& (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == nero)
+						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() == 1)
+						&& comando.getCattura())
+						|| ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1)
+						&& (tabella[toGo.getRiga()][toGo.getColonna()] == null)
+						&& (tabella[toGo.getRiga() - 1][toGo.getColonna()] != null
+						&& tabella[toGo.getRiga() - 1][toGo.getColonna()].getNome() == 'p')
+						&& (tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() == nero)
+						&& (tabella[toGo.getRiga() - 1][toGo.getColonna()].getCatturabileE())))
+						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)
+						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() > 0)) {
+					isEnpassant(comando);
+					return true;
+				}
 
-                }
-                else {
-                    if (pezzo.getPosizione().getRiga() != rigaPedoniNeri) {
-                        pezzo.giaMosso();
-                    }
-                    if ((toGo.getRiga() - pezzo.getPosizione().getRiga() >= -pezzo.getGittata()) && (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()) && controlloGittata(pezzo , toGo)) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] != null) && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == bianco)  && (Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) == 1  )) || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1) && (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (tabella[toGo.getRiga() + 1][toGo.getColonna()] != null) && (tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() == bianco) && (tabella[toGo.getRiga() + 1][toGo.getColonna()].getCatturabileE()))) && (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0) && (toGo.getRiga() - pezzo.getPosizione().getRiga() < 0)){
-                        isEnpassant(comando);
-                        return true;
-                    }
+			} else {
+				isEnpassant(comando);
+				if (pezzo.getPosizione().getRiga() != rigaPedoniNeri) {
+					pezzo.giaMosso();
+				}
+				if ((toGo.getRiga() - pezzo.getPosizione().getRiga() >= -pezzo.getGittata())
+						&& (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0)
+						&& (tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura())
+						&& controlloGittata(pezzo, toGo))
+						|| ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1)
+						&& (tabella[toGo.getRiga()][toGo.getColonna()] != null)
+						&& (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == bianco)
+						&& (Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) == 1))
+						|| ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1)
+						&& (tabella[toGo.getRiga()][toGo.getColonna()] == null)
+						&& (tabella[toGo.getRiga() + 1][toGo.getColonna()] != null
+						&& tabella[toGo.getRiga() + 1][toGo.getColonna()].getNome() == 'p')
+					    && (tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() == bianco)
+						&& (tabella[toGo.getRiga() + 1][toGo.getColonna()].getCatturabileE())))
+						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)
+						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() < 0)) 
+				{
+					isEnpassant(comando);
+					return true;
+				}
 
-                }
-            default:
+			}
+		}
+        else if (pezzo.getNome() == 'R') {
+			return ((pezzo.getGittata() >= Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()))
+					&& (pezzo.getGittata() >= Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()))
+					&& (((toGo.getRiga() - pezzo.getPosizione().getRiga() == 0
+					&& toGo.getColonna() - pezzo.getPosizione().getColonna() != 0)
+					|| (toGo.getColonna() - pezzo.getPosizione().getColonna() == 0
+					&& toGo.getRiga() - pezzo.getPosizione().getRiga() != 0))
+					&& (((tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()))
+					|| ((tabella[toGo.getRiga()][toGo.getColonna()] != null)
+					&& (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore())
+					&& comando.getCattura())))
+					&& controlloGittata(pezzo, toGo));
+		} 
                 return false;
         }
-    }//controlla se per ogni tipo di pezzo è possibile lo spostamento
+    //controlla se per ogni tipo di pezzo Ã¨ possibile lo spostamento
 
     private boolean controlloGittata(Pezzo pezzo , Posizione toGo){
-        switch (pezzo.getNome()){
-            case 'p':
-                if (pezzo.getColore() == bianco){
-                    for (int i = 1; i <= pezzo.getGittata(); i++){
-                        if (pezzo.getPosizione().getRiga() + i > 7){
-                            return false;
-                        }
-                        else if (tabella[pezzo.getPosizione().getRiga() + i][pezzo.getPosizione().getColonna()] != null){
-                            return false;
-                        }
-                    }
-                }
-                else{
-                    for (int i = 1; i <= pezzo.getGittata(); i++){
-                        if (pezzo.getPosizione().getRiga() - i < 0){
-                            return false;
-                        }
-                        else if (tabella[pezzo.getPosizione().getRiga() - i][pezzo.getPosizione().getColonna()] != null){
-                            return false;
-                        }
-                    }
-                }
-
-            default:
-                return true;
-        }
+    	if (pezzo.getNome() == 'p') {
+			if (pezzo.getColore() == bianco) {
+				for (int i = 1; i <= toGo.getRiga() - pezzo.getGittata(); i++) {
+					if (pezzo.getPosizione().getRiga() + i > 7) {
+						return false;
+					} else if (tabella[pezzo.getPosizione().getRiga() + i][pezzo.getPosizione().getColonna()] != null) {
+						return false;
+					}
+				}
+			} else {
+				for (int i = 1; i <= pezzo.getGittata() - toGo.getRiga(); i++) {
+					if (pezzo.getPosizione().getRiga() - i < 0) {
+						return false;
+					} else if (tabella[pezzo.getPosizione().getRiga() - i][pezzo.getPosizione().getColonna()] != null) {
+						return false;
+					}
+				}
+			}
+		} else if (pezzo.getNome() == 'R') {
+			if (toGo.getRiga() > pezzo.getPosizione().getRiga()
+					&& (toGo.getColonna() == pezzo.getPosizione().getColonna())) {
+				for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) { 
+					if (tabella[pezzo.getPosizione().getRiga() + i][pezzo.getPosizione().getColonna()] != null)
+						return false;
+				}
+			}
+			/* giu */
+			else if (toGo.getRiga() < pezzo.getPosizione().getRiga()
+					&& (toGo.getColonna() == pezzo.getPosizione().getColonna())) {
+				for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) {
+					if (tabella[pezzo.getPosizione().getRiga() - i][pezzo.getPosizione().getColonna()] != null)
+						return false;
+				}
+			}
+			/* destra */
+			else if (toGo.getRiga() == pezzo.getPosizione().getRiga()
+					&& (toGo.getColonna() > pezzo.getPosizione().getColonna())) {
+				for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) { 
+					if (tabella[pezzo.getPosizione().getRiga()][pezzo.getPosizione().getColonna() + i] != null)
+						return false;
+				}
+			}
+			/* sinistra */
+			else if (toGo.getRiga() == pezzo.getPosizione().getRiga()
+					&& (toGo.getColonna() < pezzo.getPosizione().getColonna())) {
+				for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {																										
+					if (tabella[pezzo.getPosizione().getRiga()][pezzo.getPosizione().getColonna() - i] != null)
+						return false;
+				}
+			}
+		}
+        return true;  
     }
 
     private void isEnpassant(Comando comando){
@@ -293,7 +367,7 @@ public class Tabella {
 
 
     public class Comando {
-        private Posizione posizioneTradotta;//essendo il comando un vettore di char trasformiamo i char in int , la a minuscola è il 97 esimo carattere e ha valore 97 invece l'1 ha valore 49
+        private Posizione posizioneTradotta;//essendo il comando un vettore di char trasformiamo i char in int , la a minuscola Ã¨ il 97 esimo carattere e ha valore 97 invece l'1 ha valore 49
         private Posizione inizialeTradotta;
         private Pezzo pezzoMosso;
         private boolean cattura;
@@ -339,11 +413,11 @@ public class Tabella {
                                 pezzoMosso = pedoniBianchi[i];
                                 esito = true;
                             }
-                        }//cicla  i pedoni e vede quale di questi si può muovere
+                        }//cicla  i pedoni e vede quale di questi si puÃ² muovere
                         if (!esito) {
                             System.out.println("mossa illegale");
                         }
-                    }//controllano tutti i pedoni e si vede si potrebbe implementare un algoritmo di ricerca migliore che cerca  a partire dalla colonna iniziale del pedone perchè si ha piu probabilità di torvarlo vicino che lontano però dato che i dati non sono ocsi grossi e massicci possiamo lasiare questa
+                    }//controllano tutti i pedoni e si vede si potrebbe implementare un algoritmo di ricerca migliore che cerca  a partire dalla colonna iniziale del pedone perchÃ¨ si ha piu probabilitÃ  di torvarlo vicino che lontano perÃ² dato che i dati non sono ocsi grossi e massicci possiamo lasiare questa
                 }//controlla se si sta muovendo un pedone, e traduce il movimento
                 else {
                     if ((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) {
@@ -358,11 +432,11 @@ public class Tabella {
                             System.out.println("mossa illegale");
                         }
                     }
-                }//le funzioni cmabiano a seconda se si sta giocando nero o bianco qunid c'è un if grosso alla inizio
+                }//le funzioni cmabiano a seconda se si sta giocando nero o bianco qunid c'Ã¨ un if grosso alla inizio
             } else {
                 inizialeTradotta = null;
-            }//dato che non hai scirtto bene il comando acnhe la posizione finale è nulla
-        }//qusta funzione si occupa solo di tradurre il movimento qualunque esso sia poi il contorlo se lo può fare o meno si farà in seguito
+            }//dato che non hai scirtto bene il comando acnhe la posizione finale Ã¨ nulla
+        }//qusta funzione si occupa solo di tradurre il movimento qualunque esso sia poi il contorlo se lo puÃ² fare o meno si farÃ  in seguito
 
         public void traduzionePosFinale() {
             if (comando.length() == 0) {
@@ -375,14 +449,14 @@ public class Tabella {
             else if ((comando.length() == 4) && (((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) || ((comando.charAt(0) == regina) || (comando.charAt(0) == re) || (comando.charAt(0) == alfiere) || (comando.charAt(0) == torre) || (comando.charAt(0) == cavallo)) && (comando.charAt(1) == 'x') && ((comando.charAt(2) - 97 >= 0) && (comando.charAt(2) - 97 <= 7)) && ((comando.charAt(3) - 49 >= 0) && (comando.charAt(3) - 49 <= 7)))) {
                 posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
                 cattura = true;
-            }//comando di movimento con mangiata senza ambiguità che prevede anche l'ambiguità dei pedoni ne verifica la correttezza sintattica e assegna la posizione tradotta alla varibaile
+            }//comando di movimento con mangiata senza ambiguitÃ  che prevede anche l'ambiguitÃ  dei pedoni ne verifica la correttezza sintattica e assegna la posizione tradotta alla varibaile
             else if ((comando.length() == 6) && (((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) || ((comando.charAt(0) == regina) || (comando.charAt(0) == re) || (comando.charAt(0) == alfiere) || (comando.charAt(0) == torre) || (comando.charAt(0) == cavallo)) && (comando.charAt(1) == 'x') && ((comando.charAt(2) - 97 >= 0) && (comando.charAt(2) - 97 <= 7)) && ((comando.charAt(3) - 49 >= 0) && (comando.charAt(3) - 49 <= 7) && (comando.charAt(4) == 'e') && (comando.charAt(5) == 'p')))) {
                 posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
                 cattura = true;
             }
             else {
                 posizioneTradotta = null;
-            }//altrimenit la posizione tradotta è nulla e se è nulla significa che la roba non l'hai scirtta bene
+            }//altrimenit la posizione tradotta Ã¨ nulla e se Ã¨ nulla significa che la roba non l'hai scirtta bene
         }
 
 
@@ -413,12 +487,12 @@ public class Tabella {
 
         public void getIstruzioni() throws UnsupportedEncodingException {
             if ((comando.equals("help")) || (comando.equals("Help")) || (comando.equals("HELP"))) {
-                System.out.println("help   stampa elenco comandi");
-                System.out.println("board   mostra la schacchiera");
-                System.out.println("captures   mostra i pezzi mangiati dell avversario");
-                System.out.println("moves     mossa le mosse effettuate finora");
+                System.out.println("help      stampa elenco comandi");
+                System.out.println("board     mostra la schacchiera");
+                System.out.println("captures  mostra i pezzi mangiati dell'avversario");
+                System.out.println("moves     mostra le mosse effettuate finora");
                 System.out.println("quit      esci dal gioco");
-                System.out.println("play       inizia una nuova aprtita");
+                System.out.println("play      inizia una nuova partita");
             } else if (comando.equals("board")) {
                 display();
             } else if (comando.equals("quit")) {
