@@ -251,6 +251,23 @@ else if (pezzo.getNome() == 'N') {
 					&& (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore())
 					&& comando.getCattura())))
 					&& controlloGittata(pezzo, toGo));
+		}else if (pezzo.getNome() == 'K') {
+			return ((((Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) == pezzo.getGittata())
+					&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == pezzo.getGittata())
+					&& (tabella[toGo.getRiga()][toGo.getColonna()] == null) && controlloGittata(pezzo, toGo)
+					&& (!comando.getCattura()))
+					|| ((tabella[toGo.getRiga()][toGo.getColonna()] != null)
+							&& (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore())
+							&& controlloGittata(pezzo, toGo) && comando.getCattura()))
+					|| (((toGo.getRiga() - pezzo.getPosizione().getRiga() == 0
+							&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == pezzo.getGittata()))
+							|| (toGo.getColonna() - pezzo.getPosizione().getColonna() == 0 && (Math
+									.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) == pezzo.getGittata())))
+							&& ((tabella[toGo.getRiga()][toGo.getColonna()] == null) && controlloGittata(pezzo, toGo)
+									&& (!comando.getCattura()))
+							|| ((tabella[toGo.getRiga()][toGo.getColonna()] != null)
+									&& (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore())
+									&& controlloGittata(pezzo, toGo) && comando.getCattura())));
 		} 
                 return false;
         }
@@ -382,7 +399,41 @@ else if (pezzo.getNome() == 'N') {
                     }
                 }
             }
-        }
+        } else if (pezzo.getNome() == 'K') {
+			// controlloscacco
+			// bordi
+			int bsx = toGo.getColonna() - 2;
+			int balt = 7 - toGo.getRiga();
+			int bdx = 7 - toGo.getColonna();
+			int bbas = toGo.getRiga() - 2;
+
+			/* pedone */ if (pezzo.getColore() == bianco) {
+				if (balt > 0) {
+					if (bdx > 0)
+						if (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
+								&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'p'
+								&& tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() == nero)
+							return false;
+					if (bsx > 0)
+						if (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
+								&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'p'
+								&& tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() == nero)
+							return false;
+				}
+			} else {
+				/* nero */ if (bbas > 0) {
+					if (bdx > 0)
+						if (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
+								&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'p'
+								&& tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() == nero)
+							return false;
+					if (bsx > 0)
+						if (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
+								&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'p'
+								&& tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() == nero)
+							return false;
+				}
+			}
 
 
         return true;  
@@ -663,5 +714,4 @@ else if (pezzo.getNome() == 'N') {
         }
     }
 }
-
 
