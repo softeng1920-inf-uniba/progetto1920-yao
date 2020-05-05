@@ -208,7 +208,50 @@ public class Tabella {
 
 			}
 		}
-        else if (pezzo.getNome() == 'R') {
+
+        else if (pezzo.getNome() == 'Q') { // vede se non sta catturando oppure se sta catturando e se il colore �
+                                                // diverso e se la cattura � true contorlli di movimento su stessa riga
+                                                // o su stessa colonna ma diversa riga o sulle diagonali quindi si vede
+                                                // se la distanza tra colonna e righe sono uguali in termini di
+                                                // differenza controllo sulla gittata per vedere se cis ono pezzi in
+                                                // mezzo
+            return ((Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) <= pezzo.getGittata())
+                    && (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) <= pezzo.getGittata()
+                            && (((tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()))
+                                    || ((tabella[toGo.getRiga()][toGo.getColonna()] != null)
+                                            && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo
+                                                    .getColore())
+                                            && (comando.getCattura())))
+                            && (((toGo.getRiga() - pezzo.getPosizione().getRiga() == 0
+                                    && toGo.getColonna() - pezzo.getPosizione().getColonna() != 0)
+                                    || (toGo.getColonna() - pezzo.getPosizione().getColonna() == 0
+                                            && toGo.getRiga() - pezzo.getPosizione().getRiga() != 0))
+                                    || (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == Math
+                                            .abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))))
+                    && controlloGittata(pezzo, toGo) && (toGo.getRiga() != pezzo.getPosizione().getRiga()
+                            || toGo.getColonna() != pezzo.getPosizione().getColonna()));
+        }else if (pezzo.getNome() == 'Q') { // vede se non sta catturando oppure se sta catturando e se il colore �
+                                                // diverso e se la cattura � true contorlli di movimento su stessa riga
+                                                // o su stessa colonna ma diversa riga o sulle diagonali quindi si vede
+                                                // se la distanza tra colonna e righe sono uguali in termini di
+                                                // differenza controllo sulla gittata per vedere se cis ono pezzi in
+                                                // mezzo
+            return ((Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) <= pezzo.getGittata())
+                    && (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) <= pezzo.getGittata()
+                            && (((tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()))
+                                    || ((tabella[toGo.getRiga()][toGo.getColonna()] != null)
+                                            && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo
+                                                    .getColore())
+                                            && (comando.getCattura())))
+                            && (((toGo.getRiga() - pezzo.getPosizione().getRiga() == 0
+                                    && toGo.getColonna() - pezzo.getPosizione().getColonna() != 0)
+                                    || (toGo.getColonna() - pezzo.getPosizione().getColonna() == 0
+                                            && toGo.getRiga() - pezzo.getPosizione().getRiga() != 0))
+                                    || (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == Math
+                                            .abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))))
+                    && controlloGittata(pezzo, toGo) && (toGo.getRiga() != pezzo.getPosizione().getRiga()
+                            || toGo.getColonna() != pezzo.getPosizione().getColonna()));
+        }    else if (pezzo.getNome() == 'R') {
 			return ((pezzo.getGittata() >= Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()))
 					&& (pezzo.getGittata() >= Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()))
 					&& (((toGo.getRiga() - pezzo.getPosizione().getRiga() == 0
@@ -276,7 +319,82 @@ public class Tabella {
 						return false;
 				}
 			}
-		}
+		}else if (pezzo.getNome() == 'Q') {
+            /* sopra */
+            if (toGo.getRiga() > pezzo.getPosizione().getRiga()
+                    && (toGo.getColonna() == pezzo.getPosizione().getColonna())) {
+                for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) { // senza + i
+                                                                                                        // perch� la
+                                                                                                        // colonna
+                                                                                                        // rimane la
+                                                                                                        // stessa
+                    if (tabella[pezzo.getPosizione().getRiga() + i][pezzo.getPosizione().getColonna()] != null)
+                        return false;
+                }
+            }
+            /* giu */
+            else if (toGo.getRiga() < pezzo.getPosizione().getRiga()
+                    && (toGo.getColonna() == pezzo.getPosizione().getColonna())) {
+                for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) { // - i perch� vado
+                                                                                                        // indietro
+                    if (tabella[pezzo.getPosizione().getRiga() - i][pezzo.getPosizione().getColonna()] != null)
+                        return false;
+                }
+            }else if (toGo.getRiga() == pezzo.getPosizione().getRiga()
+                    && (toGo.getColonna() > pezzo.getPosizione().getColonna())) {
+                for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) { // la riga
+                                                                                                            // rimane la
+                                                                                                            // stessa
+                    if (tabella[pezzo.getPosizione().getRiga()][pezzo.getPosizione().getColonna() + i] != null)
+                        return false;
+                }
+            }
+            /* sinistra */
+            else if (toGo.getRiga() == pezzo.getPosizione().getRiga()
+                    && (toGo.getColonna() < pezzo.getPosizione().getColonna())) {
+                for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) { // - i
+                                                                                                            // perch�
+                                                                                                            // vado a
+                                                                                                            // sinistra
+                    if (tabella[pezzo.getPosizione().getRiga()][pezzo.getPosizione().getColonna() - i] != null)
+                        return false;
+                }
+            }
+            // sopra sinistra
+            else if (toGo.getRiga() > pezzo.getPosizione().getRiga()
+                    && toGo.getColonna() < pezzo.getPosizione().getColonna()) {
+                for (int i = 1; i < pezzo.getPosizione().getColonna() - toGo.getColonna(); i++) {
+                    if (tabella[pezzo.getPosizione().getRiga() + 1][pezzo.getPosizione().getColonna() - 1] != null) {
+                        return false;
+                    }
+                }
+            } // sopra destra
+            else if (toGo.getRiga() > pezzo.getPosizione().getRiga()
+                    && toGo.getColonna() > pezzo.getPosizione().getColonna()) {
+                for (int i = 1; i < pezzo.getPosizione().getColonna() - toGo.getColonna(); i++) {
+                    if (tabella[pezzo.getPosizione().getRiga() + i][pezzo.getPosizione().getColonna() + i] != null) {
+                        return false;
+                    }
+                }
+            } // sotto sinistra
+            else if (toGo.getRiga() < pezzo.getPosizione().getRiga()
+                    && toGo.getColonna() < pezzo.getPosizione().getColonna()) {
+                for (int i = 1; i < pezzo.getPosizione().getColonna() - toGo.getColonna(); i++) {
+                    if (tabella[pezzo.getPosizione().getRiga() - 1][pezzo.getPosizione().getColonna() - 1] != null) {
+                        return false;
+                    }
+                }
+            } else if (toGo.getRiga() < pezzo.getPosizione().getRiga()
+                    && toGo.getColonna() > pezzo.getPosizione().getColonna()) {
+                for (int i = 1; i < pezzo.getPosizione().getColonna() - toGo.getColonna(); i++) {
+                    if (tabella[pezzo.getPosizione().getRiga() - 1][pezzo.getPosizione().getColonna() + 1] != null) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+
         return true;  
     }
 
