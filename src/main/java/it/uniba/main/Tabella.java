@@ -208,29 +208,17 @@ public class Tabella {
 
 			}
 		}
-
+else if (pezzo.getNome() == 'N') {
+			return ((pezzo.getGittata() >= Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()))
+					&& (pezzo.getGittata() >= Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()))
+					&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) != Math
+							.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))
+					&& ((tabella[toGo.getRiga()][toGo.getColonna()] == null)
+							|| (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore()))
+					&& (toGo.getColonna() != pezzo.getPosizione().getColonna())
+					&& (toGo.getRiga() != pezzo.getPosizione().getRiga()));
+		}
         else if (pezzo.getNome() == 'Q') { // vede se non sta catturando oppure se sta catturando e se il colore �
-                                                // diverso e se la cattura � true contorlli di movimento su stessa riga
-                                                // o su stessa colonna ma diversa riga o sulle diagonali quindi si vede
-                                                // se la distanza tra colonna e righe sono uguali in termini di
-                                                // differenza controllo sulla gittata per vedere se cis ono pezzi in
-                                                // mezzo
-            return ((Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) <= pezzo.getGittata())
-                    && (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) <= pezzo.getGittata()
-                            && (((tabella[toGo.getRiga()][toGo.getColonna()] == null) && (!comando.getCattura()))
-                                    || ((tabella[toGo.getRiga()][toGo.getColonna()] != null)
-                                            && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo
-                                                    .getColore())
-                                            && (comando.getCattura())))
-                            && (((toGo.getRiga() - pezzo.getPosizione().getRiga() == 0
-                                    && toGo.getColonna() - pezzo.getPosizione().getColonna() != 0)
-                                    || (toGo.getColonna() - pezzo.getPosizione().getColonna() == 0
-                                            && toGo.getRiga() - pezzo.getPosizione().getRiga() != 0))
-                                    || (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == Math
-                                            .abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))))
-                    && controlloGittata(pezzo, toGo) && (toGo.getRiga() != pezzo.getPosizione().getRiga()
-                            || toGo.getColonna() != pezzo.getPosizione().getColonna()));
-        }else if (pezzo.getNome() == 'Q') { // vede se non sta catturando oppure se sta catturando e se il colore �
                                                 // diverso e se la cattura � true contorlli di movimento su stessa riga
                                                 // o su stessa colonna ma diversa riga o sulle diagonali quindi si vede
                                                 // se la distanza tra colonna e righe sono uguali in termini di
@@ -287,7 +275,9 @@ public class Tabella {
 					}
 				}
 			}
-		} else if (pezzo.getNome() == 'R') {
+			 } else if (pezzo.getNome() == 'N') {
+			return true;
+			 } else if (pezzo.getNome() == 'R') {
 			if (toGo.getRiga() > pezzo.getPosizione().getRiga()
 					&& (toGo.getColonna() == pezzo.getPosizione().getColonna())) {
 				for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) { 
