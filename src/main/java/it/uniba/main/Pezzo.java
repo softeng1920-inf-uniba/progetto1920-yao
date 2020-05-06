@@ -1,7 +1,7 @@
 package it.uniba.main;
 
 public abstract class Pezzo {
-    private  boolean enpassant;
+    private  boolean enpassant; //significa che il epzzo non è stato ancora mosso e all inizio è vera vale per torri re e pedoni
     private int gittata;
     private Posizione posizione;
     private char nome;
@@ -43,12 +43,15 @@ public abstract class Pezzo {
         return gittata;
     }
 
+    public void setColore(int colore) {
+        this.colore = colore;
+    }
+
     public void giaMosso(){
         if (enpassant){
             enpassant = !enpassant;
-            setGittata(1);
         }
-        else if (catturabileE){
+        else if (catturabileE && nome == 'p'){
             catturabileE = !catturabileE;
         }
     }

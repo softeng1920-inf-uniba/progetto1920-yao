@@ -11,4 +11,10 @@ public class Pedone extends Pezzo{
             super.setSimbolo('\u2659');
         }
     }
+
+    @Override
+    public void giaMosso() {
+        super.giaMosso();
+        setGittata(1);
+    }
 }
