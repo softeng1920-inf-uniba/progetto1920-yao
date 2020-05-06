@@ -90,9 +90,9 @@ public class Tabella {
 				tabella[0][i] = new Donna(0, posDB);
 				donnaBianca = (Donna) tabella[0][i];
 			} else if (i == 4) {
-				Posizione posRB = new Posizione(4, i);
-				tabella[4][i] = new Re(0, posRB);
-				reBianco = (Re) tabella[4][i];
+				Posizione posRB = new Posizione(0, i);
+				tabella[0][i] = new Re(0, posRB);
+				reBianco = (Re) tabella[0][i];
 			}
 		}
 		for (int j = 0; j < 8; j++) {
