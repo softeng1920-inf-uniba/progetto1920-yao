@@ -1,5 +1,9 @@
 package it.uniba.main;
 
+/* classe di tipo entity 
+* responsabilita: rappresenta il pezzo di tipo pedone
+*/
+
 public class Pedone extends Pezzo{
     Pedone(int colore ,  Posizione pos){
         super(2 , colore , 'p' , pos );

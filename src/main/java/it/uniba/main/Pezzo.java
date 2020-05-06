@@ -1,5 +1,10 @@
 package it.uniba.main;
 
+/* classe di tipo entity 
+* responsabilita: include le informazioni di ogni pezzo,
+* tra cui la posizione, il colore, il simbolo, la gittata
+*/
+
 public abstract class Pezzo {
     private  boolean enpassant; //significa che il epzzo non è stato ancora mosso e all inizio è vera vale per torri re e pedoni
     private int gittata;
