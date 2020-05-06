@@ -7,14 +7,14 @@ import java.util.Scanner;
 import java.util.Vector;
 
 /* classe di tipo boundary
-* responsabilita: 
-* - permette l'esecuzione di una mossa
-* - permette lo svolgimento della partita (avvio, chiusura, cambio turno, richiesta comandi)
-* - prepara la scacchiera per la partita
-* - richiede all'utente l'inserimento di un comando
-* - permette di visualizzare la scacchiera e le informazioni della partita
-* - 
-*/
+ * responsabilita:
+ * - permette l'esecuzione di una mossa
+ * - permette lo svolgimento della partita (avvio, chiusura, cambio turno, richiesta comandi)
+ * - prepara la scacchiera per la partita
+ * - richiede all'utente l'inserimento di un comando
+ * - permette di visualizzare la scacchiera e le informazioni della partita
+ * -
+ */
 
 public class Tabella {
 	private int righe;
@@ -90,9 +90,9 @@ public class Tabella {
 				tabella[0][i] = new Donna(0, posDB);
 				donnaBianca = (Donna) tabella[0][i];
 			} else if (i == 4) {
-				Posizione posRB = new Posizione(0, i);
-				tabella[0][i] = new Re(0, posRB);
-				reBianco = (Re) tabella[0][i];
+				Posizione posRB = new Posizione(4, i);
+				tabella[4][i] = new Re(0, posRB);
+				reBianco = (Re) tabella[4][i];
 			}
 		}
 		for (int j = 0; j < 8; j++) {
@@ -1121,10 +1121,6 @@ public class Tabella {
 		System.exit(0);
 	}
 
-/* classe di tipo control
-* responsabilita: codifica i comando inseriti dall'utente (traduce la posizione inserita
-*  e verifica la computabilita)
-*/
 	public class Comando {
 		private Posizione posizioneTradotta;// essendo il comando un vettore di char trasformiamo i char in int , la a
 											// minuscola � il 97 esimo carattere e ha valore 97 invece l'1 ha valore 49
@@ -1133,11 +1129,11 @@ public class Tabella {
 		private boolean cattura;
 		private boolean sistema;
 		private String comando;
-		private char regina = 'Q';
-		private char re = 'K';
-		private char alfiere = 'B';
-		private char torre = 'R';
-		private char cavallo = 'N';
+		private char regina = 'D';
+		private char re = 'R';
+		private char alfiere = 'A';
+		private char torre = 'T';
+		private char cavallo = 'C';
 		private String[] comandidArrocco = { "0-0-0", "O-O-O", "0-0", "O-O" };
 		private String[] comandiSistema = { "help", "board", "captures", "moves", "quit", "play" };
 
@@ -1764,9 +1760,6 @@ public class Tabella {
 		}
 	}
 
-/* classe di tipo entity
-* responsabilita: restituisce i pezzi mangiati durante la partita
-*/
 	protected class Mangiati{
 		private int numeroMangiati = 0;
 		private int pedoniMangiati = 0;
@@ -1831,7 +1824,6 @@ public class Tabella {
 				System.out.println(simboliBianchi[3] + " x " + regineMangiate);
 				System.out.println(simboliBianchi[4] + " x " + cavalliMangiati);
 			}
-
 		}
 	}
 }

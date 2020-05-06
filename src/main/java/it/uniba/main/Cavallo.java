@@ -1,8 +1,7 @@
 package it.uniba.main;
-
-/* classe di tipo entity 
-* responsabilita: rappresenta il pezzo di tipo cavallo
-*/
+/* classe di tipo entity
+ * responsabilita: rappresenta il pezzo di tipo cavallo
+ */
 
 public class Cavallo extends Pezzo{
     Cavallo(int colore , Posizione pos){
