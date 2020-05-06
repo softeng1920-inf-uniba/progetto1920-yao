@@ -4,10 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 /* classe di tipo boundary
-* responsabilita: 
-* - permette all'utente di avviare una partita
-* - 
-*/
+ * responsabilita:
+ * - permette all'utente di avviare una partita
+ * -
+ */
 
 public class AppMain {
 	public static void main(String args[]) throws UnsupportedEncodingException {
