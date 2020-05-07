@@ -1121,6 +1121,10 @@ public class Tabella {
 		System.exit(0);
 	}
 
+/* classe di tipo control
+* responsabilita: codifica i comando inseriti dall'utente (traduce la posizione inserita
+*  e verifica la computabilita)
+*/
 	public class Comando {
 		private Posizione posizioneTradotta;// essendo il comando un vettore di char trasformiamo i char in int , la a
 											// minuscola � il 97 esimo carattere e ha valore 97 invece l'1 ha valore 49
@@ -1760,6 +1764,9 @@ public class Tabella {
 		}
 	}
 
+/* classe di tipo entity
+* responsabilita: restituisce i pezzi mangiati durante la partita
+*/
 	protected class Mangiati{
 		private int numeroMangiati = 0;
 		private int pedoniMangiati = 0;
