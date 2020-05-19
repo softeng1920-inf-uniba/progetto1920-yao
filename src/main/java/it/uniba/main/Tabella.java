@@ -16,7 +16,7 @@ import java.util.Vector;
  * -
  */
 
-public class Tabella {
+public class Tabella  implements Cloneable{
 	private int righe;
 	private int colonne;
 	private Pezzo[][] tabella;
@@ -179,7 +179,7 @@ public class Tabella {
 		}
 	}
 
-	public void muovicondomanda() throws UnsupportedEncodingException {
+	public void muovicondomanda() throws UnsupportedEncodingException, CloneNotSupportedException {
 		stampaTurno();
 		String moss1;
 		Scanner input = new Scanner(System.in);
@@ -294,7 +294,7 @@ public class Tabella {
 		System.out.println("pedone mangiato con en passant");
 	}
 
-	private boolean controlMovimento(Pezzo pezzo, Comando comando) {
+	private boolean controlMovimento(Pezzo pezzo, Comando comando) throws CloneNotSupportedException {
 		Posizione toGo = comando.posizioneTradotta;
 		if (comando.isArrocco()) {
 			if (pezzo.getColore() == bianco) {
@@ -348,7 +348,7 @@ public class Tabella {
 										&& (tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() == nero)
 										&& (tabella[toGo.getRiga() - 1][toGo.getColonna()].getCatturabileE())))
 						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)
-						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() > 0)) {
+						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() > 0) && !contorlloPinnato(pezzo, comando)) {
 					isEnpassant(comando);
 					return true;
 				}
@@ -373,7 +373,7 @@ public class Tabella {
 										&& (tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() == bianco)
 										&& (tabella[toGo.getRiga() + 1][toGo.getColonna()].getCatturabileE())))
 						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)
-						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() < 0)) {
+						&& (toGo.getRiga() - pezzo.getPosizione().getRiga() < 0) && !contorlloPinnato(pezzo, comando)) {
 					isEnpassant(comando);
 					return true;
 				}
@@ -387,7 +387,7 @@ public class Tabella {
 					&& ((tabella[toGo.getRiga()][toGo.getColonna()] == null)
 							|| (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore()))
 					&& (toGo.getColonna() != pezzo.getPosizione().getColonna())
-					&& (toGo.getRiga() != pezzo.getPosizione().getRiga()));
+					&& (toGo.getRiga() != pezzo.getPosizione().getRiga()) && !contorlloPinnato(pezzo, comando));
 		} else if (pezzo.getNome() == 'R') {
 			return ((pezzo.getGittata() >= Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()))
 					&& (pezzo.getGittata() >= Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()))
@@ -399,7 +399,7 @@ public class Tabella {
 					|| ((tabella[toGo.getRiga()][toGo.getColonna()] != null)
 					&& (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore())
 					&& comando.getCattura())))
-					&& controlloGittata(pezzo, toGo));
+					&& controlloGittata(pezzo, toGo) && !contorlloPinnato(pezzo, comando));
 		} else if (pezzo.getNome() == 'B') {
 			return ((Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) <= pezzo.getGittata())
 					&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) <= pezzo.getGittata())
@@ -413,7 +413,7 @@ public class Tabella {
 											.abs(toGo.getRiga() - pezzo.getPosizione().getRiga())))
 					&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == Math
 							.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))
-					&& controlloGittata(pezzo, toGo));
+					&& controlloGittata(pezzo, toGo) && !contorlloPinnato(pezzo , comando));
 		} else if (pezzo.getNome() == 'Q') { // vede se non sta catturando oppure se sta catturando e se il colore �
 												// diverso e se la cattura � true contorlli di movimento su stessa riga
 												// o su stessa colonna ma diversa riga o sulle diagonali quindi si vede
@@ -434,7 +434,7 @@ public class Tabella {
 									|| (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == Math
 											.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))))
 					&& controlloGittata(pezzo, toGo) && (toGo.getRiga() != pezzo.getPosizione().getRiga()
-							|| toGo.getColonna() != pezzo.getPosizione().getColonna()));
+							|| toGo.getColonna() != pezzo.getPosizione().getColonna()) && !contorlloPinnato(pezzo , comando));
 		} else if (pezzo.getNome() == 'K') {
 			return ((((Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()) == pezzo.getGittata())
 					&& (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == pezzo.getGittata())
@@ -455,6 +455,26 @@ public class Tabella {
 
 		return false;
 	}// controlla se per ogni tipo di pezzo � possibile lo spostamento
+
+	private boolean contorlloPinnato(Pezzo pezzo , Comando comando) throws CloneNotSupportedException { //vede se un pezzo blocca lo  scacco del re
+		Posizione toGo = comando.posizioneTradotta;
+		Posizione iniziale = new Posizione(pezzo.getPosizione().getRiga() , pezzo.getPosizione().getColonna());
+		Pezzo pezzoAux = tabella[toGo.getRiga()][toGo.getColonna()];
+		boolean esito = true;
+		tabella[toGo.getRiga()][toGo.getColonna()] = pezzo;
+		tabella[iniziale.getRiga()][iniziale.getColonna()] = null;
+		pezzo.setPosizione(toGo);
+		 if (turno == bianco){
+		 	esito = controlloGittata(reBianco , reBianco.getPosizione());
+		 }
+		 else{
+		 	esito =  controlloGittata(reNero , reNero.getPosizione());
+		 }
+		 tabella[iniziale.getRiga()][iniziale.getColonna()] = pezzo;
+		 pezzo.setPosizione(iniziale);
+		 tabella[toGo.getRiga()][toGo.getColonna()] = pezzoAux;
+		 return !esito;
+	}
 
 	private boolean controlloGittata(Pezzo pezzo, Posizione toGo) {
 		if (pezzo.getNome() == 'p') {
@@ -630,11 +650,10 @@ public class Tabella {
 		} else if (pezzo.getNome() == 'K') {
 			// controlloscacco
 			// bordi
-			int bsx = toGo.getColonna() - 2;
+			int bsx = toGo.getColonna();
 			int balt = 7 - toGo.getRiga();
 			int bdx = 7 - toGo.getColonna();
-			int bbas = toGo.getRiga() - 2;
-
+			int bbas = toGo.getRiga();
 			/* pedone */ if (pezzo.getColore() == bianco) {
 				if (balt > 0) {
 					if (bdx > 0)
@@ -668,82 +687,138 @@ public class Tabella {
 
 //altsx
 			while (i < bsx && i < balt) {
-				if (tabella[toGo.getRiga() + i][toGo.getColonna() - i] != null
-						&& tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore() != pezzo.getColore()
-						&& (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() == 'B'
-								|| tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() == 'Q'))
-					return false;
+				if (tabella[toGo.getRiga() + i][toGo.getColonna() - i] != null) {
+					if (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore() != pezzo.getColore()
+							&& (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() == 'B'
+							|| tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() == 'Q'))
+						return false;
+					else if (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore() == pezzo.getColore() ||
+							(tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore() != pezzo.getColore() &&
+									(tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() != 'B'
+											|| tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() != 'Q'))){
+						break;
+					}
+				}
 				i++;
 			}
 //altdx
 			i = 1;
-			while (i < bdx && i < balt) {
-				if (tabella[toGo.getRiga() + i][toGo.getColonna() + i] != null
-						&& tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore() != pezzo.getColore()
-						&& (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() == 'B'
-								|| tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() == 'Q'))
-					return false;
+			while (i <= bdx && i <= balt) {
+				if (tabella[toGo.getRiga() + i][toGo.getColonna() + i] != null) {
+					if (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore() != pezzo.getColore()
+							&& (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() == 'B'
+							|| tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() == 'Q'))
+						return false;
+					else if (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore() == pezzo.getColore() ||
+							(tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore() != pezzo.getColore() &&
+									(tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() != 'B'
+											|| tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() != 'Q'))){
+						break;
+					}
+				}
 				i++;
 			}
 //bassx
 			i = 1;
-			while (i < bsx && i < bbas) {
-				if (tabella[toGo.getRiga() - i][toGo.getColonna() - i] != null
-						&& tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore() != pezzo.getColore()
-						&& (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() == 'B'
-								|| tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() == 'Q'))
-					return false;
+			while (i <= bsx && i <= bbas) {
+				if (tabella[toGo.getRiga() - i][toGo.getColonna() - i] != null) {
+					if (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore() != pezzo.getColore()
+							&& (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() == 'B'
+							|| tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() == 'Q'))
+						return false;
+					else if (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore() == pezzo.getColore() ||
+							(tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore() != pezzo.getColore() &&
+							(tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() != 'B'
+							|| tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() != 'Q'))){
+						break;
+					}
+				}
 				i++;
 			}
 //bassdx
 			i = 1;
-			while (i < bdx && i < bbas) {
-				if (tabella[toGo.getRiga() - i][toGo.getColonna() + i] != null
-						&& tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore() != pezzo.getColore()
-						&& (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() == 'B'
-								|| tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() == 'Q'))
-					return false;
+			while (i <= bdx && i <= bbas) {
+				if (tabella[toGo.getRiga() - i][toGo.getColonna() + i] != null) {
+					if (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore() != pezzo.getColore()
+							&& (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() == 'B'
+							|| tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() == 'Q'))
+						return false;
+					else if (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore() == pezzo.getColore() ||
+							(tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore() != pezzo.getColore() &&
+									(tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() != 'B'
+											|| tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() != 'Q'))){
+						break;
+					}
+				}
 				i++;
 			}
 
 			/* torre, donna */
 			i = 1;
-			while (i < balt) {
-				if (tabella[toGo.getRiga() + i][toGo.getColonna()] != null
-						&& tabella[toGo.getRiga() + i][toGo.getColonna()].getColore() != pezzo.getColore()
-						&& (tabella[toGo.getRiga() + i][toGo.getColonna()].getNome() == 'R'
-								|| tabella[toGo.getRiga() + i][toGo.getColonna()].getNome() == 'Q'))
-					return false;
+			while (i <= balt) {
+				if (tabella[toGo.getRiga() + i][toGo.getColonna()] != null) {
+					if (tabella[toGo.getRiga() + i][toGo.getColonna()].getColore() != pezzo.getColore()
+							&& (tabella[toGo.getRiga() + i][toGo.getColonna()].getNome() == 'R'
+							|| tabella[toGo.getRiga() + i][toGo.getColonna()].getNome() == 'Q'))
+						return false;
+					else if (tabella[toGo.getRiga() + i][toGo.getColonna()].getColore() == pezzo.getColore() ||
+							(tabella[toGo.getRiga() + i][toGo.getColonna()].getColore() != pezzo.getColore() &&
+									(tabella[toGo.getRiga() + i][toGo.getColonna()].getNome() != 'R'
+											|| tabella[toGo.getRiga() + i][toGo.getColonna()].getNome() != 'Q'))){
+						break;
+					}
+				}
 				i++;
 			}
 //giu
 			i = 1;
-			while (i < bbas) {
-				if (tabella[toGo.getRiga() - i][toGo.getColonna()] != null
-						&& tabella[toGo.getRiga() - i][toGo.getColonna()].getColore() != pezzo.getColore()
-						&& (tabella[toGo.getRiga() - i][toGo.getColonna()].getNome() == 'R'
-								|| tabella[toGo.getRiga() - i][toGo.getColonna()].getNome() == 'Q'))
-					return false;
+			while (i <= bbas) {
+				if (tabella[toGo.getRiga() - i][toGo.getColonna()] != null) {
+					if (tabella[toGo.getRiga() - i][toGo.getColonna()].getColore() != pezzo.getColore()
+							&& (tabella[toGo.getRiga() - i][toGo.getColonna()].getNome() == 'R'
+							|| tabella[toGo.getRiga() - i][toGo.getColonna()].getNome() == 'Q'))
+						return false;
+					else if (tabella[toGo.getRiga() - i][toGo.getColonna()].getColore() == pezzo.getColore() ||
+							(tabella[toGo.getRiga() - i][toGo.getColonna()].getColore() != pezzo.getColore() &&
+									(tabella[toGo.getRiga() - i][toGo.getColonna()].getNome() != 'R'
+											|| tabella[toGo.getRiga() - i][toGo.getColonna()].getNome() != 'Q'))){
+						break;
+					}
+				}
 				i++;
 			}
 //sx
 			i = 1;
-			while (i < bsx) {
-				if (tabella[toGo.getRiga()][toGo.getColonna() - i] != null
-						&& tabella[toGo.getRiga()][toGo.getColonna() - i].getColore() != pezzo.getColore()
-						&& (tabella[toGo.getRiga()][toGo.getColonna() - i].getNome() == 'R'
-								|| tabella[toGo.getRiga()][toGo.getColonna() - i].getNome() == 'Q'))
-					return false;
+			while (i <= bsx) {
+				if (tabella[toGo.getRiga()][toGo.getColonna() - i] != null) {
+					if (tabella[toGo.getRiga()][toGo.getColonna() - i].getColore() != pezzo.getColore()
+							&& (tabella[toGo.getRiga()][toGo.getColonna() - i].getNome() == 'R'
+							|| tabella[toGo.getRiga()][toGo.getColonna() - i].getNome() == 'Q'))
+						return false;
+					else if (tabella[toGo.getRiga()][toGo.getColonna() - i].getColore() == pezzo.getColore() ||
+							(tabella[toGo.getRiga()][toGo.getColonna() - i].getColore() != pezzo.getColore() &&
+									(tabella[toGo.getRiga()][toGo.getColonna() - i].getNome() != 'R'
+											|| tabella[toGo.getRiga()][toGo.getColonna() - i].getNome() != 'Q'))){
+						break;
+					}
+				}
 				i++;
 			}
 //dx
 			i = 1;
-			while (i < bdx) {
-				if (tabella[toGo.getRiga()][toGo.getColonna() + i] != null
-						&& tabella[toGo.getRiga()][toGo.getColonna() + i].getColore() != pezzo.getColore()
-						&& (tabella[toGo.getRiga()][toGo.getColonna() + i].getNome() == 'R'
-								|| tabella[toGo.getRiga()][toGo.getColonna() + i].getNome() == 'Q'))
-					return false;
+			while (i <= bdx) {
+				if (tabella[toGo.getRiga()][toGo.getColonna() + i] != null) {
+					if (tabella[toGo.getRiga()][toGo.getColonna() + i].getColore() != pezzo.getColore()
+							&& (tabella[toGo.getRiga()][toGo.getColonna() + i].getNome() == 'R'
+							|| tabella[toGo.getRiga()][toGo.getColonna() + i].getNome() == 'Q'))
+						return false;
+					else if (tabella[toGo.getRiga()][toGo.getColonna() + i].getColore() == pezzo.getColore() ||
+							(tabella[toGo.getRiga()][toGo.getColonna() + i].getColore() != pezzo.getColore() &&
+									(tabella[toGo.getRiga()][toGo.getColonna() + i].getNome() != 'R'
+											|| tabella[toGo.getRiga()][toGo.getColonna() + i].getNome() != 'Q'))){
+						break;
+					}
+				}
 				i++;
 			}
 
@@ -1118,13 +1193,27 @@ public class Tabella {
 	}
 
 	public void esciDalGioco() {
-		System.exit(0);
+		String conferma;
+		System.out.println("confermi di voler uscire?");
+		boolean esito = true;
+		while(esito){
+		  Scanner input = new Scanner(System.in);
+		  conferma = input.nextLine();
+		  if(conferma.equals("si")||conferma.equals("Si")||conferma.equals("SI"))
+		     System.exit(0);
+		  else if (conferma.equals("no")||conferma.equals("No")||conferma.equals("NO"))
+			 esito = false;
+		  else {
+			 System.out.println("comando scritto male");
+		     System.out.println("confermi di voler uscire?");
+		  }
+		}	
 	}
-
 /* classe di tipo control
 * responsabilita: codifica i comando inseriti dall'utente (traduce la posizione inserita
 *  e verifica la computabilita)
 */
+
 	public class Comando {
 		private Posizione posizioneTradotta;// essendo il comando un vettore di char trasformiamo i char in int , la a
 											// minuscola � il 97 esimo carattere e ha valore 97 invece l'1 ha valore 49
@@ -1141,7 +1230,7 @@ public class Tabella {
 		private String[] comandidArrocco = { "0-0-0", "O-O-O", "0-0", "O-O" };
 		private String[] comandiSistema = { "help", "board", "captures", "moves", "quit", "play" };
 
-		Comando(String commands) {
+		Comando(String commands) throws CloneNotSupportedException {
 			this.comando = commands;
 			if (comando.length() == 0) {
 
@@ -1163,7 +1252,7 @@ public class Tabella {
 			return esito;
 		}
 
-		private int cavalloAmbiguo() {
+		private int cavalloAmbiguo() throws CloneNotSupportedException {
 			int esito = 0; // 0 se non ambiguo 1 se ambiguo sulle riche quindi sulla stessa colonna, 2 se
 							// ambiguo sulla colonne quindi sulla stessa riga
 			int cont = 0;
@@ -1252,7 +1341,7 @@ public class Tabella {
 			return esito;
 		}
 
-		public void traduzionePosIniziale() {
+		public void traduzionePosIniziale() throws CloneNotSupportedException {
 			boolean esito = false;
 			if (inizialeTradotta != null) {
 				return;
@@ -1267,9 +1356,6 @@ public class Tabella {
 								esito = true;
 							}
 						} // cicla i pedoni e vede quale di questi si pu� muovere
-						if (!esito) {
-							System.out.println("mossa illegale");
-						}
 					} // controllano tutti i pedoni e si vede si potrebbe implementare un algoritmo di
 						// ricerca migliore che cerca a partire dalla colonna iniziale del pedone perch�
 						// si ha piu probabilit� di torvarlo vicino che lontano per� dato che i dati non
@@ -1281,9 +1367,6 @@ public class Tabella {
 								pezzoMosso = cavalliBianchi[i];
 								esito = true;
 							}
-						}
-						if (!esito) {
-							System.out.println("mossa illegale");
 						}
 					} else if (comando.charAt(0) == torre) {
 						for (int i = 0; i < torreBianche.length && !esito; i++) {
@@ -1397,7 +1480,7 @@ public class Tabella {
 			return false;
 		}
 
-		public void traduzionePosFinale() {
+		public void traduzionePosFinale() throws CloneNotSupportedException {
 			if (isArrocco()) {
 				if (turno == bianco) {
 					if ((comando.equals(comandidArrocco[0]) || comando.equals(comandidArrocco[1]))
@@ -1763,10 +1846,10 @@ public class Tabella {
 			posizioneTradotta = null;
 		}
 	}
-
 /* classe di tipo entity
 * responsabilita: restituisce i pezzi mangiati durante la partita
 */
+
 	protected class Mangiati{
 		private int numeroMangiati = 0;
 		private int pedoniMangiati = 0;
