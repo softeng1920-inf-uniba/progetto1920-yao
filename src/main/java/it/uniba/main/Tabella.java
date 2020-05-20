@@ -16,7 +16,7 @@ import java.util.Vector;
  * -
  */
 
-public class Tabella  implements Cloneable{
+public class Tabella {
 	private int righe;
 	private int colonne;
 	private Pezzo[][] tabella;
@@ -112,9 +112,9 @@ public class Tabella  implements Cloneable{
 				tabella[7][j] = new Torre(1, posTN);
 				torreNere[0] = (Torre) tabella[7][j];
 			} else if (j == 7) {
-				Posizione posTN = new Posizione(7, j);
-				tabella[7][j] = new Torre(1, posTN);
-				torreNere[1] = (Torre) tabella[7][j];
+				Posizione posTN = new Posizione(5, 4);
+				tabella[5][4] = new Torre(1, posTN);
+				torreNere[1] = (Torre) tabella[5][4];
 			} else if (j == 2) {
 				Posizione posAN = new Posizione(7, j);
 				tabella[7][j] = new Alfiere(1, posAN);
@@ -179,7 +179,7 @@ public class Tabella  implements Cloneable{
 		}
 	}
 
-	public void muovicondomanda() throws UnsupportedEncodingException, CloneNotSupportedException {
+	public void muovicondomanda() throws UnsupportedEncodingException{
 		stampaTurno();
 		String moss1;
 		Scanner input = new Scanner(System.in);
@@ -294,7 +294,7 @@ public class Tabella  implements Cloneable{
 		System.out.println("pedone mangiato con en passant");
 	}
 
-	private boolean controlMovimento(Pezzo pezzo, Comando comando) throws CloneNotSupportedException {
+	private boolean controlMovimento(Pezzo pezzo, Comando comando){
 		Posizione toGo = comando.posizioneTradotta;
 		if (comando.isArrocco()) {
 			if (pezzo.getColore() == bianco) {
@@ -456,7 +456,7 @@ public class Tabella  implements Cloneable{
 		return false;
 	}// controlla se per ogni tipo di pezzo � possibile lo spostamento
 
-	private boolean contorlloPinnato(Pezzo pezzo , Comando comando) throws CloneNotSupportedException { //vede se un pezzo blocca lo  scacco del re
+	private boolean contorlloPinnato(Pezzo pezzo , Comando comando) { //vede se un pezzo blocca lo  scacco del re
 		Posizione toGo = comando.posizioneTradotta;
 		Posizione iniziale = new Posizione(pezzo.getPosizione().getRiga() , pezzo.getPosizione().getColonna());
 		Pezzo pezzoAux = tabella[toGo.getRiga()][toGo.getColonna()];
@@ -1193,26 +1193,8 @@ public class Tabella  implements Cloneable{
 	}
 
 	public void esciDalGioco() {
-		String conferma;
-		System.out.println("confermi di voler uscire?");
-		boolean esito = true;
-		while(esito){
-		  Scanner input = new Scanner(System.in);
-		  conferma = input.nextLine();
-		  if(conferma.equals("si")||conferma.equals("Si")||conferma.equals("SI"))
-		     System.exit(0);
-		  else if (conferma.equals("no")||conferma.equals("No")||conferma.equals("NO"))
-			 esito = false;
-		  else {
-			 System.out.println("comando scritto male");
-		     System.out.println("confermi di voler uscire?");
-		  }
-		}	
+		System.exit(0);
 	}
-/* classe di tipo control
-* responsabilita: codifica i comando inseriti dall'utente (traduce la posizione inserita
-*  e verifica la computabilita)
-*/
 
 	public class Comando {
 		private Posizione posizioneTradotta;// essendo il comando un vettore di char trasformiamo i char in int , la a
@@ -1230,7 +1212,7 @@ public class Tabella  implements Cloneable{
 		private String[] comandidArrocco = { "0-0-0", "O-O-O", "0-0", "O-O" };
 		private String[] comandiSistema = { "help", "board", "captures", "moves", "quit", "play" };
 
-		Comando(String commands) throws CloneNotSupportedException {
+		Comando(String commands) {
 			this.comando = commands;
 			if (comando.length() == 0) {
 
@@ -1252,7 +1234,7 @@ public class Tabella  implements Cloneable{
 			return esito;
 		}
 
-		private int cavalloAmbiguo() throws CloneNotSupportedException {
+		private int cavalloAmbiguo(){
 			int esito = 0; // 0 se non ambiguo 1 se ambiguo sulle riche quindi sulla stessa colonna, 2 se
 							// ambiguo sulla colonne quindi sulla stessa riga
 			int cont = 0;
@@ -1341,7 +1323,7 @@ public class Tabella  implements Cloneable{
 			return esito;
 		}
 
-		public void traduzionePosIniziale() throws CloneNotSupportedException {
+		public void traduzionePosIniziale() {
 			boolean esito = false;
 			if (inizialeTradotta != null) {
 				return;
@@ -1480,7 +1462,7 @@ public class Tabella  implements Cloneable{
 			return false;
 		}
 
-		public void traduzionePosFinale() throws CloneNotSupportedException {
+		public void traduzionePosFinale() {
 			if (isArrocco()) {
 				if (turno == bianco) {
 					if ((comando.equals(comandidArrocco[0]) || comando.equals(comandidArrocco[1]))
@@ -1846,9 +1828,6 @@ public class Tabella  implements Cloneable{
 			posizioneTradotta = null;
 		}
 	}
-/* classe di tipo entity
-* responsabilita: restituisce i pezzi mangiati durante la partita
-*/
 
 	protected class Mangiati{
 		private int numeroMangiati = 0;
