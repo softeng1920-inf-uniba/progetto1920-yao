@@ -260,7 +260,7 @@ public class Tabella {
 	public void stampaComandi() {
 		for (int i = 0; i < comandi.size(); i++) {
 			System.out.print(comandi.get(i) + ";  ");
-			if (i % 2 == 1) {
+			if (Math.abs(i) % 2 == 1) {
 				System.out.println();
 			}
 		}
@@ -1877,7 +1877,6 @@ public class Tabella {
 		}
 		public void displayMangiati()throws UnsupportedEncodingException{
 
-			Font font = new Font("NSimSun" , Font.ITALIC , 14);
 			System.setOut(new PrintStream(System.out, false, "UTF-8"));
 			if (turno == bianco){
 				System.out.println(simboliNeri[0] + " x " + pedoniMangiati);
