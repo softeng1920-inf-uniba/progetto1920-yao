@@ -6,79 +6,80 @@ package it.uniba.main;
  */
 
 public abstract class Pezzo {
-    private  boolean enpassant; //significa che il epzzo non è stato ancora mosso e all inizio è vera vale per torri re e pedoni
-    private int gittata;
-    private Posizione posizione;
-    private char nome;
-    private int colore;
-    private char simbolo;
-    private  boolean catturabileE;
-    Pezzo(int gittata , int colore , char nome , Posizione posizione){
-        this.gittata = gittata;
-        this.colore = colore;
-        this.nome = nome;
-        this.posizione = posizione;
-    }
+  //significa che il pezzo non è stato ancora mosso e all inizio è vera, vale per torri re e pedoni
+  private boolean enpassant; 
+  private int gittata;
+  private Posizione posizione;
+  private char nome;
+  private int colore;
+  private char simbolo;
+  private boolean catturabileE;
 
-    public void setSimbolo(char simbolo){
-        this.simbolo = simbolo;
-    }
+  Pezzo(int gittata, int colore, char nome, Posizione posizione) {
+    this.gittata = gittata;
+    this.colore = colore;
+    this.nome = nome;
+    this.posizione = posizione;
+  }
 
-    public int getColore() {
-        return colore;
-    }
+  public void setSimbolo(char simbolo) {
+    this.simbolo = simbolo;
+  }
 
-    public Posizione getPosizione() {
-        return posizione;
-    }
+  public int getColore() {
+    return colore;
+  }
 
-    public void setPosizione(Posizione posizione) {
-        this.posizione = posizione;
-    }
+  public Posizione getPosizione() {
+    return posizione;
+  }
 
-    public char getNome() {
-        return nome;
-    }
+  public void setPosizione(Posizione posizione) {
+    this.posizione = posizione;
+  }
 
-    public void setGittata(int gittata) {
-        this.gittata = gittata;
-    }
+  public char getNome() {
+    return nome;
+  }
 
-    public int getGittata() {
-        return gittata;
-    }
+  public void setGittata(int gittata) {
+    this.gittata = gittata;
+  }
 
-    public void setColore(int colore) {
-        this.colore = colore;
-    }
+  public int getGittata() {
+    return gittata;
+  }
 
-    public void giaMosso(){
-        if (enpassant){
-            enpassant = !enpassant;
-        }
-        else if (catturabileE && nome == 'p'){
-            catturabileE = !catturabileE;
-        }
+  public void setColore(int colore) {
+    this.colore = colore;
+  }
+  
+  public void giaMosso() {
+    if (enpassant) {
+      enpassant = !enpassant;
+    } else if (catturabileE && nome == 'p') {
+      catturabileE = !catturabileE;
     }
+  }
 
-    public void setCatturabileE() {
-        this.catturabileE = true;
-    }
+  public void setCatturabileE() {
+    this.catturabileE = true;
+  }
 
-    public boolean getCatturabileE(){
-        return  catturabileE;
-    }
+  public boolean getCatturabileE() {
+    return catturabileE;
+  }
 
-    public  boolean getEnpassant(){
-        return enpassant;
-    }
+  public boolean getEnpassant() {
+    return enpassant;
+  }
 
-    public void setEmpoissonTrue() {
-        enpassant = true;
-    }
+  public void setEmpoissonTrue() {
+    enpassant = true;
+  }
 
-    public char getSimbolo(){
-        return simbolo;
-    }
+  public char getSimbolo() {
+    return simbolo;
+  }
 
 }
