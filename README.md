@@ -1,4 +1,4 @@
-# scacchi ![CI/CD](https://github.com/softeng1920-inf-uniba/progetto1920-yao/workflows/CI/CD/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/softeng1920-inf-uniba/progetto1920-yao/badge.svg?t=UHb5u3)](https://coveralls.io/github/softeng1920-inf-uniba/progetto1920-yao)
+# scacchi ![CI/CD](https://github.com/softeng1920-inf-uniba/progetto1920-yao/workflows/CI/CD/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/softeng1920-inf-uniba/progetto1920-yao/badge.svg?branch=master&t=UHb5u3&service=github)](https://coveralls.io/github/softeng1920-inf-uniba/progetto1920-yao?branch=master)
 
 La struttura della repository si presenta nel seguente modo:
 ```
