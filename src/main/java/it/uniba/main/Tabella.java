@@ -40,7 +40,7 @@ public class Tabella {
   private int turno;
   private Vector<String> comandi;
 
-  Tabella(int righe, int colonne) {
+  public Tabella(int righe, int colonne) {
     this.righe = righe;
     this.colonne = colonne;
     turno = bianco;
@@ -150,6 +150,10 @@ public class Tabella {
     return tabella[toGet.getRiga()][toGet.getColonna()];
   }
 
+  public void aggiungiComando(String com) {
+	  comandi.add(com);
+  }
+  
   public void move(Posizione toGo, Pezzo pezzo) { 
     if ((this.getTabella(toGo) != null)) {
       mangiaPedina(toGo, pezzo);
@@ -172,19 +176,18 @@ public class Tabella {
 
   public void stampaTurno() {
     if (turno == bianco) {
-      System.out.println("muove il bianco:");
+      System.out.print("muove il bianco:\n");
     } else {
-      System.out.println("muove il nero:");
+      System.out.print("muove il nero:\n");
     }
   }
 
   public void muovicondomanda() throws UnsupportedEncodingException {
-    stampaTurno();
     String moss1;
     Scanner input = new Scanner(System.in);
     moss1 = input.nextLine();
     if (moss1.length() == 0) {
-      System.out.println("mossa illegale");
+      System.out.print("mossa illegale\n");
     }
     Comando comando = new Comando(moss1);
     if (comando.getSistema()) {
@@ -199,9 +202,9 @@ public class Tabella {
             esito = true;
             move(new Posizione(0, 6), tabella[0][4]);
             tabella[0][6].giaMosso();
-            comandi.add(comando.getComando());
+            aggiungiComando(comando.getComando());
             move(new Posizione(0, 5), tabella[0][7]);
-            System.out.println("Pezzo Mosso");
+            System.out.print("Pezzo Mosso\n");
             tabella[0][5].giaMosso();
             cambiaTurno();
           } else {
@@ -209,9 +212,9 @@ public class Tabella {
               esito = true;
               move(new Posizione(0, 1), tabella[0][4]);
               tabella[0][1].giaMosso();
-              comandi.add(comando.getComando());
+              aggiungiComando(comando.getComando());
               move(new Posizione(0, 2), tabella[0][0]);
-              System.out.println("Pezzo Mosso");
+              System.out.print("Pezzo Mosso\n");
               tabella[0][2].giaMosso();
               cambiaTurno();
             }
@@ -222,9 +225,9 @@ public class Tabella {
             esito = true;
             move(new Posizione(7, 6), tabella[7][4]);
             tabella[7][6].giaMosso();
-            comandi.add(comando.getComando());
+            aggiungiComando(comando.getComando());
             move(new Posizione(7, 5), tabella[7][7]);
-            System.out.println("Pezzo Mosso");
+            System.out.print("Pezzo Mosso\n");
             tabella[7][5].giaMosso();
             cambiaTurno();
           } else {
@@ -232,9 +235,9 @@ public class Tabella {
               esito = true;
               move(new Posizione(7, 1), tabella[7][4]);
               tabella[7][1].giaMosso();
-              comandi.add(comando.getComando());
+              aggiungiComando(comando.getComando());
               move(new Posizione(7, 2), tabella[7][0]);
-              System.out.println("Pezzo Mosso");
+              System.out.print("Pezzo Mosso\n");
               tabella[7][2].giaMosso();
               cambiaTurno();
             }
@@ -246,8 +249,8 @@ public class Tabella {
       } else {
         move(comando.posizioneTradotta,
             tabella[comando.inizialeTradotta.getRiga()][comando.inizialeTradotta.getColonna()]);
-        comandi.add(comando.getComando());
-        System.out.println("Pezzo Mosso");
+        aggiungiComando(comando.getComando());
+        System.out.print("Pezzo Mosso\n");
         cambiaTurno();
       }
 
@@ -1280,7 +1283,7 @@ public class Tabella {
 
   public void esciDalGioco() {
     String conferma;
-    System.out.println("confermi di voler uscire?");
+    System.out.print("confermi di voler uscire?\n");
     boolean esito = true;
     while (esito) {
       Scanner input = new Scanner(System.in);
@@ -1290,8 +1293,8 @@ public class Tabella {
       } else if (conferma.equals("no") || conferma.equals("No") || conferma.equals("NO")) {
         esito = false;
       } else {
-        System.out.println("comando scritto male");
-        System.out.println("confermi di voler uscire?");
+        System.out.print("comando scritto male\n");
+        System.out.print("confermi di voler uscire?\n");
       }
     }
   }
@@ -1318,7 +1321,7 @@ public class Tabella {
     private String[] comandidArrocco = { "0-0-0", "O-O-O", "0-0", "O-O" };
     private String[] comandiSistema = { "help", "board", "captures", "moves", "quit", "play" };
 
-    Comando(String commands) {
+    public Comando(String commands) {
       this.comando = commands;
       if (comando.length() == 0) {
         System.out.println("mossa illegale");
@@ -1919,12 +1922,12 @@ public class Tabella {
 
     public void getIstruzioni() throws UnsupportedEncodingException {
       if ((comando.equals("help")) || (comando.equals("Help")) || (comando.equals("HELP"))) {
-        System.out.println("help      stampa elenco comandi");
-        System.out.println("board     mostra la schacchiera");
-        System.out.println("captures  mostra i pezzi mangiati dell'avversario");
-        System.out.println("moves     mostra le mosse effettuate finora");
-        System.out.println("quit      esci dal gioco");
-        System.out.println("play      inizia una nuova partita");
+        System.out.print("help      stampa elenco comandi\n");
+        System.out.print("board     mostra la schacchiera\n");
+        System.out.print("captures  mostra i pezzi mangiati dell'avversario\n");
+        System.out.print("moves     mostra le mosse effettuate finora\n");
+        System.out.print("quit      esci dal gioco\n");
+        System.out.print("play      inizia una nuova partita\n");
       } else if (comando.equals("board")) {
         display();
       } else if (comando.equals("quit")) {
@@ -1939,13 +1942,12 @@ public class Tabella {
         stampaComandi();
       } else if (comando.equals("play")) {
         restart();
-        System.out.println("nuova partita iniziata, "
-            + "inserire help per vededere elenco comandi disponibili");
+        System.out.print("nuova partita iniziata, "
+            + "inserire help per vededere elenco comandi disponibili\n");
       } else {
-        System.out.println("comando non riconosciuto, "
-            + "inserire /help per vedere elenco comand disponibili");
+        System.out.print("comando non riconosciuto, "
+            + "inserire /help per vedere elenco comand disponibili\n");
       }
-      System.out.println();
       posizioneTradotta = null;
     }
   }
@@ -1966,13 +1968,11 @@ public class Tabella {
     private char[] simboliNeri = {'\u2659', '\u2657', '\u2656', '\u2655', '\u2658'}; //cod pezzi b
 
     Mangiati(int grandezza) {
-      mangiati = new Pezzo[grandezza];
+      mangiati = new Pezzo [grandezza];
 
     }
 
-    public int getNumeroMangiati() {
-      return numeroMangiati;
-    }
+
 
     public void incrase(Pezzo pezzo) {
       numeroMangiati++;

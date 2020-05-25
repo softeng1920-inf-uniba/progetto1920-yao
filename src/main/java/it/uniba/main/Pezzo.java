@@ -15,7 +15,7 @@ public abstract class Pezzo {
   private char simbolo;
   private boolean catturabileE;
 
-  Pezzo(int gittata, int colore, char nome, Posizione posizione) {
+   Pezzo(int gittata, int colore, char nome, Posizione posizione) {
     this.gittata = gittata;
     this.colore = colore;
     this.nome = nome;

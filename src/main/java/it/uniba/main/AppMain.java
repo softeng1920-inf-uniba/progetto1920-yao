@@ -28,6 +28,7 @@ public class AppMain {
     System.out.println("scrivi help per visualizzare i comandi disponibili");
     Tabella tabella = new Tabella(8, 8);
     for (int i = 0; true; i++) {
+    	tabella.stampaTurno();
       tabella.muovicondomanda();
     }
   }

@@ -9,7 +9,7 @@ public class Posizione {
   private int riga;
   private int colonna;
 
-  Posizione(int riga, int colonna) {
+  public Posizione(int riga, int colonna) {
     this.riga = riga;
     this.colonna = colonna;
   }
