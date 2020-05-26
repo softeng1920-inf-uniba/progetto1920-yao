@@ -5,7 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import java.util.Vector;
 
-/* classe di tipo boundary
+/**
+ * classe di tipo boundary
  * responsabilita:
  * - permette l'esecuzione di una mossa
  * - permette lo svolgimento della partita (avvio, chiusura, cambio turno, richiesta comandi)
@@ -1344,11 +1345,10 @@ public class Tabella {
     }
   }
 
-  /*
+  /**
    * classe di tipo control responsabilita: codifica i comando inseriti
    * dall'utente (traduce la posizione inserita e verifica la computabilita)
-  */
-
+   */
   public class Comando {
     private Posizione posizioneTradotta; // essendo il comando un vettore di char
     //trasformiamo i char in int , la a minuscola � il 97 esimo carattere
@@ -2006,10 +2006,10 @@ public class Tabella {
     }
   }
 
-  /* classe di tipo entity
-  * responsabilita: restituisce i pezzi mangiati durante la partita
-  */
-
+  /**
+   * classe di tipo entity
+   * responsabilita: restituisce i pezzi mangiati durante la partita
+   */
   protected class Mangiati {
     private int numeroMangiati = 0;
     private int pedoniMangiati = 0;

@@ -1,9 +1,9 @@
 package it.uniba.main;
 
-/* classe di tipo entity
+/**
+ * classe di tipo entity
  * responsabilita: rappresenta il pezzo di tipo torre
  */
-
 public class Torre extends Pezzo {
   public Torre(final int colore, final Posizione pos) {
     super(8, colore, 'R', pos);

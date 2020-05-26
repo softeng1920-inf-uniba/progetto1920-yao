@@ -3,12 +3,12 @@ package it.uniba.main;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-/* classe di tipo boundary
+/**
+ * classe di tipo boundary
  * responsabilita:
  * - permette all'utente di avviare una partita
  * -
  */
-
 public class AppMain {
   public static void main(final String[]args) throws UnsupportedEncodingException {
     System.out.println("scrivi play  per iniziare una nuova partita");
