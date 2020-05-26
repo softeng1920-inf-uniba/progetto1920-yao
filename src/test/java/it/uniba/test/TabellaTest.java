@@ -1,34 +1,19 @@
 package it.uniba.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Scanner;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import it.uniba.main.Alfiere;
-import it.uniba.main.Cavallo;
-import it.uniba.main.Donna;
 import it.uniba.main.Pedone;
 import it.uniba.main.Pezzo;
 import it.uniba.main.Posizione;
@@ -38,21 +23,11 @@ import it.uniba.main.Tabella;
 
 public class TabellaTest {
 
-
-
-@BeforeAll
-	static void setUpAll() {
-		System.out.println("Inizio dei test della classe Tabella");
-	}
-
-	@AfterAll
-	static void tearDownAll() {
-		System.out.println("Fine dei test della classe Tabella");
-	}
+	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	private final PrintStream originalOut = System.out;
 
 	// **Getrighe
 	@Test
-	@DisplayName("Testing getrighe")
 	public void testGetRighe() {
 		Tabella tabella = new Tabella(8, 8);
 		assertEquals(8, tabella.getRighe());
@@ -101,17 +76,17 @@ public class TabellaTest {
 		Posizione pos= new Posizione(0,5);
 		Pezzo pz = new Alfiere(0,pos);
 		Posizione toGo= new Posizione(1,4);
+		System.setOut(new PrintStream(outContent));
 		tabella.move(toGo, pz);
 		assertTrue(tabella.getTabella(toGo).equals(pz));
+		System.setOut(originalOut);
 	}
 	
 	@Test
 	void testmoveEMangiaPedina() { 
 		Tabella tabella = new Tabella(8, 8);
 		Posizione pos1= new Posizione(4,4);
-		Posizione pos2= new Posizione(5,5);
 		Pezzo pz1 = new Alfiere(0,pos1);
-		Pezzo pz2 = new Alfiere(1,pos2);
 		Posizione toGo= new Posizione(5,5);
 		tabella.move(toGo, pz1);
 		assertTrue(!pz1.getEnpassant());
@@ -129,15 +104,6 @@ public class TabellaTest {
 		tabella.move(toGo, tabella.getTabella(pos1));
 		assertTrue(tabella.getTabella(toGo).getColore() == 0);		
 	}
-	
-	
-	
-	
-	
-	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-	private final PrintStream originalOut = System.out;
-	
-
 	
 	@Test
 	void teststampaturnobianco() {

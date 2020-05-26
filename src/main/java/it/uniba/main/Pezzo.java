@@ -6,8 +6,7 @@ package it.uniba.main;
  */
 
 public abstract class Pezzo {
-  //significa che il pezzo non è stato ancora mosso e all inizio è vera, vale per torri re e pedoni
-  private boolean enpassant; 
+  private boolean enpassant;
   private int gittata;
   private Posizione posizione;
   private char nome;
@@ -15,15 +14,16 @@ public abstract class Pezzo {
   private char simbolo;
   private boolean catturabileE;
 
-   Pezzo(int gittata, int colore, char nome, Posizione posizione) {
-    this.gittata = gittata;
-    this.colore = colore;
-    this.nome = nome;
-    this.posizione = posizione;
+  Pezzo(final int git, final int col, final char nom,
+       final Posizione pos) {
+    gittata = git;
+    colore = col;
+    nome = nom;
+    posizione = pos;
   }
 
-  public void setSimbolo(char simbolo) {
-    this.simbolo = simbolo;
+  public void setSimbolo(final char simb) {
+    simbolo = simb;
   }
 
   public int getColore() {
@@ -34,26 +34,26 @@ public abstract class Pezzo {
     return posizione;
   }
 
-  public void setPosizione(Posizione posizione) {
-    this.posizione = posizione;
+  public void setPosizione(final Posizione pos) {
+    posizione = pos;
   }
 
   public char getNome() {
     return nome;
   }
 
-  public void setGittata(int gittata) {
-    this.gittata = gittata;
+  public void setGittata(final int git) {
+    gittata = git;
   }
 
   public int getGittata() {
     return gittata;
   }
 
-  public void setColore(int colore) {
-    this.colore = colore;
+  public void setColore(final int col) {
+    colore = col;
   }
-  
+
   public void giaMosso() {
     if (enpassant) {
       enpassant = !enpassant;

@@ -5,7 +5,7 @@ package it.uniba.main;
  */
 
 public class Donna extends Pezzo {
-  public Donna(int colore, Posizione pos) {
+  public Donna(final int colore, final Posizione pos) {
     super(8, colore, 'Q', pos);
     if (colore == 0) {
       super.setSimbolo('\u265B'); // donna nera
