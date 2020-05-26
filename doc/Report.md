@@ -52,7 +52,7 @@ Di seguito viene fornita una illustrazione degli strumenti utilizzati per la rea
 
 
 
-![](./res/img/report/Modello_di_domi.PNG)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/Modello_di_domi.PNG)
 
 ## Requisiti Specifici
 
@@ -112,17 +112,17 @@ Non è stato adottato alcun stile architetturale, in quanto la complessità di d
 
 DI seguito si riportano il diagramma delle classi e di sequenza del progetto:
 
-![](res/img/report/Diagramma classi.PNG)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/Diagramma%20classi.PNG)
 
 Avviare una partita :
 
-![](res/img/report/Avviare una partita(US).PNG)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/Avviare%20una%20partita(US).PNG)
 
 
 
 Muovere un pezzo:
 
-![](res/img/report/ULTImATE MUOVERE PEZZO.PNG)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/ULTImATE%20MUOVERE%20PEZZO.PNG)
 
 
 
@@ -130,7 +130,7 @@ Muovere un pezzo:
 
 Moves (Stesso comportamento per qualsiasi altra istruzione di sistema):  
 
-![](res/img/report/ULTIMATE MOVES.PNG)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/moves.png)
 
 
 
@@ -148,11 +148,11 @@ Subito dopo lo sprint 1, ci siamo accorti di avere adottato un design architettu
 
 Di seguito vengono riportati i report di checkstyle, rispettivamente prima e dopo aver modificato il codice:
 
-![](res/img/report/checkstyle prima.PNG)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/checkstyle%20prima.PNG)
 
 
 
-![](res/img/report/reportcheckstyledopo.png)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/reportcheckstyledopo.png)
 
 
 
@@ -166,7 +166,7 @@ I warning rilevati da checkstyle, che sono stati ignorati sono i seguenti:
 
 Di seguito vengono riportati i risultati di Spotbugs:
 
-![](res/img/report/Spotbug html.PNG)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/Spotbug%20html.PNG)
 
 I warning rilevati da spotbugs riguardano rispettivamente la procedura di uscita dal programma, che porta all'arresto del sistema e ciò viene visto come procedura che va avviata in circostanze controllate. E' stato ignorato perché questa procedura era richiesta nelle user story "Chiudere il gioco".
 
@@ -174,7 +174,7 @@ Mentre gli altri warning vanno a segnalare che viene utilizzato più volte lo sc
 
 Riepilogo test
 
-![](res/img/report/coveralls.PNG)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/coveralls.PNG)
 
 Link a coveralls per visionare la pagina dei test: https://coveralls.io/github/softeng1920-inf-uniba/progetto1920-yao?branch=master
 
@@ -250,23 +250,23 @@ Per eseguire l'applicazione, è necessario avviare l'immagine tramite Docker e s
 
 Una volta avviata l'immagine con Docker, viene mostrata all'utente la console, che chiede all'utente di digitare il comando play per avviare la partita.
 
-![](res/img/report/terminale_con_play.png)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/terminale_con_play.png)
 
 Dopodiché la partita viene avviata, e si richiede all'utente di digitare un nuovo comando:
 
-![](res/img/report/terminale_con_help.png)
+![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/terminale_con_help.png)
 
 funzioni (specifica tutto ciò che si può fare al interno con immagini)
 
   - help: visualizza la lista dei comandi di sistema
 
-    ![](res/img/report/terminale_con_help.png)
+    ![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/terminale_con_menu.png)
 
     
 
   - board: l'applicazione mostra la scacchiera e i pezzi posizionati al suo interno
 
-    ![](res/img/report/board.png)
+    ![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/board.png)
 
   - play: viene avviata una nuova partita
 
@@ -274,13 +274,13 @@ funzioni (specifica tutto ciò che si può fare al interno con immagini)
 
   - captures: vengono mostrati i propri pezzi catturati 
 
-    ![](res/img/report/captures.png)
+    ![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/captures.png)
 
     
 
   - moves: vengono mostrate le mosse effettuate da entrambi i giocatori
 
-  ![](res/img/report/moves.png)
+  ![](https://github.com/softeng1920-inf-uniba/progetto1920-yao/blob/RelazioneTF/res/img/report/moves.png)
 
 
 
