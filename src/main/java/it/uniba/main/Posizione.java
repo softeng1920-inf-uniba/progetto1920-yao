@@ -1,10 +1,10 @@
 package it.uniba.main;
 
-/* classe di tipo entity
+/**
+ * classe di tipo entity
  * responsabilita: rappresenta le coordinate di un
  * pezzo nella scacchiera
  */
-
 public class Posizione {
   private int riga;
   private int colonna;
