@@ -52,7 +52,7 @@ Di seguito viene fornita una illustrazione degli strumenti utilizzati per la rea
 
 
 
-![](res/img/report/Modello_di_domi.png)
+![](res/img/report/Modello_di_domi.PNG)
 
 ## Requisiti Specifici
 
