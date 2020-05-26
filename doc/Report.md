@@ -52,7 +52,7 @@ Di seguito viene fornita una illustrazione degli strumenti utilizzati per la rea
 
 
 
-![](./res/img/report/Modello_di_domi.png)
+![](res/img/report/Modello_di_domi.png)
 
 ## Requisiti Specifici
 
@@ -112,17 +112,17 @@ Non è stato adottato alcun stile architetturale, in quanto la complessità di d
 
 DI seguito si riportano il diagramma delle classi e di sequenza del progetto:
 
-![](./res/img/report/Diagramma classi.PNG)
+![](res/img/report/Diagramma classi.PNG)
 
 Avviare una partita :
 
-![](./res/img/report/Avviare una partita(US).PNG)
+![](res/img/report/Avviare una partita(US).PNG)
 
 
 
 Muovere un pezzo:
 
-![](./res/img/report/ULTImATE MUOVERE PEZZO.PNG)
+![](res/img/report/ULTImATE MUOVERE PEZZO.PNG)
 
 
 
@@ -130,7 +130,7 @@ Muovere un pezzo:
 
 Moves (Stesso comportamento per qualsiasi altra istruzione di sistema):  
 
-![](./res/img/report/ULTIMATE MOVES.PNG)
+![](res/img/report/ULTIMATE MOVES.PNG)
 
 
 
@@ -148,11 +148,11 @@ Subito dopo lo sprint 1, ci siamo accorti di avere adottato un design architettu
 
 Di seguito vengono riportati i report di checkstyle, rispettivamente prima e dopo aver modificato il codice:
 
-![](./res/img/report/checkstyle prima.PNG)
+![](res/img/report/checkstyle prima.PNG)
 
 
 
-![](./res/img/report/reportcheckstyledopo.png)
+![](res/img/report/reportcheckstyledopo.png)
 
 
 
@@ -166,7 +166,7 @@ I warning rilevati da checkstyle, che sono stati ignorati sono i seguenti:
 
 Di seguito vengono riportati i risultati di Spotbugs:
 
-![](./res/img/report/Spotbug html.PNG)
+![](res/img/report/Spotbug html.PNG)
 
 I warning rilevati da spotbugs riguardano rispettivamente la procedura di uscita dal programma, che porta all'arresto del sistema e ciò viene visto come procedura che va avviata in circostanze controllate. E' stato ignorato perché questa procedura era richiesta nelle user story "Chiudere il gioco".
 
@@ -174,7 +174,7 @@ Mentre gli altri warning vanno a segnalare che viene utilizzato più volte lo sc
 
 Riepilogo test
 
-![](./res/img/report/coveralls.PNG)
+![](res/img/report/coveralls.PNG)
 
 Link a coveralls per visionare la pagina dei test: https://coveralls.io/github/softeng1920-inf-uniba/progetto1920-yao?branch=master
 
@@ -250,23 +250,23 @@ Per eseguire l'applicazione, è necessario avviare l'immagine tramite Docker e s
 
 Una volta avviata l'immagine con Docker, viene mostrata all'utente la console, che chiede all'utente di digitare il comando play per avviare la partita.
 
-![](./res/img/report/terminale_con_play.png)
+![](res/img/report/terminale_con_play.png)
 
 Dopodiché la partita viene avviata, e si richiede all'utente di digitare un nuovo comando:
 
-![](./res/img/report/terminale_con_help.png)
+![](res/img/report/terminale_con_help.png)
 
 funzioni (specifica tutto ciò che si può fare al interno con immagini)
 
   - help: visualizza la lista dei comandi di sistema
 
-    ![](./res/img/report/terminale_con_help.png)
+    ![](res/img/report/terminale_con_help.png)
 
     
 
   - board: l'applicazione mostra la scacchiera e i pezzi posizionati al suo interno
 
-    ![](./res/img/report/board.png)
+    ![](res/img/report/board.png)
 
   - play: viene avviata una nuova partita
 
@@ -274,13 +274,13 @@ funzioni (specifica tutto ciò che si può fare al interno con immagini)
 
   - captures: vengono mostrati i propri pezzi catturati 
 
-    ![](./res/img/report/captures.png)
+    ![](res/img/report/captures.png)
 
     
 
   - moves: vengono mostrate le mosse effettuate da entrambi i giocatori
 
-  ![](./res/img/report/moves.png)
+  ![](res/img/report/moves.png)
 
 
 
