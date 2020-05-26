@@ -5,7 +5,7 @@ package it.uniba.main;
  */
 
 public class Pedone extends Pezzo {
-  public Pedone(int colore, Posizione pos) {
+  public Pedone(final int colore, final Posizione pos) {
     super(2, colore, 'p', pos);
     super.setEmpoissonTrue();
     if (colore == 0) {

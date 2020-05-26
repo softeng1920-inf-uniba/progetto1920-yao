@@ -5,7 +5,7 @@ package it.uniba.main;
  */
 
 public class Re extends Pezzo {
-  Re(int colore, Posizione pos) {
+  Re(final int colore, final Posizione pos) {
     super(1, colore, 'K', pos);
     if (colore == 0) {
       super.setSimbolo('\u265A'); //re nero

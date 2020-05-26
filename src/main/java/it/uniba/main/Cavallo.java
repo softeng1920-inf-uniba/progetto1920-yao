@@ -5,7 +5,7 @@ package it.uniba.main;
  */
 
 public class Cavallo extends Pezzo {
-  public Cavallo(int colore, Posizione pos) {
+  public Cavallo(final int colore, final Posizione pos) {
     super(2, colore, 'N', pos);
     if (colore == 0) {
       super.setSimbolo('\u265E'); //cavallo nero

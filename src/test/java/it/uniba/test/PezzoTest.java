@@ -12,15 +12,14 @@ import java.io.UnsupportedEncodingException;
 import org.junit.jupiter.api.Test;
 
 import it.uniba.main.Alfiere;
-import it.uniba.main.Pedone;
 import it.uniba.main.Pezzo;
 import it.uniba.main.Posizione;
 import it.uniba.main.Tabella;
 import it.uniba.main.Torre;
 
 class PezzoTest {
-
-	
+	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+  private final PrintStream originalOut = System.out;
 	//**Colore
 	@Test
 	void testgetColore() {
@@ -150,19 +149,18 @@ class PezzoTest {
 	
 	
 	@Test
-	void testGiaMossoNotEnp() throws UnsupportedEncodingException {
-		
-		
-		InputStream sysInBackup = System.in; // backup System.in to restore it later
-		ByteArrayInputStream in = new ByteArrayInputStream("a4".getBytes());
-		System.setIn(in);
-		Tabella tabella = new Tabella(8, 8);
-		tabella.muovicondomanda();
-		Posizione finalpos = new Posizione(4,7);
-		System.setIn(sysInBackup);
-		tabella.getTabella(new Posizione(3,0)).giaMosso();
-		assertTrue(!tabella.getTabella(new Posizione(3,0)).getCatturabileE());
-	}
+  void testGiaMossoNotEnp() throws UnsupportedEncodingException {
+    InputStream sysInBackup = System.in; // backup System.in to restore it later
+    ByteArrayInputStream in = new ByteArrayInputStream("a4".getBytes());
+    System.setIn(in);
+    Tabella tabella = new Tabella(8, 8);
+    System.setOut(new PrintStream(outContent));
+    tabella.muovicondomanda();
+    System.setIn(sysInBackup);
+    tabella.getTabella(new Posizione(3,0)).giaMosso();
+    assertTrue(!tabella.getTabella(new Posizione(3,0)).getCatturabileE());
+    System.setOut(originalOut);
+  }
 	
 	
 	

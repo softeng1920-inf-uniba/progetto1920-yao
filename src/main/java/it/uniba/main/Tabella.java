@@ -40,9 +40,9 @@ public class Tabella {
   private int turno;
   private Vector<String> comandi;
 
-  public Tabella(int righe, int colonne) {
-    this.righe = righe;
-    this.colonne = colonne;
+  public Tabella(final int rig, final int colon) {
+    righe = rig;
+    colonne = colon;
     turno = bianco;
     tabella = new Pezzo[8][8];
     neriMangiati = new Mangiati(16);
@@ -142,19 +142,19 @@ public class Tabella {
     return colonne;
   }
 
-  public void setTabella(Pezzo pezzo, Posizione toGo) {
+  public void setTabella(final Pezzo pezzo, final Posizione toGo) {
     tabella[toGo.getRiga()][toGo.getColonna()] = pezzo;
   }
 
-  public Pezzo getTabella(Posizione toGet) {
+  public Pezzo getTabella(final Posizione toGet) {
     return tabella[toGet.getRiga()][toGet.getColonna()];
   }
 
-  public void aggiungiComando(String com) {
+  public void aggiungiComando(final String com) {
 	  comandi.add(com);
   }
-  
-  public void move(Posizione toGo, Pezzo pezzo) { 
+
+  public void move(final Posizione toGo, final Pezzo pezzo) {
     if ((this.getTabella(toGo) != null)) {
       mangiaPedina(toGo, pezzo);
       System.out.println("Pezzo Mangiato");
@@ -170,7 +170,6 @@ public class Tabella {
       setTabella(null, pos1);
       pezzo.setPosizione(toGo);
       pezzo.giaMosso();
-
     }
   }
 
@@ -197,48 +196,60 @@ public class Tabella {
       if (comando.isArrocco()) {
         boolean esito = false;
         if (turno == bianco) {
+        	final int quattro = 4;
+        	final int sette = 7;
+        	final int sei = 6;
+        	final int cinque = 5;
+        	final int uno = 1;
+        	final int due = 2;
           if ((comando.getComando().equals("0-0") || comando.getComando().equals("O-O"))
-              && controlMovimento(tabella[0][4], comando)) {
+              && controlMovimento(tabella[0][quattro], comando)) {
             esito = true;
-            move(new Posizione(0, 6), tabella[0][4]);
-            tabella[0][6].giaMosso();
+            move(new Posizione(0, sei), tabella[0][quattro]);
+            tabella[0][sei].giaMosso();
             aggiungiComando(comando.getComando());
-            move(new Posizione(0, 5), tabella[0][7]);
+            move(new Posizione(0, cinque), tabella[0][sette]);
             System.out.print("Pezzo Mosso\n");
-            tabella[0][5].giaMosso();
+            tabella[0][cinque].giaMosso();
             cambiaTurno();
           } else {
-            if (controlMovimento(tabella[0][4], comando)) {
+            if (controlMovimento(tabella[0][quattro], comando)) {
               esito = true;
-              move(new Posizione(0, 1), tabella[0][4]);
-              tabella[0][1].giaMosso();
+              move(new Posizione(0, uno), tabella[0][quattro]);
+              tabella[0][uno].giaMosso();
               aggiungiComando(comando.getComando());
-              move(new Posizione(0, 2), tabella[0][0]);
+              move(new Posizione(0, due), tabella[0][0]);
               System.out.print("Pezzo Mosso\n");
-              tabella[0][2].giaMosso();
+              tabella[0][due].giaMosso();
               cambiaTurno();
             }
           }
         } else {
+        	final int quattro = 4;
+        	final int sette = 7;
+        	final int sei = 6;
+        	final int cinque = 5;
+        	final int uno = 1;
+        	final int due = 2;
           if ((comando.getComando().equals("0-0") || comando.getComando().equals("O-O"))
-              && controlMovimento(tabella[7][4], comando)) {
+              && controlMovimento(tabella[sette][quattro], comando)) {
             esito = true;
-            move(new Posizione(7, 6), tabella[7][4]);
-            tabella[7][6].giaMosso();
+            move(new Posizione(sette, sei), tabella[sette][quattro]);
+            tabella[sette][sei].giaMosso();
             aggiungiComando(comando.getComando());
-            move(new Posizione(7, 5), tabella[7][7]);
+            move(new Posizione(sette, cinque), tabella[sette][sette]);
             System.out.print("Pezzo Mosso\n");
-            tabella[7][5].giaMosso();
+            tabella[sette][cinque].giaMosso();
             cambiaTurno();
           } else {
-            if (controlMovimento(tabella[7][4], comando)) {
+            if (controlMovimento(tabella[sette][quattro], comando)) {
               esito = true;
-              move(new Posizione(7, 1), tabella[7][4]);
-              tabella[7][1].giaMosso();
+              move(new Posizione(sette, uno), tabella[sette][quattro]);
+              tabella[sette][uno ].giaMosso();
               aggiungiComando(comando.getComando());
-              move(new Posizione(7, 2), tabella[7][0]);
+              move(new Posizione(sette, due), tabella[sette][0]);
               System.out.print("Pezzo Mosso\n");
-              tabella[7][2].giaMosso();
+              tabella[sette][due].giaMosso();
               cambiaTurno();
             }
           }
@@ -269,7 +280,7 @@ public class Tabella {
     }
   }
 
-  private void mangiaPedina(Posizione toGo, Pezzo pezzo) {
+  private void mangiaPedina(final Posizione toGo, final Pezzo pezzo) {
     if (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == bianco) {
       bianchiMangiati.set(tabella[toGo.getRiga()][toGo.getColonna()]);
     } else {
@@ -282,57 +293,73 @@ public class Tabella {
 
   }
 
-  private void mangiaPedinaEnpassant(Posizione toGo, Pezzo pezzo) {
+  private void mangiaPedinaEnpassant(final Posizione toGo, final Pezzo pezzo) {
     if (tabella[pezzo.getPosizione().getRiga()][toGo.getColonna()].getColore() == bianco) {
       bianchiMangiati.set(tabella[pezzo.getPosizione().getRiga()][toGo.getColonna()]);
     } else {
       neriMangiati.set(tabella[pezzo.getPosizione().getRiga()][toGo.getColonna()]);
     }
     Posizione pos1 = pezzo.getPosizione(); // posizione del pezzo iniziale
-    Posizione pos2 = new Posizione(pezzo.getPosizione().getRiga(), toGo.getColonna()); 
-    // pezzo da mangiare
+    Posizione pos2 = new Posizione(pezzo.getPosizione().getRiga(), toGo.getColonna());
     setTabella(null, pos1); // mette null la posizione precedente di pezzo
     setTabella(null, pos2); // mette null la posizione dove stava la pedina mangiata
-    pezzo.setPosizione(toGo); // mette la poiszione di pezzo uguali al posto in cui � ora
+    pezzo.setPosizione(toGo); // mette la poiszione di pezzo uguali al posto in cui ï¿½ ora
     setTabella(pezzo, toGo); // mette pezzo nel posto della tabella
     System.out.println("pedone mangiato con en passant");
   }
 
-  private boolean controlMovimento(Pezzo pezzo, Comando comando) {
+  private boolean controlMovimento(final Pezzo pezzo, final Comando comando) {
     Posizione toGo = comando.posizioneTradotta;
     if (comando.isArrocco()) {
       if (pezzo.getColore() == bianco) {
         if (comando.getComando().equals("0-0") || comando.getComando().equals("O-O")) {
-          if (tabella[0][7].getNome() == 'R' && tabella[0][7].getEnpassant() 
-              && tabella[0][4].getNome() == 'K'
-              && tabella[0][4].getEnpassant() 
-              && tabella[0][5] == null && tabella[0][6] == null
+        	final int sette = 7;
+        	final int quattro = 4;
+        	final int cinque = 5;
+        	final int sei = 6;
+          if (tabella[0][sette].getNome() == 'R' && tabella[0][sette].getEnpassant()
+              && tabella[0][quattro].getNome() == 'K'
+              && tabella[0][quattro].getEnpassant()
+              && tabella[0][cinque] == null && tabella[0][sei] == null
               && controlloGittata(pezzo, toGo)) {
             return true;
           }
         } else {
-          if (tabella[0][0].getNome() == 'R' 
-              && tabella[0][0].getEnpassant() && tabella[0][4].getNome() == 'K'
-              && tabella[0][4].getEnpassant() && tabella[0][1] == null 
-              && tabella[0][2] == null && tabella[0][3] == null
+          final int quattro = 4;
+          final int uno = 1;
+        	final int due = 2;
+        	final int tre = 3;
+					if (tabella[0][0].getNome() == 'R'
+              && tabella[0][0].getEnpassant() && tabella[0][quattro].getNome() == 'K'
+              && tabella[0][quattro].getEnpassant() && tabella[0][uno] == null
+              && tabella[0][due] == null && tabella[0][tre] == null
               && controlloGittata(pezzo, toGo)) {
             return true;
           }
         }
       } else {
         if (comando.getComando().equals("0-0") || comando.getComando().equals("O-O")) {
-          if (tabella[7][7].getNome() == 'R' 
-              && tabella[7][7].getEnpassant() 
-              && tabella[7][4].getNome() == 'K'
-              && tabella[7][4].getEnpassant() && tabella[7][5] == null && tabella[7][6] == null
+          final int sette = 7;
+        	final int quattro = 4;
+        	final int cinque = 5;
+        	final int sei = 6;
+					if (tabella[sette][sette].getNome() == 'R'
+              && tabella[sette][sette].getEnpassant()
+              && tabella[sette][quattro].getNome() == 'K'
+              && tabella[sette][quattro].getEnpassant() && tabella[sette][cinque] == null && tabella[sette][sei] == null
               && controlloGittata(pezzo, toGo)) {
             return true;
           }
         } else {
-          if (tabella[7][0].getNome() == 'R' && tabella[7][0].getEnpassant() 
-              && tabella[7][4].getNome() == 'K'
-              && tabella[7][4].getEnpassant() && tabella[7][1] == null 
-              && tabella[7][2] == null && tabella[7][3] == null
+        	final int sette = 7;
+        	final int quattro = 4;
+        	final int uno = 1;
+        	final int due = 2;
+        	final int tre = 3;
+          if (tabella[sette][0].getNome() == 'R' && tabella[sette][0].getEnpassant()
+              && tabella[sette][quattro].getNome() == 'K'
+              && tabella[sette][quattro].getEnpassant() && tabella[sette][uno] == null
+              && tabella[sette][due] == null && tabella[sette][tre] == null
                   && controlloGittata(pezzo, toGo)) {
             return true;
           }
@@ -344,21 +371,21 @@ public class Tabella {
         if (pezzo.getPosizione().getRiga() != rigaPedoniBianchi) {
           pezzo.giaMosso();
         } // controllo gittata x , y sulla posizione di arrivo and ((controllo per vedera
-        // se ï¿½ nella stessa colonna and la posizuione ï¿½ nulla ) e si vuole caturare
+        // se Ã¯Â¿Â½ nella stessa colonna and la posizuione Ã¯Â¿Â½ nulla ) e si vuole caturare
         // e
-        // la gittata ï¿½ quella giusta oppure (la differenza in valiore asoluto tera le
-        // colonne ï¿½ 1 and ci deve essere una pedina and il colore de essere uuale al
-        // nero e la differenza di righe ï¿½ 1 e si sta catturando cattura con en
+        // la gittata Ã¯Â¿Â½ quella giusta oppure (la differenza in valiore asoluto tera le
+        // colonne Ã¯Â¿Â½ 1 and ci deve essere una pedina and il colore de essere uuale al
+        // nero e la differenza di righe Ã¯Â¿Â½ 1 e si sta catturando cattura con en
         // passant
         if ((toGo.getRiga() - pezzo.getPosizione().getRiga() <= pezzo.getGittata())
             && (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0)
-                && (tabella[toGo.getRiga()][toGo.getColonna()] == null) 
+                && (tabella[toGo.getRiga()][toGo.getColonna()] == null)
                 && (!comando.getCattura())
                 && controlloGittata(pezzo, toGo))
                 || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1)
                  && (tabella[toGo.getRiga()][toGo.getColonna()] != null)
                  && (tabella[toGo.getRiga()][toGo.getColonna()].getColore() == nero)
-                    && (toGo.getRiga() - pezzo.getPosizione().getRiga() == 1) 
+                    && (toGo.getRiga() - pezzo.getPosizione().getRiga() == 1)
                     && comando.getCattura())
                 || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1)
                     && (tabella[toGo.getRiga()][toGo.getColonna()] == null)
@@ -367,7 +394,7 @@ public class Tabella {
                     && (tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() == nero)
                     && (tabella[toGo.getRiga() - 1][toGo.getColonna()].getCatturabileE())))
             && (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)
-            && (toGo.getRiga() - pezzo.getPosizione().getRiga() > 0) 
+            && (toGo.getRiga() - pezzo.getPosizione().getRiga() > 0)
             && !contorlloPinnato(pezzo, comando)) {
           isEnpassant(comando);
           return true;
@@ -380,7 +407,7 @@ public class Tabella {
         }
         if ((toGo.getRiga() - pezzo.getPosizione().getRiga() >= -pezzo.getGittata())
             && (((toGo.getColonna() - pezzo.getPosizione().getColonna() == 0)
-                && (tabella[toGo.getRiga()][toGo.getColonna()] == null) 
+                && (tabella[toGo.getRiga()][toGo.getColonna()] == null)
                 && (!comando.getCattura())
                 && controlloGittata(pezzo, toGo))
                 || ((Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == 1)
@@ -394,7 +421,7 @@ public class Tabella {
                     && (tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() == bianco)
                     && (tabella[toGo.getRiga() + 1][toGo.getColonna()].getCatturabileE())))
             && (toGo.getRiga() - pezzo.getPosizione().getRiga() != 0)
-            && (toGo.getRiga() - pezzo.getPosizione().getRiga() < 0) 
+            && (toGo.getRiga() - pezzo.getPosizione().getRiga() < 0)
             && !contorlloPinnato(pezzo, comando)) {
           isEnpassant(comando);
           return true;
@@ -409,7 +436,7 @@ public class Tabella {
           && ((tabella[toGo.getRiga()][toGo.getColonna()] == null)
               || (tabella[toGo.getRiga()][toGo.getColonna()].getColore() != pezzo.getColore()))
           && (toGo.getColonna() != pezzo.getPosizione().getColonna())
-          && (toGo.getRiga() != pezzo.getPosizione().getRiga()) 
+          && (toGo.getRiga() != pezzo.getPosizione().getRiga())
           && !contorlloPinnato(pezzo, comando));
     } else if (pezzo.getNome() == 'R') {
       return ((pezzo.getGittata() >= Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()))
@@ -437,9 +464,9 @@ public class Tabella {
           && (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) == Math
               .abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))
           && controlloGittata(pezzo, toGo) && !contorlloPinnato(pezzo, comando));
-    } else if (pezzo.getNome() == 'Q') { 
-      // vede se non sta catturando oppure se sta catturando e se il colore è
-      // diverso e se la cattura ï¿½ true contorlli di movimento su stessa riga
+    } else if (pezzo.getNome() == 'Q') {
+      // vede se non sta catturando oppure se sta catturando e se il colore Ã¨
+      // diverso e se la cattura Ã¯Â¿Â½ true contorlli di movimento su stessa riga
       // o su stessa colonna ma diversa riga o sulle diagonali quindi si vede
       // se la distanza tra colonna e righe sono uguali in termini di
       // differenza controllo sulla gittata per vedere se ci sono pezzi in
@@ -454,7 +481,7 @@ public class Tabella {
                   && toGo.getColonna() - pezzo.getPosizione().getColonna() != 0)
                   || (toGo.getColonna() - pezzo.getPosizione().getColonna() == 0
                       && toGo.getRiga() - pezzo.getPosizione().getRiga() != 0))
-                  || (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna()) 
+                  || (Math.abs(toGo.getColonna() - pezzo.getPosizione().getColonna())
                       == Math.abs(toGo.getRiga() - pezzo.getPosizione().getRiga()))))
           && controlloGittata(pezzo, toGo) && (toGo.getRiga() != pezzo.getPosizione().getRiga()
               || toGo.getColonna() != pezzo.getPosizione().getColonna())
@@ -479,12 +506,12 @@ public class Tabella {
     }
 
     return false;
-  } // controlla se per ogni tipo di pezzo ï¿½ possibile lo spostamento
+  } // controlla se per ogni tipo di pezzo Ã¯Â¿Â½ possibile lo spostamento
   //vede se un pezzo blocca lo scacco del re
-  
-  private boolean contorlloPinnato(Pezzo pezzo, Comando comando) { 
+
+  private boolean contorlloPinnato(final Pezzo pezzo, final Comando comando) {
     Posizione toGo = comando.posizioneTradotta;
-    Posizione iniziale = new Posizione(pezzo.getPosizione().getRiga(), 
+    Posizione iniziale = new Posizione(pezzo.getPosizione().getRiga(),
         pezzo.getPosizione().getColonna());
     Pezzo pezzoAux = tabella[toGo.getRiga()][toGo.getColonna()];
     boolean esito = true;
@@ -502,11 +529,12 @@ public class Tabella {
     return !esito;
   }
 
-  private boolean controlloGittata(Pezzo pezzo, Posizione toGo) {
+  private boolean controlloGittata(final Pezzo pezzo, final Posizione toGo) {
     if (pezzo.getNome() == 'p') {
       if (pezzo.getColore() == bianco) {
         for (int i = 1; i <= pezzo.getGittata(); i++) {
-          if (pezzo.getPosizione().getRiga() + i > 7) {
+        	final int sette = 7;
+          if (pezzo.getPosizione().getRiga() + i > sette) {
             return false;
           } else if (tabella[pezzo.getPosizione().getRiga() + i]
               [pezzo.getPosizione().getColonna()] != null) {
@@ -526,9 +554,9 @@ public class Tabella {
     } else if (pezzo.getNome() == 'N') {
       return true;
     } else if (pezzo.getNome() == 'R') {
-      if (toGo.getRiga() > pezzo.getPosizione().getRiga() 
+      if (toGo.getRiga() > pezzo.getPosizione().getRiga()
           && (toGo.getColonna() == pezzo.getPosizione().getColonna())) {
-        for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) {      
+        for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) {
           if (tabella[pezzo.getPosizione().getRiga() + i]
               [pezzo.getPosizione().getColonna()] != null) {
             return false;
@@ -564,7 +592,7 @@ public class Tabella {
       }
     } else if (pezzo.getNome() == 'B') {
       // sopra sinistra
-      if (toGo.getRiga() > pezzo.getPosizione().getRiga() 
+      if (toGo.getRiga() > pezzo.getPosizione().getRiga()
           && toGo.getColonna() < pezzo.getPosizione().getColonna()) {
         for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {
           if (tabella[pezzo.getPosizione().getRiga() + 1]
@@ -601,9 +629,9 @@ public class Tabella {
       }
     } else if (pezzo.getNome() == 'Q') {
       /* sopra */
-      if (toGo.getRiga() > pezzo.getPosizione().getRiga() 
+      if (toGo.getRiga() > pezzo.getPosizione().getRiga()
           && (toGo.getColonna() == pezzo.getPosizione().getColonna())) {
-        for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) { 
+        for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) {
           if (tabella[pezzo.getPosizione().getRiga() + i]
               [pezzo.getPosizione().getColonna()] != null) {
             return false;
@@ -612,7 +640,7 @@ public class Tabella {
         /* giu */
       } else if (toGo.getRiga() < pezzo.getPosizione().getRiga()
           && (toGo.getColonna() == pezzo.getPosizione().getColonna())) {
-        for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) { 
+        for (int i = 1; i < Math.abs(pezzo.getPosizione().getRiga() - toGo.getRiga()); i++) {
           if (tabella[pezzo.getPosizione().getRiga() - i]
               [pezzo.getPosizione().getColonna()] != null) {
             return false;
@@ -621,7 +649,7 @@ public class Tabella {
         /* destra */
       } else if (toGo.getRiga() == pezzo.getPosizione().getRiga()
           && (toGo.getColonna() > pezzo.getPosizione().getColonna())) {
-        for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) { 
+        for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {
           if (tabella[pezzo.getPosizione().getRiga()]
               [pezzo.getPosizione().getColonna() + i] != null) {
             return false;
@@ -630,7 +658,7 @@ public class Tabella {
         /* sinistra */
       } else if (toGo.getRiga() == pezzo.getPosizione().getRiga()
           && (toGo.getColonna() < pezzo.getPosizione().getColonna())) {
-        for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) { 
+        for (int i = 1; i < Math.abs(pezzo.getPosizione().getColonna() - toGo.getColonna()); i++) {
           if (tabella[pezzo.getPosizione().getRiga()]
               [pezzo.getPosizione().getColonna() - i] != null) {
             return false;
@@ -675,9 +703,10 @@ public class Tabella {
     } else if (pezzo.getNome() == 'K') {
       // controlloscacco
       // bordi
+    	final int sette = 7;
       int bsx = toGo.getColonna();
-      int balt = 7 - toGo.getRiga();
-      int bdx = 7 - toGo.getColonna();
+      int balt = sette - toGo.getRiga();
+      int bdx = sette - toGo.getColonna();
       int bbas = toGo.getRiga();
       /* pedone */ if (pezzo.getColore() == bianco) {
         if (balt > 0) {
@@ -725,9 +754,9 @@ public class Tabella {
               && (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() == 'B'
                   || tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() == 'Q')) {
             return false;
-          } else if (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore() 
+          } else if (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore()
               == pezzo.getColore()
-              || (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore() 
+              || (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getColore()
                   != pezzo.getColore()
                   && (tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() != 'B'
                       || tabella[toGo.getRiga() + i][toGo.getColonna() - i].getNome() != 'Q'))) {
@@ -744,9 +773,9 @@ public class Tabella {
               && (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() == 'B'
                   || tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() == 'Q')) {
             return false;
-          } else if (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore() 
+          } else if (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore()
               == pezzo.getColore()
-              || (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore() 
+              || (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getColore()
                   != pezzo.getColore()
                   && (tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() != 'B'
                       || tabella[toGo.getRiga() + i][toGo.getColonna() + i].getNome() != 'Q'))) {
@@ -763,9 +792,9 @@ public class Tabella {
               && (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() == 'B'
                   || tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() == 'Q')) {
             return false;
-          } else if (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore() 
+          } else if (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore()
               == pezzo.getColore()
-              || (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore() 
+              || (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getColore()
                   != pezzo.getColore()
                   && (tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() != 'B'
                       || tabella[toGo.getRiga() - i][toGo.getColonna() - i].getNome() != 'Q'))) {
@@ -782,9 +811,9 @@ public class Tabella {
               && (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() == 'B'
                   || tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() == 'Q')) {
             return false;
-          } else if (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore() 
+          } else if (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore()
               == pezzo.getColore()
-              || (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore() 
+              || (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getColore()
                   != pezzo.getColore()
                   && (tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() != 'B'
                       || tabella[toGo.getRiga() - i][toGo.getColonna() + i].getNome() != 'Q'))) {
@@ -869,7 +898,7 @@ public class Tabella {
         if (balt > 0) {
           if (tabella[toGo.getRiga() + 1][toGo.getColonna() - 2] != null
               && tabella[toGo.getRiga() + 1][toGo.getColonna() - 2].getNome() == 'N'
-                  && tabella[toGo.getRiga() + 1][toGo.getColonna() - 2].getColore() 
+                  && tabella[toGo.getRiga() + 1][toGo.getColonna() - 2].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -877,7 +906,7 @@ public class Tabella {
         if (balt >= 2) {
           if (tabella[toGo.getRiga() + 2][toGo.getColonna() - 1] != null
               && tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getNome() == 'N'
-                  && tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getColore() 
+                  && tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -886,7 +915,7 @@ public class Tabella {
         if (bbas > 0) {
           if (tabella[toGo.getRiga() - 1][toGo.getColonna() - 2] != null
               && tabella[toGo.getRiga() - 1][toGo.getColonna() - 2].getNome() == 'N'
-                  && tabella[toGo.getRiga() - 1][toGo.getColonna() - 2].getColore() 
+                  && tabella[toGo.getRiga() - 1][toGo.getColonna() - 2].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -894,7 +923,7 @@ public class Tabella {
         if (bbas >= 2) {
           if (tabella[toGo.getRiga() - 2][toGo.getColonna() - 1] != null
               && tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getNome() == 'N'
-                  && tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getColore() 
+                  && tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -905,7 +934,7 @@ public class Tabella {
         if (balt >= 2) {
           if (tabella[toGo.getRiga() + 2][toGo.getColonna() - 1] != null
               && tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getNome() == 'N'
-                  && tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getColore() 
+                  && tabella[toGo.getRiga() + 2][toGo.getColonna() - 1].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -914,7 +943,7 @@ public class Tabella {
         if (bbas >= 2) {
           if (tabella[toGo.getRiga() - 2][toGo.getColonna() - 1] != null
               && tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getNome() == 'N'
-                  && tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getColore() 
+                  && tabella[toGo.getRiga() - 2][toGo.getColonna() - 1].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -926,7 +955,7 @@ public class Tabella {
         if (balt > 0) {
           if (tabella[toGo.getRiga() + 1][toGo.getColonna() + 2] != null
               && tabella[toGo.getRiga() + 1][toGo.getColonna() + 2].getNome() == 'N'
-                  && tabella[toGo.getRiga() + 1][toGo.getColonna() + 2].getColore() 
+                  && tabella[toGo.getRiga() + 1][toGo.getColonna() + 2].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -934,7 +963,7 @@ public class Tabella {
         if (balt >= 2) {
           if (tabella[toGo.getRiga() + 2][toGo.getColonna() + 1] != null
               && tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getNome() == 'N'
-                  && tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getColore() 
+                  && tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -943,7 +972,7 @@ public class Tabella {
         if (bbas > 0) {
           if (tabella[toGo.getRiga() - 1][toGo.getColonna() + 2] != null
               && tabella[toGo.getRiga() - 1][toGo.getColonna() + 2].getNome() == 'N'
-                  && tabella[toGo.getRiga() - 1][toGo.getColonna() + 2].getColore() 
+                  && tabella[toGo.getRiga() - 1][toGo.getColonna() + 2].getColore()
                   != pezzo.getColore()) {
             return false;
           }
@@ -951,7 +980,7 @@ public class Tabella {
         if (bbas >= 2) {
           if (tabella[toGo.getRiga() - 2][toGo.getColonna() + 1] != null
               && tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getNome() == 'N'
-              && tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getColore()
               != pezzo.getColore()) {
             return false;
           }
@@ -962,7 +991,7 @@ public class Tabella {
         if (balt >= 2) {
           if (tabella[toGo.getRiga() + 2][toGo.getColonna() + 1] != null
               && tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getNome() == 'N'
-              && tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() + 2][toGo.getColonna() + 1].getColore()
               != pezzo.getColore()) {
             return false;
           }
@@ -971,7 +1000,7 @@ public class Tabella {
         if (bbas >= 2) {
           if (tabella[toGo.getRiga() - 2][toGo.getColonna() + 1] != null
               && tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getNome() == 'N'
-              && tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() - 2][toGo.getColonna() + 1].getColore()
               != pezzo.getColore()) {
             return false;
           }
@@ -986,11 +1015,11 @@ public class Tabella {
               && tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
                   && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'K'
-              && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore()
               != pezzo.getColore())
               || (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
                   && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'K'
-              && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() 
+              && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1001,7 +1030,7 @@ public class Tabella {
               && tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
                   && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'K'
-              && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() 
+              && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1012,7 +1041,7 @@ public class Tabella {
               && tabella[toGo.getRiga() + 1][toGo.getColonna()].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
                   && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'K'
-              && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1026,11 +1055,11 @@ public class Tabella {
               && tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
                   && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'K'
-              && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() 
+              && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore()
               != pezzo.getColore())
               || (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
                   && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'K'
-              && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1041,7 +1070,7 @@ public class Tabella {
               && tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
                   && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'K'
-              && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() 
+              && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1052,7 +1081,7 @@ public class Tabella {
               && tabella[toGo.getRiga() - 1][toGo.getColonna()].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
                   && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'K'
-              && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1065,11 +1094,11 @@ public class Tabella {
               && tabella[toGo.getRiga()][toGo.getColonna() + 1].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
                   && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'K'
-              && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore()
               != pezzo.getColore())
               || (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
                   && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'K'
-              && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1080,7 +1109,7 @@ public class Tabella {
               && tabella[toGo.getRiga()][toGo.getColonna() + 1].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() - 1][toGo.getColonna() + 1] != null
                   && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getNome() == 'K'
-              && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() - 1][toGo.getColonna() + 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1091,7 +1120,7 @@ public class Tabella {
               && tabella[toGo.getRiga()][toGo.getColonna() + 1].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() + 1][toGo.getColonna() + 1] != null
                   && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getNome() == 'K'
-              && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore() 
+              && tabella[toGo.getRiga() + 1][toGo.getColonna() + 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1104,11 +1133,11 @@ public class Tabella {
               && tabella[toGo.getRiga()][toGo.getColonna() - 1].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
                   && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'K'
-              && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() 
+              && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore()
               != pezzo.getColore())
               || (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
                   && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'K'
-              && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() 
+              && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1119,7 +1148,7 @@ public class Tabella {
               && tabella[toGo.getRiga()][toGo.getColonna() - 1].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() + 1][toGo.getColonna() - 1] != null
                   && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getNome() == 'K'
-              && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore() 
+              && tabella[toGo.getRiga() + 1][toGo.getColonna() - 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1130,7 +1159,7 @@ public class Tabella {
               && tabella[toGo.getRiga()][toGo.getColonna() - 1].getColore() != pezzo.getColore())
               || (tabella[toGo.getRiga() - 1][toGo.getColonna() - 1] != null
                   && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getNome() == 'K'
-              && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore() 
+              && tabella[toGo.getRiga() - 1][toGo.getColonna() - 1].getColore()
               != pezzo.getColore())) {
             return false;
           }
@@ -1140,13 +1169,13 @@ public class Tabella {
     return true;
   }
 
-  private void isEnpassant(Comando comando) {
+  private void isEnpassant(final Comando comando) {
     if (comando.pezzoMosso != null && comando.pezzoMosso.getNome() == 'p') {
-      if ((comando.pezzoMosso.getColore() == bianco) 
+      if ((comando.pezzoMosso.getColore() == bianco)
           && (comando.inizialeTradotta.getRiga() == rigaPedoniBianchi)
           && (comando.posizioneTradotta.getRiga() - comando.inizialeTradotta.getRiga() == 2)) {
         comando.pezzoMosso.setCatturabileE();
-      } else if ((comando.pezzoMosso.getColore() == nero) 
+      } else if ((comando.pezzoMosso.getColore() == nero)
                && (comando.inizialeTradotta.getRiga() == rigaPedoniNeri)
                && (comando.inizialeTradotta.getRiga() - comando.posizioneTradotta.getRiga() == 2)) {
         comando.pezzoMosso.setCatturabileE();
@@ -1155,7 +1184,7 @@ public class Tabella {
   }
 
   public void display() throws UnsupportedEncodingException {
-    char[] nomiColonne = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+    char[] nomiColonne = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
     System.out.print(" ");
     for (int i = 0; i < colonne; i++) {
       System.out.print(" " + nomiColonne[i]);
@@ -1178,6 +1207,7 @@ public class Tabella {
     for (int i = 0; i < colonne; i++) {
       System.out.print(" " + nomiColonne[i]);
     }
+    System.out.println();
   }
 
   public void cambiaTurno() {
@@ -1190,11 +1220,13 @@ public class Tabella {
 
   public void restart() {
     turno = bianco;
-    tabella = new Pezzo[8][8];
-    neriMangiati = new Mangiati(16);
-    bianchiMangiati = new Mangiati(16);
-    pedoniBianchi = new Pezzo[8];
-    pedoniNeri = new Pezzo[8];
+    final int otto = 8;
+    final int sedici = 16;
+		tabella = new Pezzo[otto][otto];
+    neriMangiati = new Mangiati(sedici);
+    bianchiMangiati = new Mangiati(sedici);
+    pedoniBianchi = new Pezzo[otto];
+    pedoniNeri = new Pezzo[otto];
     cavalliBianchi = new Cavallo[2];
     cavalliNeri = new Cavallo[2];
     alfieriBianchi = new Alfiere[2];
@@ -1202,15 +1234,20 @@ public class Tabella {
     torreBianche = new Torre[2];
     torreNere = new Torre[2];
     comandi = new Vector<String>();
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < otto; i++) {
       Posizione pos = new Posizione(rigaPedoniBianchi, i);
       tabella[rigaPedoniBianchi][i] = new Pedone(0, pos);
       pedoniBianchi[i] = tabella[rigaPedoniBianchi][i];
-      if (i == 1) {
+      final int sei = 6;
+			final int sette = 7;
+			final int cinque = 5;
+			final int quattro = 4;
+			final int tre = 3;
+			if (i == 1) {
         Posizione posCB = new Posizione(0, 1);
         tabella[0][1] = new Cavallo(0, posCB);
         cavalliBianchi[0] = (Cavallo) tabella[0][i];
-      } else if (i == 6) {
+      } else if (i == sei) {
         Posizione posCB = new Posizione(0, i);
         tabella[0][i] = new Cavallo(0, posCB);
         cavalliBianchi[1] = (Cavallo) tabella[0][i];
@@ -1218,7 +1255,7 @@ public class Tabella {
         Posizione posTB = new Posizione(0, i);
         tabella[0][i] = new Torre(0, posTB);
         torreBianche[0] = (Torre) tabella[0][i];
-      } else if (i == 7) {
+      } else if (i == sette) {
         Posizione posTB = new Posizione(0, i);
         tabella[0][i] = new Torre(0, posTB);
         torreBianche[1] = (Torre) tabella[0][i];
@@ -1226,57 +1263,65 @@ public class Tabella {
         Posizione posAB = new Posizione(0, i);
         tabella[0][i] = new Alfiere(0, posAB);
         alfieriBianchi[0] = (Alfiere) tabella[0][i];
-      } else if (i == 5) {
+      } else if (i == cinque) {
         Posizione posAB = new Posizione(0, i);
         tabella[0][i] = new Alfiere(0, posAB);
         alfieriBianchi[1] = (Alfiere) tabella[0][i];
-      } else if (i == 3) {
+      } else if (i == tre) {
         Posizione posDB = new Posizione(0, i);
         tabella[0][i] = new Donna(0, posDB);
         donnaBianca = (Donna) tabella[0][i];
-      } else if (i == 4) {
+      } else if (i == quattro) {
         Posizione posRB = new Posizione(0, i);
         tabella[0][i] = new Re(0, posRB);
         reBianco = (Re) tabella[0][i];
       }
     }
-    for (int j = 0; j < 8; j++) {
+    for (int j = 0; j < otto; j++) {
       Posizione pos = new Posizione(rigaPedoniNeri, j);
       tabella[rigaPedoniNeri][j] = new Pedone(1, pos);
       pedoniNeri[j] = tabella[rigaPedoniNeri][j];
-      if (j == 1) {
-        Posizione posCN = new Posizione(7, j);
-        tabella[7][j] = new Cavallo(1, posCN);
-        cavalliNeri[0] = (Cavallo) tabella[7][j];
-      } else if (j == 6) {
-        Posizione posCN = new Posizione(7, j);
-        tabella[7][j] = new Cavallo(1, posCN);
-        cavalliNeri[1] = (Cavallo) tabella[7][j];
+      final int sei = 6;
+			if (j == 1) {
+        final int sette = 7;
+				Posizione posCN = new Posizione(sette, j);
+        tabella[sette][j] = new Cavallo(1, posCN);
+        cavalliNeri[0] = (Cavallo) tabella[sette][j];
+      } else if (j == sei) {
+        final int sette = 7;
+				Posizione posCN = new Posizione(sette, j);
+        tabella[sette][j] = new Cavallo(1, posCN);
+        cavalliNeri[1] = (Cavallo) tabella[sette][j];
       }
-      if (j == 0) {
-        Posizione posTN = new Posizione(7, j);
-        tabella[7][j] = new Torre(1, posTN);
-        torreNere[0] = (Torre) tabella[7][j];
-      } else if (j == 7) {
-        Posizione posTN = new Posizione(7, j);
-        tabella[7][j] = new Torre(1, posTN);
-        torreNere[1] = (Torre) tabella[7][j];
+      final int sette = 7;
+      final int quattro = 4;
+      final int tre = 3;
+      final int cinque = 5;
+
+			if (j == 0) {
+				Posizione posTN = new Posizione(sette, j);
+        tabella[sette][j] = new Torre(1, posTN);
+        torreNere[0] = (Torre) tabella[sette][j];
+      } else if (j == sette) {
+        Posizione posTN = new Posizione(sette, j);
+        tabella[sette][j] = new Torre(1, posTN);
+        torreNere[1] = (Torre) tabella[sette][j];
       } else if (j == 2) {
-        Posizione posAN = new Posizione(7, j);
-        tabella[7][j] = new Alfiere(1, posAN);
-        alfieriNeri[0] = (Alfiere) tabella[7][j];
-      } else if (j == 5) {
-        Posizione posAN = new Posizione(7, j);
-        tabella[7][j] = new Alfiere(1, posAN);
-        alfieriNeri[1] = (Alfiere) tabella[7][j];
-      } else if (j == 3) {
-        Posizione posDN = new Posizione(7, j);
-        tabella[7][j] = new Donna(1, posDN);
-        donnaNera = (Donna) tabella[7][j];
-      } else if (j == 4) {
-        Posizione posRN = new Posizione(7, j);
-        tabella[7][j] = new Re(1, posRN);
-        reNero = (Re) tabella[7][j];
+        Posizione posAN = new Posizione(sette, j);
+        tabella[sette][j] = new Alfiere(1, posAN);
+        alfieriNeri[0] = (Alfiere) tabella[sette][j];
+      } else if (j == cinque) {
+        Posizione posAN = new Posizione(sette, j);
+        tabella[sette][j] = new Alfiere(1, posAN);
+        alfieriNeri[1] = (Alfiere) tabella[sette][j];
+      } else if (j == tre) {
+        Posizione posDN = new Posizione(sette, j);
+        tabella[sette][j] = new Donna(1, posDN);
+        donnaNera = (Donna) tabella[sette][j];
+      } else if (j == quattro) {
+        Posizione posRN = new Posizione(sette, j);
+        tabella[sette][j] = new Re(1, posRN);
+        reNero = (Re) tabella[sette][j];
       }
     }
   }
@@ -1289,7 +1334,7 @@ public class Tabella {
       Scanner input = new Scanner(System.in);
       conferma = input.nextLine();
       if (conferma.equals("si") || conferma.equals("Si") || conferma.equals("SI")) {
-        System.exit(0); 
+        System.exit(0);
       } else if (conferma.equals("no") || conferma.equals("No") || conferma.equals("NO")) {
         esito = false;
       } else {
@@ -1298,15 +1343,15 @@ public class Tabella {
       }
     }
   }
-  
+
   /*
    * classe di tipo control responsabilita: codifica i comando inseriti
    * dall'utente (traduce la posizione inserita e verifica la computabilita)
   */
-  
+
   public class Comando {
-    private Posizione posizioneTradotta; // essendo il comando un vettore di char 
-    //trasformiamo i char in int , la a minuscola � il 97 esimo carattere 
+    private Posizione posizioneTradotta; // essendo il comando un vettore di char
+    //trasformiamo i char in int , la a minuscola � il 97 esimo carattere
     //e ha valore 97 invece l'1 ha valore 49
     private Posizione inizialeTradotta;
     private Pezzo pezzoMosso;
@@ -1318,8 +1363,8 @@ public class Tabella {
     private char alfiere = 'A';
     private char torre = 'T';
     private char cavallo = 'C';
-    private String[] comandidArrocco = { "0-0-0", "O-O-O", "0-0", "O-O" };
-    private String[] comandiSistema = { "help", "board", "captures", "moves", "quit", "play" };
+    private String[] comandidArrocco = {"0-0-0", "O-O-O", "0-0", "O-O"};
+    private String[] comandiSistema = {"help", "board", "captures", "moves", "quit", "play"};
 
     public Comando(String commands) {
       this.comando = commands;
@@ -1344,12 +1389,15 @@ public class Tabella {
     }
 
     private int cavalloAmbiguo() {
+      final int uno = 1;
+      final int due = 2;
+      final int tre = 3;
       int esito = 0; // 0 se non ambiguo 1 se ambiguo sulle riche quindi sulla stessa colonna, 2 se
       // ambiguo sulla colonne quindi sulla stessa riga
       int cont = 0;
       if (comando.charAt(0) == cavallo) {
         if (turno == bianco) {
-          if (cavalliBianchi.length < 2) {
+          if (cavalliBianchi.length < due) {
             return esito;
           } else {
             for (int i = 0; i < cavalliBianchi.length; i++) {
@@ -1357,17 +1405,17 @@ public class Tabella {
                 cont++;
               }
             }
-            if (cont == 2) {
-              if (cavalliBianchi[0].getPosizione().getColonna() == cavalliBianchi[1].getPosizione()
+            if (cont == due) {
+              if (cavalliBianchi[0].getPosizione().getColonna() == cavalliBianchi[uno].getPosizione()
                   .getColonna()) {
-                esito = 1;
+                esito = uno;
               } else {
-                esito = 2;
+                esito = due;
               }
             }
           }
         } else {
-          if (cavalliNeri.length < 2) {
+          if (cavalliNeri.length < due) {
             return esito;
           } else {
             for (int i = 0; i < cavalliNeri.length; i++) {
@@ -1375,19 +1423,19 @@ public class Tabella {
                 cont++;
               }
             }
-            if (cont == 2) {
-              if (cavalliNeri[0].getPosizione().getColonna() == cavalliNeri[1].getPosizione()
+            if (cont == due) {
+              if (cavalliNeri[0].getPosizione().getColonna() == cavalliNeri[uno].getPosizione()
                   .getColonna()) {
-                esito = 1;
+                esito = uno;
               } else {
-                esito = 2;
+                esito = due;
               }
             }
           }
         }
       } else if (comando.charAt(0) == torre) {
         if (turno == bianco) {
-          if (torreBianche.length < 2) {
+          if (torreBianche.length < due) {
             return esito;
           } else {
             for (int i = 0; i < torreBianche.length; i++) {
@@ -1395,22 +1443,22 @@ public class Tabella {
                 cont++;
               }
             }
-            if (cont == 2) {
-              if (torreBianche[0].getPosizione().getRiga() 
-                  == torreBianche[1].getPosizione().getRiga()) {
-                esito = 2;
-              } else if (torreBianche[0].getPosizione().getColonna() 
-                      == torreBianche[1].getPosizione()
+            if (cont == due) {
+              if (torreBianche[0].getPosizione().getRiga()
+                  == torreBianche[uno].getPosizione().getRiga()) {
+                esito = due;
+              } else if (torreBianche[0].getPosizione().getColonna()
+                      == torreBianche[uno].getPosizione()
                          .getColonna()) {
-                esito = 1;
+                esito = uno;
               } else {
-                esito = 3; //se sono su righe e colonne diverse 
+                esito = tre; //se sono su righe e colonne diverse
                 //ma vogliono andare sullo stesso punto
               }
             }
           }
         } else {
-          if (torreNere.length < 2) {
+          if (torreNere.length < due) {
             return esito;
           } else {
             for (int i = 0; i < torreNere.length; i++) {
@@ -1418,14 +1466,14 @@ public class Tabella {
                 cont++;
               }
             }
-            if (cont == 2) {
-              if (torreNere[0].getPosizione().getRiga() == torreNere[1].getPosizione().getRiga()) {
-                esito = 2;
-              } else if (torreNere[0].getPosizione().getColonna() == torreNere[1].getPosizione()
+            if (cont == due) {
+              if (torreNere[0].getPosizione().getRiga() == torreNere[uno].getPosizione().getRiga()) {
+                esito = due;
+              } else if (torreNere[0].getPosizione().getColonna() == torreNere[uno].getPosizione()
                          .getColonna()) {
-                esito = 1;
+                esito = uno;
               } else {
-                esito = 3; // se sono su righe e colonne diverse 
+                esito = tre; // se sono su righe e colonne diverse
                 //ma vogliono andare sullo stesso punto
               }
             }
@@ -1436,13 +1484,15 @@ public class Tabella {
     }
 
     public void traduzionePosIniziale() {
+      final int novsette = 97;
+      final int sette = 7;
       boolean esito = false;
       if (inizialeTradotta != null) {
         return;
       }
       if (posizioneTradotta != null) {
         if (turno == bianco) {
-          if ((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) {
+          if ((comando.charAt(0) - novsette >= 0) && (comando.charAt(0) - novsette <= sette)) {
             for (int i = 0; i < pedoniBianchi.length && !esito; i++) {
               if (controlMovimento(pedoniBianchi[i], this)) {
                 inizialeTradotta = pedoniBianchi[i].getPosizione();
@@ -1494,7 +1544,7 @@ public class Tabella {
             System.out.println("mossa illegale");
           }
         } else {
-          if ((comando.charAt(0) - 97 >= 0) && (comando.charAt(0) - 97 <= 7)) {
+          if ((comando.charAt(0) - novsette >= 0) && (comando.charAt(0) - novsette <= sette)) {
             for (int i = 0; i < pedoniNeri.length && !esito; i++) {
               if (controlMovimento(pedoniNeri[i], this)) {
                 inizialeTradotta = pedoniNeri[i].getPosizione();
@@ -1556,7 +1606,6 @@ public class Tabella {
     }
 
     private boolean isArrocco() {
-      //boolean esito = false;
       for (int i = 0; i < comandidArrocco.length; i++) {
         if (comando.equals(comandidArrocco[i])) {
           return true;
@@ -1566,121 +1615,130 @@ public class Tabella {
     }
 
     public void traduzionePosFinale() {
+    	final int uno = 1;
+    	final int due = 2;
+    	final int tre = 3;
+    	final int quattro = 4;
+    	final int cinque = 5;
+    	final int sei = 6;
+    	final int sette = 7;
+    	final int novsette = 97;
+    	final int quarnove = 49;
       if (isArrocco()) {
         if (turno == bianco) {
-          if ((comando.equals(comandidArrocco[0]) || comando.equals(comandidArrocco[1]))
+          if ((comando.equals(comandidArrocco[0]) || comando.equals(comandidArrocco[uno]))
               && (reBianco.getEnpassant()
                   && (torreBianche[0] != null && torreBianche[0].getEnpassant()))) {
             inizialeTradotta = reBianco.getPosizione();
             pezzoMosso = reBianco;
-            posizioneTradotta = new Posizione(0, 6);
-          } else if ((comando.equals(comandidArrocco[2]) || comando.equals(comandidArrocco[3]))
+            posizioneTradotta = new Posizione(0, sei);
+          } else if ((comando.equals(comandidArrocco[due]) || comando.equals(comandidArrocco[tre]))
                      && (reBianco.getEnpassant()
-                         && (torreBianche[1] != null && torreBianche[1].getEnpassant()))) {
+                         && (torreBianche[uno] != null && torreBianche[uno].getEnpassant()))) {
             inizialeTradotta = reBianco.getPosizione();
             pezzoMosso = reBianco;
-            posizioneTradotta = new Posizione(0, 1);
+            posizioneTradotta = new Posizione(0, uno);
           }
         } else {
-          if ((comando.equals(comandidArrocco[0]) || comando.equals(comandidArrocco[1]))
+          if ((comando.equals(comandidArrocco[0]) || comando.equals(comandidArrocco[uno]))
               && (reNero.getEnpassant() && (torreNere[0] != null && torreNere[0].getEnpassant()))) {
             inizialeTradotta = reNero.getPosizione();
             pezzoMosso = reNero;
-            posizioneTradotta = new Posizione(7, 1);
-          } else if ((comando.equals(comandidArrocco[2]) || comando.equals(comandidArrocco[3]))
-                  && (reNero.getEnpassant() 
-                  && (torreNere[1] != null && torreNere[1].getEnpassant()))) {
+            posizioneTradotta = new Posizione(sette, uno);
+          } else if ((comando.equals(comandidArrocco[due]) || comando.equals(comandidArrocco[tre]))
+                  && (reNero.getEnpassant()
+                  && (torreNere[uno] != null && torreNere[uno].getEnpassant()))) {
             inizialeTradotta = reBianco.getPosizione();
             pezzoMosso = reNero;
-            posizioneTradotta = new Posizione(7, 6);
+            posizioneTradotta = new Posizione(sette, sei);
           }
         }
       }
       if (comando.length() == 0) {
         posizioneTradotta = null;
         inizialeTradotta = null;
-      } else if ((comando.length() == 2) 
-          && (comando.charAt(0) - 97 >= 0) 
-          && (comando.charAt(0) - 97 <= 7)
-            && (comando.charAt(1) - 49 >= 0) 
-            && (comando.charAt(1) - 49 <= 7)) {
-        posizioneTradotta = new Posizione(comando.charAt(1) - 49, comando.charAt(0) - 97);
+      } else if ((comando.length() == due)
+          && (comando.charAt(0) - novsette >= 0)
+          && (comando.charAt(0) - novsette <= sette)
+            && (comando.charAt(uno) - quarnove >= 0)
+            && (comando.charAt(uno) - quarnove <= sette)) {
+        posizioneTradotta = new Posizione(comando.charAt(uno) - quarnove, comando.charAt(0) - novsette);
         cattura = false;
-      } else if ((comando.length() == 4) 
-          && (((comando.charAt(0) - 97 >= 0) 
-            && (comando.charAt(0) - 97 <= 7))
-              || ((comando.charAt(0) == regina) 
-              || (comando.charAt(0) == re) 
+      } else if ((comando.length() == quattro)
+          && (((comando.charAt(0) - novsette >= 0)
+            && (comando.charAt(0) - novsette <= sette))
+              || ((comando.charAt(0) == regina)
+              || (comando.charAt(0) == re)
           || (comando.charAt(0) == alfiere))
-          && (comando.charAt(1) == 'x')
-          && ((comando.charAt(2) - 97 >= 0) 
-          && (comando.charAt(2) - 97 <= 7))
-          && ((comando.charAt(3) - 49 >= 0) 
-          && (comando.charAt(3) - 49 <= 7)))) {
-        posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
+          && (comando.charAt(uno) == 'x')
+          && ((comando.charAt(due) - novsette >= 0)
+          && (comando.charAt(due) - novsette <= sette))
+          && ((comando.charAt(tre) - quarnove >= 0)
+          && (comando.charAt(tre) - quarnove <= sette)))) {
+        posizioneTradotta = new Posizione(comando.charAt(tre) - quarnove, comando.charAt(due) - novsette);
         cattura = true;
-      } else if ((comando.length() == 6)
-          && (((comando.charAt(0) - 97 >= 0) 
-          && (comando.charAt(0) - 97 <= 7))
-          && (comando.charAt(1) == 'x') 
-          && ((comando.charAt(2) - 97 >= 0) 
-          && (comando.charAt(2) - 97 <= 7))
-          && ((comando.charAt(3) - 49 >= 0) 
-          && (comando.charAt(3) - 49 <= 7) 
-          && (comando.charAt(4) == 'e')
-                                               && (comando.charAt(5) == 'p')))) {
-        posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
+      } else if ((comando.length() == sei)
+          && (((comando.charAt(0) - novsette >= 0)
+          && (comando.charAt(0) - novsette <= sette))
+          && (comando.charAt(uno) == 'x')
+          && ((comando.charAt(due) - novsette >= 0)
+          && (comando.charAt(due) - novsette <= sette))
+          && ((comando.charAt(tre) - quarnove >= 0)
+          && (comando.charAt(tre) - quarnove <= sette)
+          && (comando.charAt(quattro) == 'e')
+                                               && (comando.charAt(cinque) == 'p')))) {
+        posizioneTradotta = new Posizione(comando.charAt(tre) - quarnove, comando.charAt(due) - novsette);
         cattura = true;
-      } else if ((comando.length() == 3)
-                 && ((comando.charAt(0) == regina) 
-                 || (comando.charAt(0) == re) 
+      } else if ((comando.length() == tre)
+                 && ((comando.charAt(0) == regina)
+                 || (comando.charAt(0) == re)
                  || (comando.charAt(0) == alfiere))
-                 && ((comando.charAt(1) - 97 >= 0) 
-                 && (comando.charAt(1) - 97 <= 7))
-                 && ((comando.charAt(2) - 49 >= 0) 
-                 && (comando.charAt(2) - 49 <= 7))) {
-        posizioneTradotta = new Posizione(comando.charAt(2) - 49, comando.charAt(1) - 97);
+                 && ((comando.charAt(uno) - novsette >= 0)
+                 && (comando.charAt(uno) - novsette <= sette))
+                 && ((comando.charAt(due) - quarnove >= 0)
+                 && (comando.charAt(due) - quarnove <= sette))) {
+        posizioneTradotta = new Posizione(comando.charAt(due) - quarnove, comando.charAt(uno) - novsette);
       } else if ((comando.charAt(0) == cavallo)) { // controlla l'ambiguit� del cavallo
-        if ((comando.length() == 3) 
-            && (((comando.charAt(1) - 97 >= 0) 
-            && (comando.charAt(1) - 97 <= 7))
-              && ((comando.charAt(2) - 49 >= 0) 
-              && (comando.charAt(2) - 49 <= 7)))) {
-          posizioneTradotta = new Posizione(comando.charAt(2) - 49, comando.charAt(1) - 97);
+        if ((comando.length() == tre)
+            && (((comando.charAt(uno) - novsette >= 0)
+            && (comando.charAt(uno) - novsette <= sette))
+              && ((comando.charAt(due) - quarnove >= 0)
+              && (comando.charAt(due) - quarnove <= sette)))) {
+          posizioneTradotta = new Posizione(comando.charAt(due) - quarnove, comando.charAt(uno) - novsette);
           if (cavalloAmbiguo() != 0) {
             posizioneTradotta = null;
           }
-        } else if ((comando.length() == 4) && ((comando.charAt(1) == 'x')
-              && ((comando.charAt(2) - 97 >= 0) 
-              && (comando.charAt(2) - 97 <= 7))
-              && ((comando.charAt(3) - 49 >= 0) 
-              && (comando.charAt(3) - 49 <= 7)))) {
-          posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
+        } else if ((comando.length() == quattro) && ((comando.charAt(uno) == 'x')
+              && ((comando.charAt(due) - novsette >= 0)
+              && (comando.charAt(due) - novsette <= sette))
+              && ((comando.charAt(tre) - quarnove >= 0)
+              && (comando.charAt(tre) - quarnove <= sette)))) {
+          posizioneTradotta = new Posizione(comando.charAt(tre) - quarnove, comando.charAt(due) - novsette);
           cattura = true;
           if (cavalloAmbiguo() != 0) {
             posizioneTradotta = null;
           }
-        } else if ((comando.length() == 5)
-                   && (((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7))
-                       || ((comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)))
-                   && (comando.charAt(2) == 'x')
-                   && ((comando.charAt(3) - 97 >= 0) && (comando.charAt(3) - 97 <= 7))
-                   && ((comando.charAt(4) - 49 >= 0) && (comando.charAt(4) - 49 <= 7))) {
-          posizioneTradotta = new Posizione(comando.charAt(4) - 49, comando.charAt(3) - 97);
+        } else if ((comando.length() == cinque)
+                   && (((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette))
+                       || ((comando.charAt(uno) - quarnove >= 0) && (comando.charAt(uno) - quarnove <= sette)))
+                   && (comando.charAt(due) == 'x')
+                   && ((comando.charAt(tre) - novsette >= 0) && (comando.charAt(tre) - novsette <= sette))
+                   && ((comando.charAt(quattro) - quarnove >= 0) && (comando.charAt(quattro) - quarnove <= sette))) {
+          posizioneTradotta = new Posizione(comando.charAt(quattro) - quarnove, comando.charAt(tre) - novsette);
           if (cavalloAmbiguo() == 0) {
             posizioneTradotta = null;
             inizialeTradotta = null;
-          } else if (cavalloAmbiguo() == 1) {
-            if ((comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)) {
+          } else if (cavalloAmbiguo() == uno) {
+            if ((comando.charAt(uno) - quarnove >= 0) && (comando.charAt(uno) - quarnove <= sette)) {
               if (turno == bianco) {
                 for (int i = 0; i < cavalliBianchi.length; i++) {
-                  if (cavalliBianchi[i].getPosizione().getRiga() == comando.charAt(1) - 49) {
+                  if (cavalliBianchi[i].getPosizione().getRiga() == comando.charAt(uno) - quarnove) {
                     pezzoMosso = cavalliBianchi[i];
                   }
                 }
               } else {
                 for (int i = 0; i < cavalliNeri.length; i++) {
-                  if (cavalliBianchi[i].getPosizione().getRiga() == comando.charAt(1) - 49) {
+                  if (cavalliBianchi[i].getPosizione().getRiga() == comando.charAt(uno) - quarnove) {
                     pezzoMosso = cavalliNeri[i];
                   }
                 }
@@ -1689,17 +1747,17 @@ public class Tabella {
             } else {
               System.out.println("mossa illegale");
             }
-          } else if (cavalloAmbiguo() == 2) {
-            if ((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7)) {
+          } else if (cavalloAmbiguo() == due) {
+            if ((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette)) {
               if (turno == bianco) {
                 for (int i = 0; i < cavalliBianchi.length; i++) {
-                  if (cavalliBianchi[i].getPosizione().getColonna() == comando.charAt(1) - 97) {
+                  if (cavalliBianchi[i].getPosizione().getColonna() == comando.charAt(uno) - novsette) {
                     pezzoMosso = cavalliBianchi[i];
                   }
                 }
               } else {
                 for (int i = 0; i < cavalliNeri.length; i++) {
-                  if (cavalliBianchi[i].getPosizione().getColonna() == comando.charAt(1) - 97) {
+                  if (cavalliBianchi[i].getPosizione().getColonna() == comando.charAt(uno) - novsette) {
                     pezzoMosso = cavalliNeri[i];
                   }
                 }
@@ -1710,47 +1768,47 @@ public class Tabella {
               posizioneTradotta = null;
             }
           }
-        } else if ((comando.length() == 4)
-                   && (((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7))
-                       || ((comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)))
-                   && ((comando.charAt(2) - 97 >= 0) && (comando.charAt(2) - 97 <= 7))
-                   && ((comando.charAt(3) - 49 >= 0) && (comando.charAt(3) - 49 <= 7))) {
-          posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
+        } else if ((comando.length() == quattro)
+                   && (((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette))
+                       || ((comando.charAt(uno) - quarnove >= 0) && (comando.charAt(uno) - quarnove <= sette)))
+                   && ((comando.charAt(due) - novsette >= 0) && (comando.charAt(due) - novsette <= sette))
+                   && ((comando.charAt(tre) - quarnove >= 0) && (comando.charAt(tre) - quarnove <= sette))) {
+          posizioneTradotta = new Posizione(comando.charAt(tre) - quarnove, comando.charAt(due) - novsette);
           if (cavalloAmbiguo() == 0) {
             posizioneTradotta = null;
             inizialeTradotta = null;
-          } else if (cavalloAmbiguo() == 1) {
-            if ((comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)) {
+          } else if (cavalloAmbiguo() == uno) {
+            if ((comando.charAt(uno) - quarnove >= 0) && (comando.charAt(uno) - quarnove <= sette)) {
               if (turno == bianco) {
                 for (int i = 0; i < cavalliBianchi.length; i++) {
-                  if (cavalliBianchi[i].getPosizione().getRiga() == comando.charAt(1) - 49) {
+                  if (cavalliBianchi[i].getPosizione().getRiga() == comando.charAt(uno) - quarnove) {
                     pezzoMosso = cavalliBianchi[i];
                   }
                 }
               } else {
                 for (int i = 0; i < cavalliNeri.length; i++) {
-                  if (cavalliBianchi[i].getPosizione().getRiga() == comando.charAt(1) - 49) {
+                  if (cavalliBianchi[i].getPosizione().getRiga() == comando.charAt(uno) - quarnove) {
                     pezzoMosso = cavalliNeri[i];
                   }
                 }
               }
-              inizialeTradotta = new Posizione(comando.charAt(1) - 49,
+              inizialeTradotta = new Posizione(comando.charAt(uno) - quarnove,
                                                pezzoMosso.getPosizione().getColonna());
             } else {
               System.out.println("mossa illegale");
               posizioneTradotta = null;
             }
-          } else if (cavalloAmbiguo() == 2) {
-            if ((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7)) {
+          } else if (cavalloAmbiguo() == due) {
+            if ((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette)) {
               if (turno == bianco) {
                 for (int i = 0; i < cavalliBianchi.length; i++) {
-                  if (cavalliBianchi[i].getPosizione().getColonna() == comando.charAt(1) - 97) {
+                  if (cavalliBianchi[i].getPosizione().getColonna() == comando.charAt(uno) - novsette) {
                     pezzoMosso = cavalliBianchi[i];
                   }
                 }
               } else {
                 for (int i = 0; i < cavalliNeri.length; i++) {
-                  if (cavalliBianchi[i].getPosizione().getColonna() == comando.charAt(1) - 97) {
+                  if (cavalliBianchi[i].getPosizione().getColonna() == comando.charAt(uno) - novsette) {
                     pezzoMosso = cavalliNeri[i];
                   }
                 }
@@ -1763,46 +1821,46 @@ public class Tabella {
           }
         }
       } else if ((comando.charAt(0) == torre)) { // controlla se l'ambiguit� della torre
-        if ((comando.length() == 3) && (((comando.charAt(1) - 97 >= 0) 
-            && (comando.charAt(1) - 97 <= 7))
-            && ((comando.charAt(2) - 49 >= 0) && (comando.charAt(2) - 49 <= 7)))) {
-          posizioneTradotta = new Posizione(comando.charAt(2) - 49, comando.charAt(1) - 97);
+        if ((comando.length() == tre) && (((comando.charAt(uno) - novsette >= 0)
+            && (comando.charAt(uno) - novsette <= sette))
+            && ((comando.charAt(due) - quarnove >= 0) && (comando.charAt(due) - quarnove <= sette)))) {
+          posizioneTradotta = new Posizione(comando.charAt(due) - quarnove, comando.charAt(uno) - novsette);
           if (cavalloAmbiguo() != 0) {
             posizioneTradotta = null;
           }
-        } else if ((comando.length() == 4) && ((comando.charAt(1) == 'x')
-            && ((comando.charAt(2) - 97 >= 0) && (comando.charAt(2) - 97 <= 7))
-            && ((comando.charAt(3) - 49 >= 0) && (comando.charAt(3) - 49 <= 7)))) {
-          posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
+        } else if ((comando.length() == quattro) && ((comando.charAt(uno) == 'x')
+            && ((comando.charAt(due) - novsette >= 0) && (comando.charAt(due) - novsette <= sette))
+            && ((comando.charAt(tre) - quarnove >= 0) && (comando.charAt(tre) - quarnove <= sette)))) {
+          posizioneTradotta = new Posizione(comando.charAt(tre) - quarnove, comando.charAt(due) - novsette);
           cattura = true;
           if (cavalloAmbiguo() != 0) {
             posizioneTradotta = null;
           }
-        } else if ((comando.length() == 5) && (comando.charAt(2) == 'x')
-                   && ((comando.charAt(3) - 97 >= 0) && (comando.charAt(3) - 97 <= 7))
-                   && ((comando.charAt(4) - 49 >= 0) && (comando.charAt(4) - 49 <= 7))) {
-          posizioneTradotta = new Posizione(comando.charAt(4) - 49, comando.charAt(3) - 97);
+        } else if ((comando.length() == cinque) && (comando.charAt(due) == 'x')
+                   && ((comando.charAt(tre) - novsette >= 0) && (comando.charAt(tre) - novsette <= sette))
+                   && ((comando.charAt(quattro) - quarnove >= 0) && (comando.charAt(quattro) - quarnove <= sette))) {
+          posizioneTradotta = new Posizione(comando.charAt(quattro) - quarnove, comando.charAt(tre) - novsette);
           cattura = true;
           if (cavalloAmbiguo() == 0) {
             posizioneTradotta = null;
             inizialeTradotta = null;
-          } else if (cavalloAmbiguo() == 1) {
-            if ((comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)) {
-              inizialeTradotta = new Posizione(comando.charAt(1) - 49, comando.charAt(3) - 97);
+          } else if (cavalloAmbiguo() == uno) {
+            if ((comando.charAt(uno) - quarnove >= 0) && (comando.charAt(uno) - quarnove <= sette)) {
+              inizialeTradotta = new Posizione(comando.charAt(uno) - quarnove, comando.charAt(tre) - novsette);
               pezzoMosso = tabella[inizialeTradotta.getRiga()][inizialeTradotta.getColonna()];
             } else {
               System.out.println("mossa illegale");
             }
-          } else if (cavalloAmbiguo() == 2) {
-            if ((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7)) {
-              inizialeTradotta = new Posizione(comando.charAt(4) - 49, comando.charAt(1) - 97);
+          } else if (cavalloAmbiguo() == due) {
+            if ((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette)) {
+              inizialeTradotta = new Posizione(comando.charAt(quattro) - quarnove, comando.charAt(uno) - novsette);
               pezzoMosso = tabella[inizialeTradotta.getRiga()][inizialeTradotta.getColonna()];
             } else {
               System.out.println("mossa illegale");
             }
-          } else if (cavalloAmbiguo() == 3) {
-            if ((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7)) {
-              if (comando.charAt(1) == comando.charAt(3)) {
+          } else if (cavalloAmbiguo() == tre) {
+            if ((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette)) {
+              if (comando.charAt(uno) == comando.charAt(tre)) {
                 if (turno == bianco) {
                   for (int i = 0; i < torreBianche.length; i++) {
                     if (torreBianche[i].getPosizione().getColonna() == posizioneTradotta
@@ -1822,8 +1880,8 @@ public class Tabella {
                     }
                   }
                 }
-              } else if (comando.charAt(1) - 97 != posizioneTradotta.getColonna()) {
-                inizialeTradotta = new Posizione(comando.charAt(4) - 49, comando.charAt(1) - 97);
+              } else if (comando.charAt(uno) - novsette != posizioneTradotta.getColonna()) {
+                inizialeTradotta = new Posizione(comando.charAt(quattro) - quarnove, comando.charAt(uno) - novsette);
                 pezzoMosso = tabella[inizialeTradotta.getRiga()][inizialeTradotta.getColonna()];
               }
             } else {
@@ -1834,32 +1892,32 @@ public class Tabella {
             posizioneTradotta = null;
             System.out.println("mossa illegale");
           }
-        } else if ((comando.length() == 4)
-                   && (((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7))
-                       || ((comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)))
-                   && ((comando.charAt(2) - 97 >= 0) && (comando.charAt(2) - 97 <= 7))
-                   && ((comando.charAt(3) - 49 >= 0) && (comando.charAt(3) - 49 <= 7))) {
-          posizioneTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(2) - 97);
+        } else if ((comando.length() == quattro)
+                   && (((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette))
+                       || ((comando.charAt(uno) - quarnove >= 0) && (comando.charAt(uno) - quarnove <= sette)))
+                   && ((comando.charAt(due) - novsette >= 0) && (comando.charAt(due) - novsette <= sette))
+                   && ((comando.charAt(tre) - quarnove >= 0) && (comando.charAt(tre) - quarnove <= sette))) {
+          posizioneTradotta = new Posizione(comando.charAt(tre) - quarnove, comando.charAt(due) - novsette);
           if (cavalloAmbiguo() == 0) {
             posizioneTradotta = null;
             inizialeTradotta = null;
-          } else if (cavalloAmbiguo() == 1) {
-            if ((comando.charAt(1) - 49 >= 0) && (comando.charAt(1) - 49 <= 7)) {
-              inizialeTradotta = new Posizione(comando.charAt(1) - 49, comando.charAt(2) - 97);
+          } else if (cavalloAmbiguo() == uno) {
+            if ((comando.charAt(uno) - quarnove >= 0) && (comando.charAt(uno) - quarnove <= sette)) {
+              inizialeTradotta = new Posizione(comando.charAt(uno) - quarnove, comando.charAt(due) - novsette);
               pezzoMosso = tabella[inizialeTradotta.getRiga()][inizialeTradotta.getColonna()];
             } else {
               System.out.println("mossa illegale");
             }
-          } else if (cavalloAmbiguo() == 2) {
-            if ((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7)) {
-              inizialeTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(1) - 97);
+          } else if (cavalloAmbiguo() == due) {
+            if ((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette)) {
+              inizialeTradotta = new Posizione(comando.charAt(tre) - quarnove, comando.charAt(uno) - novsette);
               pezzoMosso = tabella[inizialeTradotta.getRiga()][inizialeTradotta.getColonna()];
             } else {
               System.out.println("mossa illegale");
             }
-          } else if (cavalloAmbiguo() == 3) {
-            if ((comando.charAt(1) - 97 >= 0) && (comando.charAt(1) - 97 <= 7)) {
-              if (comando.charAt(1) == comando.charAt(2)) {
+          } else if (cavalloAmbiguo() == tre) {
+            if ((comando.charAt(uno) - novsette >= 0) && (comando.charAt(uno) - novsette <= sette)) {
+              if (comando.charAt(uno) == comando.charAt(due)) {
                 if (turno == bianco) {
                   for (int i = 0; i < torreBianche.length; i++) {
                     if (torreBianche[i].getPosizione().getColonna() == posizioneTradotta
@@ -1879,8 +1937,8 @@ public class Tabella {
                     }
                   }
                 }
-              } else if (comando.charAt(1) - 97 != posizioneTradotta.getColonna()) {
-                inizialeTradotta = new Posizione(comando.charAt(3) - 49, comando.charAt(1) - 97);
+              } else if (comando.charAt(uno) - novsette != posizioneTradotta.getColonna()) {
+                inizialeTradotta = new Posizione(comando.charAt(tre) - quarnove, comando.charAt(uno) - novsette);
                 pezzoMosso = tabella[inizialeTradotta.getRiga()][inizialeTradotta.getColonna()];
               }
             }
@@ -1901,11 +1959,7 @@ public class Tabella {
     }
 
     public boolean scrittaBene() {
-      if ((posizioneTradotta != null) && (inizialeTradotta != null)) {
-        return true;
-      } else {
-        return false;
-      }
+      return ((posizioneTradotta != null) && (inizialeTradotta != null));
     }
 
     public String getComando() {
@@ -1951,11 +2005,11 @@ public class Tabella {
       posizioneTradotta = null;
     }
   }
-  
+
   /* classe di tipo entity
   * responsabilita: restituisce i pezzi mangiati durante la partita
   */
-  
+
   protected class Mangiati {
     private int numeroMangiati = 0;
     private int pedoniMangiati = 0;
@@ -1967,14 +2021,11 @@ public class Tabella {
     private char[] simboliBianchi = {'\u265F', '\u265D', '\u265C', '\u265B', '\u265E'}; //cod pezzin
     private char[] simboliNeri = {'\u2659', '\u2657', '\u2656', '\u2655', '\u2658'}; //cod pezzi b
 
-    Mangiati(int grandezza) {
-      mangiati = new Pezzo [grandezza];
-
+    Mangiati(final int grandezza) {
+      mangiati = new Pezzo[grandezza];
     }
 
-
-
-    public void incrase(Pezzo pezzo) {
+    public void incrase(final Pezzo pezzo) {
       numeroMangiati++;
       if (pezzo.getNome() == 'p') {
         pedoniMangiati++;
@@ -1989,7 +2040,7 @@ public class Tabella {
       }
     }
 
-    public void set(Pezzo pezzo) {
+    public void set(final Pezzo pezzo) {
       if (numeroMangiati < mangiati.length) {
         mangiati[numeroMangiati] = pezzo;
         incrase(pezzo);
@@ -2001,18 +2052,28 @@ public class Tabella {
     public void displayMangiati()throws UnsupportedEncodingException {
 
       System.setOut(new PrintStream(System.out, false, "UTF-8"));
+      int i = 0;
       if (turno == bianco) {
-        System.out.println(simboliNeri[0] + " x " + pedoniMangiati);
-        System.out.println(simboliNeri[1] + " x " + alfieriMangiati);
-        System.out.println(simboliNeri[2] + " x " + torriMangiate);
-        System.out.println(simboliNeri[3] + " x " + regineMangiate);
-        System.out.println(simboliNeri[4] + " x " + cavalliMangiati);
+        System.out.println(simboliNeri[i] + " x " + pedoniMangiati);
+        i++;
+        System.out.println(simboliNeri[i] + " x " + alfieriMangiati);
+        i++;
+        System.out.println(simboliNeri[i] + " x " + torriMangiate);
+        i++;
+        System.out.println(simboliNeri[i] + " x " + regineMangiate);
+        i++;
+        System.out.println(simboliNeri[i] + " x " + cavalliMangiati);
       } else {
-        System.out.println(simboliBianchi[0] + " x " + pedoniMangiati);
-        System.out.println(simboliBianchi[1] + " x " + alfieriMangiati);
-        System.out.println(simboliBianchi[2] + " x " + torriMangiate);
-        System.out.println(simboliBianchi[3] + " x " + regineMangiate);
-        System.out.println(simboliBianchi[4] + " x " + cavalliMangiati);
+        i = 0;
+        System.out.println(simboliBianchi[i] + " x " + pedoniMangiati);
+        i++;
+        System.out.println(simboliBianchi[i] + " x " + alfieriMangiati);
+        i++;
+        System.out.println(simboliBianchi[i] + " x " + torriMangiate);
+        i++;
+        System.out.println(simboliBianchi[i] + " x " + regineMangiate);
+        i++;
+        System.out.println(simboliBianchi[i] + " x " + cavalliMangiati);
       }
     }
   }

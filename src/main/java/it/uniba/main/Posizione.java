@@ -9,17 +9,17 @@ public class Posizione {
   private int riga;
   private int colonna;
 
-  public Posizione(int riga, int colonna) {
-    this.riga = riga;
-    this.colonna = colonna;
+  public Posizione(final int rig, final int colon) {
+    riga = rig;
+    colonna = colon;
   }
 
-  public void setColonna(int colonna) {
-    this.colonna = colonna;
+  public void setColonna(final int colon) {
+    colonna = colon;
   }
 
-  public void setRiga(int riga) {
-    this.riga = riga;
+  public void setRiga(final int rig) {
+    riga = rig;
   }
 
   public int getColonna() {
